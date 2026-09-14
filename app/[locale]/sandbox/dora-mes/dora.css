@@ -1,0 +1,175 @@
+/* ── Google Fonts ──────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Dora MES Custom Styles — Scoped under .dora-app-wrapper */
+
+/* ── CSS Variables ─────────────────────────────────────────── */
+:root {
+  --app-bg:       #060B18;
+  --app-surface:  #0D1526;
+  --app-card:     #111827;
+  --app-border:   #1F2937;
+  --text-primary: #F9FAFB;
+  --text-muted:   #6B7280;
+
+  --color-cut:    #3B82F6;
+  --color-sew:    #14B8A6;
+  --color-qc:     #10B981;
+  --color-alert:  #F59E0B;
+  --color-scrap:  #EF4444;
+  --color-done:   #8B5CF6;
+}
+
+/* ── Base Resets ───────────────────────────────────────────── */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--app-bg);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    overscroll-behavior-y: none;
+    -webkit-user-select: none;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ── Touch targets ─────────────────────────────────────────── */
+.touch-target-industrial {
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Glassmorphism ─────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Skeleton shimmer ──────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Glow utilities ────────────────────────────────────────── */
+.glow-cut   { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+.glow-sew   { box-shadow: 0 0 20px rgba(20, 184, 166, 0.4); }
+.glow-qc    { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+.glow-alert { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+.glow-scrap { box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);  }
+.glow-brand { box-shadow: 0 0 24px rgba(59, 130, 246, 0.5); }
+
+/* ── Gradient text ─────────────────────────────────────────── */
+.text-gradient-brand {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cut {
+  background: linear-gradient(135deg, #60A5FA, #3B82F6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Animations ────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+.animate-fade-in   { animation: fade-in 0.3s ease-out both; }
+.animate-slide-up  { animation: slide-up 0.4s ease-out both; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-float     { animation: float 3s ease-in-out infinite; }
+
+/* ── Nav active indicator ──────────────────────────────────── */
+.nav-active-indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+}
+
+/* ── Card hover effect ─────────────────────────────────────── */
+.card-interactive {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-interactive:active {
+  transform: scale(0.985);
+}
+
+/* ── Print styles ──────────────────────────────────────────── */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background-color: white !important;
+    color: black !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+}

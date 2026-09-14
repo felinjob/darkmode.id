@@ -17,7 +17,6 @@ export function FounderModule() {
       {/* Retrato / Fotografia */}
       <div className="relative w-full aspect-square md:aspect-[4/5] bg-[var(--bg-base)] flex items-center justify-center overflow-hidden">
         {/* Placeholder Fallback - Substituído quando houver a imagem real */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none z-10" />
         
         <Image 
           src="/founder_v2.jpg" 

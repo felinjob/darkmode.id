@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Syne, Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { SystemFooter } from '@/components/system-footer';
 import { BottomDock } from '@/components/bottom-dock';
 import { FilmGrain } from '@/components/film-grain';
 
@@ -35,14 +36,14 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'darkmode.id // Creative Technology Studio',
-  description: 'Boutique studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
+  description: 'Studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
   metadataBase: new URL('https://darkmode.id'),
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://darkmode.id',
     title: 'darkmode.id // Creative Technology Studio',
-    description: 'Boutique studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
+    description: 'Studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
     siteName: 'darkmode.id',
     images: [
       {
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'darkmode.id // Creative Technology Studio',
-    description: 'Boutique studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
+    description: 'Studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -79,6 +80,7 @@ export default function RootLayout({
         {/* Contêiner Fluido Responsivo */}
         <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col border-x border-[var(--border-subtle)] bg-[var(--bg-base)] pb-28 md:pb-32">
           {children}
+          <SystemFooter />
         </div>
         
         {/* Sprint 06: Ergonomia Tátil */}

@@ -38,9 +38,9 @@ export function ProjectVisor({ title, media }: ProjectVisorProps) {
             loop
             playsInline
             preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover z-10 grayscale opacity-90 contrast-125"
+            className="absolute inset-0 w-full h-full object-cover z-10 opacity-95"
           >
-            {media.fallbackSrc && <img src={media.fallbackSrc} alt={title} className="absolute inset-0 w-full h-full object-cover z-10 grayscale opacity-90 contrast-125" />}
+            {media.fallbackSrc && <img src={media.fallbackSrc} alt={title} className="absolute inset-0 w-full h-full object-cover z-10 opacity-95" />}
           </video>
         ) : media.src ? (
           <Image 
@@ -48,7 +48,7 @@ export function ProjectVisor({ title, media }: ProjectVisorProps) {
             alt={`Preview do projeto ${title}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover z-10 grayscale opacity-90 contrast-125"
+            className="object-cover z-10 opacity-95"
           />
         ) : (
           <div className="absolute inset-0 w-full h-full z-10 flex items-center justify-center">

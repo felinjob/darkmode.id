@@ -18,8 +18,13 @@ export function SelectedWorks({ dict }: { dict: any }) {
 
       {/* Lista de Estudos de Caso */}
       <div className="flex flex-col gap-16 md:gap-24">
-        {dict.cases.map((project: any) => (
-          <ProjectCard key={project.id} project={project} />
+        {dict.cases.map((project: any, index: number) => (
+          <div key={project.id} className="flex flex-col gap-16 md:gap-24">
+            <ProjectCard project={project} />
+            {index < dict.cases.length - 1 && (
+              <div className="w-full h-px bg-[var(--border-subtle)]" />
+            )}
+          </div>
         ))}
       </div>
     </section>

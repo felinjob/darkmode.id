@@ -46,7 +46,7 @@ export function SystemHeader({ locale = 'pt' }: SystemHeaderProps) {
             {/* Light Mode Easter Egg */}
             <button 
               onClick={handleLightModeClick}
-              className="flex items-center justify-center p-1 hover:bg-[var(--border-subtle)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] relative rounded-sm"
+              className="flex items-center justify-center p-1 hover:bg-[var(--border-subtle)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] relative"
               aria-label="Toggle Light Mode"
               title="System Theme"
             >

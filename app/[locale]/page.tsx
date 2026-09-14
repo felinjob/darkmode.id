@@ -20,7 +20,7 @@ export default async function Home({ params }: PageProps) {
       
       <main className="flex flex-col w-full">
         {/* Sprint 03: Hero & Founder Module */}
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-6 px-4 md:px-8 lg:px-12 xl:px-16 pt-8 md:pt-12 pb-16 md:pb-32 border-b border-[var(--border-subtle)] max-w-[1920px] mx-auto w-full">
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-6 px-4 md:px-8 lg:px-12 xl:px-16 pt-0 md:pt-4 pb-16 md:pb-32 border-b border-[var(--border-subtle)] max-w-[1920px] mx-auto w-full">
           <HeroManifesto dict={dict.hero} />
           <FounderModule />
         </section>
