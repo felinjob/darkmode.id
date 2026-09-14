@@ -1,0 +1,176 @@
+{
+  "hero": {
+    "tag": "// 01. THESIS & CORE CAPABILITIES",
+    "title": "Felipe Teles — Technical Direction & Software Engineering.",
+    "description": "I translate two decades of mastery in visual hierarchy and human attention management into digital product architecture. I build scalable web systems and high-performance tactile interfaces, where the elimination of cognitive friction meets rigorous aesthetic finish.",
+    "stack": "FULL-STACK ARCHITECTURE // DATA ENGINEERING // MOBILE-FIRST"
+  },
+  "works": {
+    "title": "Selected Works",
+    "tag": "[Curated Scarcity // 03 Production Systems]",
+    "cases": [
+      {
+        "id": "case-01",
+        "index": "01",
+        "title": "Dora MES — Textile Manufacturing Operating System",
+        "category": "INDUSTRIAL SYSTEM // MES",
+        "summary": "End-to-end digitalization of the factory flow, replacing spreadsheets with a high-ergonomics PWA.",
+        "challengeLabel": "Operational Challenge",
+        "challenge": "Synchronizing sewing batches with heterogeneous cycle times. Treating the Production Order as a single block caused queues and unreal data. Shop floor operation by workers wearing gloves in textile dust.",
+        "architectureLabel": "Core Architecture",
+        "architecture": ["Next.js PWA", "Firestore (Real-time)", "Cloud Run", "Decoupled State"],
+        "metricsLabel": "Business Metrics",
+        "metrics": [
+          { "label": "Paper Forms on Line", "value": "-100%" },
+          { "label": "Traceability", "value": "Per Batch" }
+        ],
+        "media": {
+          "type": "image",
+          "src": "/placeholder-01.jpg"
+        },
+        "actions": [
+          { "label": "[ READ FULL STUDY ↗ ]", "url": "#", "isPrimary": true },
+          { "label": "[ TEST OPERATIONAL SANDBOX ↗ ]", "url": "#" }
+        ]
+      },
+      {
+        "id": "case-02",
+        "index": "02",
+        "title": "Santos PREP: Acquisition Engine & Data Auditing",
+        "category": "EDTECH // CRO & DATA PIPELINE",
+        "summary": "Digital Launch Platform & CRO: Santos 2026 Legislation Summaries.",
+        "challengeLabel": "Operational Challenge",
+        "challenge": "Critical post-notice sales window requiring mobile traffic retention and commercial skepticism breakthrough without relying on slow platforms. Demand for data auditing and GDPR compliance.",
+        "architectureLabel": "Core Architecture",
+        "architecture": ["Next.js App Router", "Tailwind CSS (Zero-runtime)", "Proprietary Modal (Touch)", "Python Data Pipeline"],
+        "metricsLabel": "Business Metrics",
+        "metrics": [
+          { "label": "Core Web Vitals", "value": "100/100" },
+          { "label": "Top 10 Approved", "value": "5" }
+        ],
+        "media": {
+          "type": "image",
+          "src": "/placeholder-02.jpg"
+        },
+        "actions": [
+          { "label": "[ OPEN PLATFORM ↗ ]", "url": "#", "isPrimary": true },
+          { "label": "[ VIEW ARCHITECTURE CODE ↗ ]", "url": "#" }
+        ]
+      },
+      {
+        "id": "case-03",
+        "index": "03",
+        "title": "Use Azevedo — E-Commerce Mobile-First & Fit Tech",
+        "category": "E-COMMERCE // FIT TECH & HEADLESS",
+        "summary": "Digital retail headless architecture with Algorithmic Virtual Fitting Room to mitigate returns.",
+        "challengeLabel": "Operational Challenge",
+        "challenge": "Overcoming mobile purchase insecurity (reducing high return rates due to fit errors in the mid/plus size niche) and eliminating the founder's technical dependency to manage catalog, stocks, and media.",
+        "architectureLabel": "Core Architecture",
+        "architecture": ["Next.js 16 (App Router)", "Prisma v6", "Supabase (Postgres)", "Zustand", "InfinitePay"],
+        "metricsLabel": "Business Metrics",
+        "metrics": [
+          { "label": "Layout Shift (CLS)", "value": "ZERO" },
+          { "label": "Ergonomics (Thumb Zone)", "value": "100%" }
+        ],
+        "media": {
+          "type": "image",
+          "src": "/placeholder-03.jpg"
+        },
+        "actions": [
+          { "label": "[ OPEN PLATFORM ↗ ]", "url": "#", "isPrimary": true },
+          { "label": "[ VIEW ARCHITECTURE CODE ↗ ]", "url": "#" }
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "title": "Capabilities",
+    "tag": "// Core Technical Domains",
+    "categories": [
+      {
+        "index": "01",
+        "title": "Frontend Engineering & Mobile-First",
+        "lead": "Structuring high-performance platforms focused on conversion (CRO) and tactile retention.",
+        "deliverables": [
+          "Next.js & React Server Components",
+          "Mobile-First Architecture (Thumb Zone)",
+          "Extreme Optimization (Core Web Vitals)"
+        ]
+      },
+      {
+        "index": "02",
+        "title": "Data Engineering & Backends",
+        "lead": "Consolidation of transactional data, metrics auditing, and relational database orchestration.",
+        "deliverables": [
+          "Analytical Pipelines (Python)",
+          "Prisma ORM & SQL/NoSQL DBs",
+          "B2B & Financial APIs Integration"
+        ]
+      },
+      {
+        "index": "03",
+        "title": "RPA & Process Automation",
+        "lead": "Replacement of slow operational tasks with real-time data extraction and cross-referencing bots.",
+        "deliverables": [
+          "Web Automation (Selenium / BotCity)",
+          "Scraping & Treatment with Pandas",
+          "Backoffice Process Orchestration"
+        ]
+      },
+      {
+        "index": "04",
+        "title": "Research (R&D) & Low-Level Manipulation",
+        "lead": "Mastery of legacy hardware, memory constraints, and binary matrix optimization.",
+        "deliverables": [
+          "Binary & Firmware Manipulation",
+          "Container Orchestration (Docker)",
+          "Embedded Image Processing"
+        ]
+      }
+    ]
+  },
+  "lab": {
+    "title": "The Archive / Lab",
+    "tag": "// R&D, Prototypes & Open Source",
+    "table": {
+      "id": "ID",
+      "experiment": "EXPERIMENT",
+      "scope": "TECH SCOPE",
+      "status": "STATUS"
+    },
+    "experiments": [
+      {
+        "id": "LAB_01",
+        "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
+        "scope": "Python / FastAPI / Mutagen",
+        "status": "STABLE",
+        "description": "Binary manipulation utility to bypass hardware constraints in legacy DAPs. Optimizes FAT32 reading via sequential I/O and applies LANCZOS algorithms on covers to prevent embedded kernel panics.",
+        "targetUrl": "#"
+      },
+      {
+        "id": "LAB_02",
+        "title": "RPA Freight & Onboarding Engine",
+        "scope": "Python / BotCity / Selenium",
+        "status": "STABLE",
+        "description": "Robotic Process Automation (RPA) for scraping logistics quotes (Correios/Jadlog) and data sanitization via Brasil API. 90% (10x) reduction in backoffice processing time.",
+        "targetUrl": "#"
+      },
+      {
+        "id": "LAB_03",
+        "title": "State Sync Pipeline",
+        "scope": "WebSockets / Redis",
+        "status": "IN BUILD",
+        "description": "Real-time state synchronizer for multiple concurrent clients in collaborative applications.",
+        "targetUrl": "#"
+      },
+      {
+        "id": "LAB_04",
+        "title": "Zero-Latency Core",
+        "scope": "Edge Functions / Vercel",
+        "status": "ALPHA",
+        "description": "Micro-framework for drastic INP (Interaction to Next Paint) reduction via Edge compute.",
+        "targetUrl": "#"
+      }
+    ]
+  }
+}

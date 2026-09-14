@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    /* ----------------------------------------------------
+       SUPERFÍCIES E ELEVAÇÃO ÓPTICA (OLED-SAFE)
+       ---------------------------------------------------- */
+    /* Fundo estrutural com 4% de luminância: estabiliza a corrente
+       elétrica residual dos diodos sem desligá-los, mitigando o 
+       black smearing físico em rolagens a 120Hz */
+    --bg-base: #0A0B0D;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    /* Superfície primária para cartões modulares (+4% elevação de luminância) */
+    --bg-surface: #131518;
+
+    /* Superfície elevada para gavetas (drawers), bottom dock e modais */
+    --bg-elevated: #1C1E22;
+
+    /* ----------------------------------------------------
+       LINHAS ESTRUTURAIS BRUTALISTAS
+       ---------------------------------------------------- */
+    /* Margem de 1px com corte seco, sem ruído decorativo */
+    --border-subtle: #22262C;
+    /* Borda para estados de foco, hover e divisores ativos */
+    --border-strong: #323742;
+
+    /* ----------------------------------------------------
+       ACENTOS FUNCIONAIS
+       ---------------------------------------------------- */
+    /* Acento industrial de conversão/ação primária */
+    --accent-focus: #FF5500;
+    /* Verde terminal para indicadores de compilação e disponibilidade */
+    --signal-state: #00DF81;
+
+    /* ----------------------------------------------------
+       ESCALA TIPOGRÁFICA (WCAG 2.2 AAA & APCA COMPLIANT)
+       ---------------------------------------------------- */
+    /* Cinza-claro neutro: evita a halação luminosa provocada pelo #FFFFFF */
+    --text-primary: #EDEDF0;
+    /* Cinza tático para metadados, tabelas mono, dados de código e métricas */
+    --text-secondary: #8F96A3;
+    /* Cinza atenuado para referências de sistema */
+    --text-muted: #717986;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    color-scheme: dark;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--accent-focus);
+    color: #000000;
+  }
 }

@@ -1,0 +1,176 @@
+{
+  "hero": {
+    "tag": "// 01. THESIS & CORE CAPABILITIES",
+    "title": "Felipe Teles — Direção Técnica e Engenharia de Software.",
+    "description": "Traduzo duas décadas de domínio em hierarquia visual e gestão de atenção humana para a arquitetura de produtos digitais. Construo sistemas web escaláveis e interfaces táteis de alto desempenho, onde a eliminação de atrito cognitivo encontra o acabamento estético rigoroso.",
+    "stack": "FULL-STACK ARCHITECTURE // DATA ENGINEERING // MOBILE-FIRST"
+  },
+  "works": {
+    "title": "Selected Works",
+    "tag": "[Curated Scarcity // 03 Production Systems]",
+    "cases": [
+      {
+        "id": "case-01",
+        "index": "01",
+        "title": "Dora MES — Sistema Operacional de Manufatura Têxtil",
+        "category": "SISTEMA INDUSTRIAL // MES",
+        "summary": "Digitalização ponta a ponta do fluxo fabril, substituindo planilhas por PWA de alta ergonomia.",
+        "challengeLabel": "Desafio Operacional",
+        "challenge": "Sincronizar lotes de costura com tempos de ciclo heterogêneos. Tratar a Ordem de Produção (OP) como um bloco único causava filas e dados irreais. Operação em galpão por trabalhadores com luvas e poeira têxtil.",
+        "architectureLabel": "Core Architecture",
+        "architecture": ["Next.js PWA", "Firestore (Real-time)", "Cloud Run", "Estado Desacoplado"],
+        "metricsLabel": "Métricas de Negócio",
+        "metrics": [
+          { "label": "Fichas de Papel na Linha", "value": "-100%" },
+          { "label": "Rastreabilidade", "value": "Por Fardo" }
+        ],
+        "media": {
+          "type": "image",
+          "src": "/placeholder-01.jpg"
+        },
+        "actions": [
+          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "#", "isPrimary": true },
+          { "label": "[ TESTAR SANDBOX OPERACIONAL ↗ ]", "url": "#" }
+        ]
+      },
+      {
+        "id": "case-02",
+        "index": "02",
+        "title": "Santos PREP: Engine de Aquisição & Auditoria de Dados",
+        "category": "EDTECH // CRO & DATA PIPELINE",
+        "summary": "Plataforma de Lançamento Digital & CRO: Resumos Legislação Santos 2026.",
+        "challengeLabel": "Desafio Operacional",
+        "challenge": "Janela crítica de vendas pós-edital com retenção de tráfego móvel e superação de ceticismo comercial sem dependência de plataformas lentas. Exigência de auditoria de dados e conformidade com LGPD.",
+        "architectureLabel": "Core Architecture",
+        "architecture": ["Next.js App Router", "Tailwind CSS (Zero-runtime)", "Modal Proprietário (Touch)", "Python Data Pipeline"],
+        "metricsLabel": "Métricas de Negócio",
+        "metrics": [
+          { "label": "Core Web Vitals", "value": "100/100" },
+          { "label": "Top 10 Aprovados", "value": "5" }
+        ],
+        "media": {
+          "type": "image",
+          "src": "/placeholder-02.jpg"
+        },
+        "actions": [
+          { "label": "[ ABRIR PLATAFORMA ↗ ]", "url": "#", "isPrimary": true },
+          { "label": "[ VER CÓDIGO DA ARQUITETURA ↗ ]", "url": "#" }
+        ]
+      },
+      {
+        "id": "case-03",
+        "index": "03",
+        "title": "Use Azevedo — E-Commerce Mobile-First & Fit Tech",
+        "category": "E-COMMERCE // FIT TECH & HEADLESS",
+        "summary": "Arquitetura headless de varejo digital com Provador Virtual algorítmico para mitigar devoluções.",
+        "challengeLabel": "Desafio Operacional",
+        "challenge": "Superar a insegurança de compra no mobile (reduzindo altas taxas de devolução por erro de caimento no nicho mid/plus size) e eliminar a dependência técnica da fundadora para gerenciar catálogo, estoques e mídias.",
+        "architectureLabel": "Core Architecture",
+        "architecture": ["Next.js 16 (App Router)", "Prisma v6", "Supabase (Postgres)", "Zustand", "InfinitePay"],
+        "metricsLabel": "Métricas de Negócio",
+        "metrics": [
+          { "label": "Layout Shift (CLS)", "value": "ZERO" },
+          { "label": "Ergonomia (Thumb Zone)", "value": "100%" }
+        ],
+        "media": {
+          "type": "image",
+          "src": "/placeholder-03.jpg"
+        },
+        "actions": [
+          { "label": "[ ABRIR PLATAFORMA ↗ ]", "url": "#", "isPrimary": true },
+          { "label": "[ VER CÓDIGO DA ARQUITETURA ↗ ]", "url": "#" }
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "title": "Capabilities",
+    "tag": "// Core Technical Domains",
+    "categories": [
+      {
+        "index": "01",
+        "title": "Engenharia Frontend & Mobile-First",
+        "lead": "Estruturação de plataformas de alta performance focadas na conversão (CRO) e retenção tátil.",
+        "deliverables": [
+          "Next.js & React Server Components",
+          "Arquitetura Mobile-First (Thumb Zone)",
+          "Otimização Extrema (Core Web Vitals)"
+        ]
+      },
+      {
+        "index": "02",
+        "title": "Engenharia de Dados & Backends",
+        "lead": "Consolidação de dados transacionais, auditoria de métricas e orquestração de bancos relacionais.",
+        "deliverables": [
+          "Pipelines Analíticos (Python)",
+          "Prisma ORM & Bancos SQL/NoSQL",
+          "Integração de APIs B2B & Financeiras"
+        ]
+      },
+      {
+        "index": "03",
+        "title": "RPA & Automação de Processos",
+        "lead": "Substituição de tarefas operacionais lentas por robôs de extração e cruzamento de dados em tempo real.",
+        "deliverables": [
+          "Automação Web (Selenium / BotCity)",
+          "Scraping & Tratamento com Pandas",
+          "Orquestração de Processos de Backoffice"
+        ]
+      },
+      {
+        "index": "04",
+        "title": "Pesquisa (P&D) & Manipulação de Baixo Nível",
+        "lead": "Domínio de hardwares legados, restrições de memória e otimização de matrizes binárias.",
+        "deliverables": [
+          "Manipulação Binária & Firmware",
+          "Orquestração de Containers (Docker)",
+          "Processamento de Imagens Embarcadas"
+        ]
+      }
+    ]
+  },
+  "lab": {
+    "title": "The Archive / Lab",
+    "tag": "// R&D, Prototypes & Open Source",
+    "table": {
+      "id": "ID",
+      "experiment": "EXPERIMENTO",
+      "scope": "ESCOPO DE TECNOLOGIA",
+      "status": "STATUS"
+    },
+    "experiments": [
+      {
+        "id": "LAB_01",
+        "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
+        "scope": "Python / FastAPI / Mutagen",
+        "status": "STABLE",
+        "description": "Utilitário de manipulação binária para contornar restrições de hardware em DAPs legados. Otimiza leitura FAT32 via I/O sequencial e aplica algoritmos LANCZOS em capas para evitar kernel panics embarcados.",
+        "targetUrl": "#"
+      },
+      {
+        "id": "LAB_02",
+        "title": "RPA Freight & Onboarding Engine",
+        "scope": "Python / BotCity / Selenium",
+        "status": "STABLE",
+        "description": "Robô de Automação de Processos (RPA) para scraping de cotações logísticas (Correios/Jadlog) e sanitização de dados via Brasil API. Redução de 90% (10x) no tempo de processamento de backoffice.",
+        "targetUrl": "#"
+      },
+      {
+        "id": "LAB_03",
+        "title": "State Sync Pipeline",
+        "scope": "WebSockets / Redis",
+        "status": "IN BUILD",
+        "description": "Sincronizador de estado em tempo real para múltiplos clientes simultâneos em aplicações colaborativas.",
+        "targetUrl": "#"
+      },
+      {
+        "id": "LAB_04",
+        "title": "Zero-Latency Core",
+        "scope": "Edge Functions / Vercel",
+        "status": "ALPHA",
+        "description": "Micro-framework para redução drástica de INP (Interaction to Next Paint) via Edge compute.",
+        "targetUrl": "#"
+      }
+    ]
+  }
+}
