@@ -40,7 +40,9 @@ export function LabArchive({ dict }: { dict: any }) {
                 {exp.scope}
               </span>
               <a 
-                href={exp.targetUrl || '#'} 
+                href={exp.targetUrl || '#'}
+                target={exp.targetUrl && exp.targetUrl !== '#' ? '_blank' : undefined}
+                rel={exp.targetUrl && exp.targetUrl !== '#' ? 'noopener noreferrer' : undefined}
                 className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-primary)] h-[48px] flex items-center px-4 bg-[var(--bg-elevated)] border border-[var(--border-subtle)]"
               >
                 Acessar ↗
@@ -90,6 +92,8 @@ export function LabArchive({ dict }: { dict: any }) {
               <div className="col-span-2 text-right">
                 <a 
                   href={exp.targetUrl || '#'}
+                  target={exp.targetUrl && exp.targetUrl !== '#' ? '_blank' : undefined}
+                  rel={exp.targetUrl && exp.targetUrl !== '#' ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center font-mono text-[11px] uppercase tracking-widest text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]"
                 >
                   ACESSAR ↗

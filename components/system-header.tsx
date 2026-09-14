@@ -23,7 +23,7 @@ export function SystemHeader({ locale = 'pt' }: SystemHeaderProps) {
 
         <div className="flex items-center gap-4">
           
-          <div className="hidden sm:flex items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-2 py-1">
+          <div className="flex items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-2 py-1">
             {/* Language Toggle */}
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase font-bold tracking-widest text-[var(--text-secondary)] border-r border-[var(--border-subtle)] pr-2 mr-1">
               <a 

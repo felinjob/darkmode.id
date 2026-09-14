@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @layer base {
   :root {
@@ -66,5 +67,35 @@
   ::selection {
     background-color: var(--accent-focus);
     color: #000000;
+  }
+}
+
+@layer components {
+  /* Estiliza apenas código inline (força a sobrescrever o Typography plugin) */
+  .prose :where(code):not(:where(pre code)) {
+    background-color: var(--bg-elevated) !important;
+    color: var(--accent-focus) !important;
+    padding: 0.125rem 0.25rem !important;
+    border-radius: 0.25rem;
+  }
+  
+  /* Remove os backticks chatos que o plugin de typography insere por padrão */
+  .prose :where(code)::before,
+  .prose :where(code)::after {
+    display: none !important;
+  }
+
+  /* Garante que o texto de blocos preformatados (como ASCII art) seja renderizado corretamente */
+  .prose pre {
+    margin-inline: auto !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+  
+  .prose pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    color: var(--accent-focus) !important;
   }
 }

@@ -29,8 +29,8 @@
           "src": "/placeholder-01.jpg"
         },
         "actions": [
-          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "#", "isPrimary": true },
-          { "label": "[ TESTAR SANDBOX OPERACIONAL ↗ ]", "url": "#" }
+          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-01", "isPrimary": true },
+          { "label": "[ TESTAR SANDBOX OPERACIONAL ↗ ]", "url": "/pt/sandbox/dora-mes" }
         ]
       },
       {
@@ -50,11 +50,11 @@
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-02.jpg"
+          "src": "/placeholder-02.png"
         },
         "actions": [
-          { "label": "[ ABRIR PLATAFORMA ↗ ]", "url": "#", "isPrimary": true },
-          { "label": "[ VER CÓDIGO DA ARQUITETURA ↗ ]", "url": "#" }
+          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-02", "isPrimary": true },
+          { "label": "[ ACESSAR SITE ↗ ]", "url": "https://resumosantos.vercel.app/" }
         ]
       },
       {
@@ -74,11 +74,11 @@
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-03.jpg"
+          "src": "/placeholder-03.png"
         },
         "actions": [
-          { "label": "[ ABRIR PLATAFORMA ↗ ]", "url": "#", "isPrimary": true },
-          { "label": "[ VER CÓDIGO DA ARQUITETURA ↗ ]", "url": "#" }
+          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-03", "isPrimary": true },
+          { "label": "[ ACESSAR SITE ↗ ]", "url": "https://useazevedo.vercel.app/" }
         ]
       }
     ]
@@ -145,7 +145,7 @@
         "scope": "Python / FastAPI / Mutagen",
         "status": "STABLE",
         "description": "Utilitário de manipulação binária para contornar restrições de hardware em DAPs legados. Otimiza leitura FAT32 via I/O sequencial e aplica algoritmos LANCZOS em capas para evitar kernel panics embarcados.",
-        "targetUrl": "#"
+        "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
       {
         "id": "LAB_02",
@@ -153,23 +153,31 @@
         "scope": "Python / BotCity / Selenium",
         "status": "STABLE",
         "description": "Robô de Automação de Processos (RPA) para scraping de cotações logísticas (Correios/Jadlog) e sanitização de dados via Brasil API. Redução de 90% (10x) no tempo de processamento de backoffice.",
-        "targetUrl": "#"
+        "targetUrl": "https://github.com/felinjob/Cadastros_e_Fretes"
       },
       {
         "id": "LAB_03",
-        "title": "State Sync Pipeline",
-        "scope": "WebSockets / Redis",
-        "status": "IN BUILD",
-        "description": "Sincronizador de estado em tempo real para múltiplos clientes simultâneos em aplicações colaborativas.",
-        "targetUrl": "#"
+        "title": "Resumos Campinas (Legacy V1)",
+        "scope": "Next.js / EdTech",
+        "status": "STABLE",
+        "description": "Landing page de aquisição e conversão para o certame anterior. Esta versão atuou como base experimental de prova social e arquitetura para a plataforma de Santos.",
+        "targetUrl": "https://resumocampinas.vercel.app/"
       },
       {
         "id": "LAB_04",
-        "title": "Zero-Latency Core",
-        "scope": "Edge Functions / Vercel",
-        "status": "ALPHA",
-        "description": "Micro-framework para redução drástica de INP (Interaction to Next Paint) via Edge compute.",
-        "targetUrl": "#"
+        "title": "SpaceX Falcon 9 Landing Prediction",
+        "scope": "Machine Learning / EDA",
+        "status": "STABLE",
+        "description": "Modelo preditivo para avaliar a probabilidade de sucesso no pouso do 1º estágio do Falcon 9 (94.4% de acurácia com Decision Tree). Projeto capstone do IBM Data Science.",
+        "targetUrl": "https://github.com/felinjob/IBM-Applied-Data-Science-Capstone"
+      },
+      {
+        "id": "LAB_05",
+        "title": "Hollywood IMDb Analytics",
+        "scope": "NLP / ML / Python",
+        "status": "STABLE",
+        "description": "Análise estratégica e motor preditivo baseado no IMDb para orientar produções de estúdio. Utiliza processamento de linguagem natural e engenharia de features para decisões de negócio.",
+        "targetUrl": "https://github.com/felinjob/hollywood_analise"
       }
     ]
   }

@@ -67,23 +67,23 @@ export function ActionDrawer({ isOpen, onClose }: ActionDrawerProps) {
             {showCal && (
               <button 
                 onClick={() => setShowCal(false)}
-                className="font-mono text-[10px] uppercase tracking-widest text-[var(--accent-focus)] hover:text-[var(--text-primary)] transition-colors focus:outline-none"
+                className="font-mono text-[10px] uppercase tracking-widest text-[var(--accent-focus)] border border-[var(--border-subtle)] hover:border-[var(--accent-focus)] bg-[var(--bg-elevated)] transition-colors px-3 py-1.5 focus:outline-none"
               >
                 [ VOLTAR ]
               </button>
             )}
             <button 
               onClick={onClose}
-              className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors focus:outline-none"
+              className="font-mono text-[10px] uppercase tracking-widest text-black bg-[var(--accent-focus)] hover:brightness-110 transition-colors px-3 py-1.5 focus:outline-none font-bold"
               aria-label="Fechar gaveta de contato"
             >
-              [ ESC / FECHAR ]
+              FECHAR ✕
             </button>
           </div>
         </header>
 
         {/* Corpo */}
-        <div className="p-6 md:p-8 flex flex-col gap-8 overflow-y-auto max-h-[80vh] min-h-[50vh]">
+        <div className="p-6 md:p-8 pb-32 flex flex-col gap-8 overflow-y-auto max-h-[80vh] min-h-[50vh]">
           
           {showCal ? (
             <div className="w-full h-full min-h-[600px]">

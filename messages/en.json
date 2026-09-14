@@ -29,8 +29,8 @@
           "src": "/placeholder-01.jpg"
         },
         "actions": [
-          { "label": "[ READ FULL STUDY ↗ ]", "url": "#", "isPrimary": true },
-          { "label": "[ TEST OPERATIONAL SANDBOX ↗ ]", "url": "#" }
+          { "label": "[ READ FULL CASE STUDY ↗ ]", "url": "/en/case/case-01", "isPrimary": true },
+          { "label": "[ TEST OPERATIONAL SANDBOX ↗ ]", "url": "/en/sandbox/dora-mes" }
         ]
       },
       {
@@ -50,11 +50,11 @@
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-02.jpg"
+          "src": "/placeholder-02.png"
         },
         "actions": [
-          { "label": "[ OPEN PLATFORM ↗ ]", "url": "#", "isPrimary": true },
-          { "label": "[ VIEW ARCHITECTURE CODE ↗ ]", "url": "#" }
+          { "label": "[ READ FULL CASE STUDY ↗ ]", "url": "/en/case/case-02", "isPrimary": true },
+          { "label": "[ ACCESS SITE ↗ ]", "url": "https://resumosantos.vercel.app/" }
         ]
       },
       {
@@ -74,11 +74,11 @@
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-03.jpg"
+          "src": "/placeholder-03.png"
         },
         "actions": [
-          { "label": "[ OPEN PLATFORM ↗ ]", "url": "#", "isPrimary": true },
-          { "label": "[ VIEW ARCHITECTURE CODE ↗ ]", "url": "#" }
+          { "label": "[ READ FULL CASE STUDY ↗ ]", "url": "/en/case/case-03", "isPrimary": true },
+          { "label": "[ ACCESS SITE ↗ ]", "url": "https://useazevedo.vercel.app/" }
         ]
       }
     ]
@@ -144,8 +144,8 @@
         "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
         "scope": "Python / FastAPI / Mutagen",
         "status": "STABLE",
-        "description": "Binary manipulation utility to bypass hardware constraints in legacy DAPs. Optimizes FAT32 reading via sequential I/O and applies LANCZOS algorithms on covers to prevent embedded kernel panics.",
-        "targetUrl": "#"
+        "description": "Binary manipulation utility to bypass hardware constraints on legacy DAPs. Optimizes FAT32 reading via sequential I/O and applies LANCZOS algorithms on covers to prevent embedded kernel panics.",
+        "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
       {
         "id": "LAB_02",
@@ -153,23 +153,31 @@
         "scope": "Python / BotCity / Selenium",
         "status": "STABLE",
         "description": "Robotic Process Automation (RPA) for scraping logistics quotes (Correios/Jadlog) and data sanitization via Brasil API. 90% (10x) reduction in backoffice processing time.",
-        "targetUrl": "#"
+        "targetUrl": "https://github.com/felinjob/Cadastros_e_Fretes"
       },
       {
         "id": "LAB_03",
-        "title": "State Sync Pipeline",
-        "scope": "WebSockets / Redis",
-        "status": "IN BUILD",
-        "description": "Real-time state synchronizer for multiple concurrent clients in collaborative applications.",
-        "targetUrl": "#"
+        "title": "Resumos Campinas (Legacy V1)",
+        "scope": "Next.js / EdTech",
+        "status": "STABLE",
+        "description": "Acquisition and conversion landing page for the previous exam. This version acted as an experimental baseline for social proof and architecture for the Santos platform.",
+        "targetUrl": "https://resumocampinas.vercel.app/"
       },
       {
         "id": "LAB_04",
-        "title": "Zero-Latency Core",
-        "scope": "Edge Functions / Vercel",
-        "status": "ALPHA",
-        "description": "Micro-framework for drastic INP (Interaction to Next Paint) reduction via Edge compute.",
-        "targetUrl": "#"
+        "title": "SpaceX Falcon 9 Landing Prediction",
+        "scope": "Machine Learning / EDA",
+        "status": "STABLE",
+        "description": "Predictive model to evaluate the probability of a successful Falcon 9 first stage landing (94.4% accuracy with Decision Tree). IBM Data Science capstone project.",
+        "targetUrl": "https://github.com/felinjob/IBM-Applied-Data-Science-Capstone"
+      },
+      {
+        "id": "LAB_05",
+        "title": "Hollywood IMDb Analytics",
+        "scope": "NLP / ML / Python",
+        "status": "STABLE",
+        "description": "Strategic analysis and predictive engine based on IMDb to guide studio productions. Uses Natural Language Processing and feature engineering for business decisions.",
+        "targetUrl": "https://github.com/felinjob/hollywood_analise"
       }
     ]
   }

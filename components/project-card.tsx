@@ -1,4 +1,5 @@
 import { ProjectVisor } from './project-visor';
+import Link from 'next/link';
 
 interface ProjectCardProps {
   project: any;
@@ -76,21 +77,25 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </section>
         </div>
 
-        {/* Barra de Ações (Ergonomia Tátil) */}
         <footer className="mt-10 flex flex-col sm:flex-row gap-3 pt-6 border-t border-[var(--border-subtle)]">
-          {project.actions?.map((action: any, i: number) => (
-            <a
-              key={i}
-              href={action.url}
-              className={`flex-1 min-h-[48px] flex items-center justify-center font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider px-4 sm:px-6 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-surface)] text-center ${
-                action.isPrimary
-                  ? 'bg-[var(--accent-focus)] text-black hover:brightness-110 active:brightness-90 focus:ring-[var(--accent-focus)]'
-                  : 'bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--border-subtle)] focus:ring-[var(--border-subtle)]'
-              }`}
-            >
-              {action.label}
-            </a>
-          ))}
+          {project.actions?.map((action: any, i: number) => {
+            const isExternal = action.url.startsWith('http');
+            return (
+              <Link
+                key={i}
+                href={action.url}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                className={`flex-1 min-h-[48px] flex items-center justify-center font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider px-4 sm:px-6 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg-surface)] text-center ${
+                  action.isPrimary
+                    ? 'bg-[var(--accent-focus)] text-black hover:brightness-110 active:brightness-90 focus:ring-[var(--accent-focus)]'
+                    : 'bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--border-subtle)] focus:ring-[var(--border-subtle)]'
+                }`}
+              >
+                {action.label}
+              </Link>
+            );
+          })}
         </footer>
       </div>
     </article>
