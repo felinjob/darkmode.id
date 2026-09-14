@@ -1,6 +1,4 @@
-import { LabExperimentStatus } from '@/data/lab';
-
-function getStatusColor(status: LabExperimentStatus) {
+function getStatusColor(status: string) {
   if (status === 'ALPHA' || status === 'IN BUILD') return 'text-[var(--accent-focus)]';
   return 'text-[var(--signal-state)]';
 }

@@ -38,7 +38,7 @@ export function CapabilitiesGrid({ dict }: { dict: any }) {
 
             {/* Lista de Entregáveis */}
             <ul className="mt-auto flex flex-col divide-y divide-[var(--border-subtle)]/50 border-t border-[var(--border-subtle)]/50">
-              {cap.deliverables.map((item, idx) => (
+              {cap.deliverables.map((item: any, idx: number) => (
                 <li 
                   key={idx} 
                   className="py-3 font-mono text-[11px] uppercase tracking-wider text-[var(--text-muted)] flex items-start gap-2"

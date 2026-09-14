@@ -1,5 +1,10 @@
 import Image from 'next/image';
-import { ProjectMedia } from '@/data/projects';
+
+export interface ProjectMedia {
+  type: 'video' | 'image';
+  src: string;
+  fallbackSrc?: string;
+}
 
 interface ProjectVisorProps {
   title: string;

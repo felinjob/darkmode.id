@@ -45,7 +45,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               {project.architectureLabel}
             </h4>
             <ul className="flex flex-wrap gap-2">
-              {project.architecture.map((tech, i) => (
+              {project.architecture.map((tech: any, i: number) => (
                 <li 
                   key={i} 
                   className="px-2 py-1 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[10px] text-[var(--text-secondary)] tracking-wide uppercase"
@@ -62,7 +62,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               {project.metricsLabel}
             </h4>
             <div className="grid grid-cols-2 gap-4">
-              {project.metrics.map((metric, i) => (
+              {project.metrics.map((metric: any, i: number) => (
                 <div key={i} className="flex flex-col space-y-1">
                   <span className="font-mono text-2xl md:text-3xl font-bold tracking-tighter text-[var(--text-primary)] tabular-nums">
                     {metric.value}
@@ -78,7 +78,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Barra de Ações (Ergonomia Tátil) */}
         <footer className="mt-10 flex flex-col sm:flex-row gap-3 pt-6 border-t border-[var(--border-subtle)]">
-          {project.actions?.map((action, i) => (
+          {project.actions?.map((action: any, i: number) => (
             <a
               key={i}
               href={action.url}
