@@ -1,9 +1,15 @@
 {
   "hero": {
     "tag": "// 01. THESIS & CORE CAPABILITIES",
-    "title": "Felipe Teles — Direção Técnica e Engenharia de Software.",
-    "description": "Traduzo duas décadas de domínio em hierarquia visual e gestão de atenção humana para a arquitetura de produtos digitais. Construo sistemas web escaláveis e interfaces táteis de alto desempenho, onde a eliminação de atrito cognitivo encontra o acabamento estético rigoroso.",
+    "title": "Felipe Teles — Engenheiro de Software & Tech Lead.",
+    "description": "Construo plataformas de alta performance que resolvem problemas reais e impulsionam negócios. Do chão de fábrica a ecossistemas de e-commerce e motores de aquisição em edtech, eu conecto arquitetura escalável e eliminação de atrito cognitivo com um rigor estético absoluto.",
     "stack": "FULL-STACK ARCHITECTURE // DATA ENGINEERING // MOBILE-FIRST"
+  },
+  "founder": {
+    "role": "Lead Technologist",
+    "status": "ACTIVE",
+    "name": "Felipe Teles // Technical Director",
+    "description": "Arquitetura de sistemas convergindo maturidade de design estrutural com rigor absoluto de código em plataformas web."
   },
   "works": {
     "title": "Selected Works",
@@ -26,7 +32,7 @@
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-01.jpg"
+          "src": "/placeholder-01.png"
         },
         "actions": [
           { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-01", "isPrimary": true },
@@ -143,7 +149,7 @@
         "id": "LAB_01",
         "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
         "scope": "Python / FastAPI / Mutagen",
-        "status": "STABLE",
+        "status": "BETA",
         "description": "Utilitário de manipulação binária para contornar restrições de hardware em DAPs legados. Otimiza leitura FAT32 via I/O sequencial e aplica algoritmos LANCZOS em capas para evitar kernel panics embarcados.",
         "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
@@ -151,7 +157,7 @@
         "id": "LAB_02",
         "title": "RPA Freight & Onboarding Engine",
         "scope": "Python / BotCity / Selenium",
-        "status": "STABLE",
+        "status": "FINALIZADO",
         "description": "Robô de Automação de Processos (RPA) para scraping de cotações logísticas (Correios/Jadlog) e sanitização de dados via Brasil API. Redução de 90% (10x) no tempo de processamento de backoffice.",
         "targetUrl": "https://github.com/felinjob/Cadastros_e_Fretes"
       },
@@ -159,7 +165,7 @@
         "id": "LAB_03",
         "title": "Resumos Campinas (Legacy V1)",
         "scope": "Next.js / EdTech",
-        "status": "STABLE",
+        "status": "FINALIZADO",
         "description": "Landing page de aquisição e conversão para o certame anterior. Esta versão atuou como base experimental de prova social e arquitetura para a plataforma de Santos.",
         "targetUrl": "https://resumocampinas.vercel.app/"
       },
@@ -167,7 +173,7 @@
         "id": "LAB_04",
         "title": "SpaceX Falcon 9 Landing Prediction",
         "scope": "Machine Learning / EDA",
-        "status": "STABLE",
+        "status": "FINALIZADO",
         "description": "Modelo preditivo para avaliar a probabilidade de sucesso no pouso do 1º estágio do Falcon 9 (94.4% de acurácia com Decision Tree). Projeto capstone do IBM Data Science.",
         "targetUrl": "https://github.com/felinjob/IBM-Applied-Data-Science-Capstone"
       },
@@ -175,7 +181,7 @@
         "id": "LAB_05",
         "title": "Hollywood IMDb Analytics",
         "scope": "NLP / ML / Python",
-        "status": "STABLE",
+        "status": "FINALIZADO",
         "description": "Análise estratégica e motor preditivo baseado no IMDb para orientar produções de estúdio. Utiliza processamento de linguagem natural e engenharia de features para decisões de negócio.",
         "targetUrl": "https://github.com/felinjob/hollywood_analise"
       }

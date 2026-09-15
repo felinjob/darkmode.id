@@ -1,125 +1,125 @@
-# Do Diário Oficial ao Edge: Engenharia de Dados, CRO e Decisões de Arquitetura no Resumos Santos
+# From the Official Gazette to the Edge: Data Engineering, CRO, and Architectural Decisions in Resumos Santos
 
-*Como o cruzamento analítico de dados públicos, a modelagem ética de prova social e uma arquitetura frontend orientada à conversão transformaram uma landing page pós-edital em uma plataforma de vendas de alto desempenho.*
-
----
-
-Na teoria do marketing digital, uma landing page de infoproduto parece uma fórmula trivial: um título chamativo, alguns botões coloridos, prints de mensagens empilhados e uma tabela de preços com cronômetro de escassez artificial.
-
-Na realidade brutal do mercado de concursos públicos de alto nível — como os certames de Arquitetura e Engenharia —, esse modelo simplista gera atrito imediato e rejeição.
-
-Concurseiros experientes são profissionais analíticos. Eles leem editais na íntegra, detectam inconsistências pedagógicas em segundos e desconfiam imediatamente de promessas vazias. Quando o edital nº 74/2026 da Prefeitura de Santos (Banca IBAM) foi publicado, a janela temporal de lançamento exigia mais do que "fazer barulho": exigia **tangibilidade técnica, prova social auditável e fricção zero de navegação no mobile**.
-
-Abaixo, detalho as decisões de engenharia de software, o pipeline analítico de dados e os trade-offs de UX/UI adotados para construir a plataforma comercial do **Resumos Legislação Santos 2026**.
+*How the analytical cross-referencing of public data, ethical modeling of social proof, and a conversion-oriented frontend architecture transformed a post-notice landing page into a high-performance sales platform.*
 
 ---
 
-## 1. Do Dado Bruto à Prova Auditada: Pipeline de Cruzamento e Conformidade LGPD
+In digital marketing theory, an info-product landing page seems like a trivial formula: a catchy headline, some colorful buttons, stacked screenshots of messages, and a pricing table with an artificial scarcity timer.
 
-O maior desafio de credibilidade em infoprodutos preparatórios é o ceticismo em relação a depoimentos. Qualquer página pode inventar frases aleatórias; poucas conseguem lastrear seus números em registros oficiais.
+In the brutal reality of the high-level civil service exam market — such as Architecture and Engineering exams —, this simplistic model generates immediate friction and rejection.
 
-Possuíamos dois conjuntos de dados desestruturados referentes ao concurso anterior da Prefeitura de Campinas (Edital 01/2025):
+Experienced exam candidates are analytical professionals. They read the notices in full, detect pedagogical inconsistencies in seconds, and immediately distrust empty promises. When the City of Santos notice No. 74/2026 (IBAM board) was published, the launch time window required more than just "making noise": it required **technical tangibility, auditable social proof, and zero-friction mobile navigation**.
 
-1. Uma base transacional de vendas (`.xlsx`) com centenas de registros de alunos, e-mails e metadados de compra.
-2. O Diário Oficial da Prefeitura de Campinas em formato PDF vetorial com centenas de páginas contendo a lista nominal de classificados, notas, cotas (LAC, PPP, PcD) e atos de convocação.
+Below, I detail the software engineering decisions, the analytical data pipeline, and the UX/UI trade-offs adopted to build the commercial platform for **Resumos Legislação Santos 2026**.
 
-### O Pipeline de Reconciliação em Python
+---
 
-Em vez de aceitar estimativas empíricas de aprovação, implementamos um pipeline analítico de auditoria textual para cruzar as duas fontes:
+## 1. From Raw Data to Audited Proof: Cross-Referencing Pipeline and GDPR Compliance
+
+The biggest credibility challenge in preparatory info-products is the skepticism regarding testimonials. Any page can invent random phrases; few can back their numbers with official records.
+
+We had two unstructured datasets regarding the previous City of Campinas exam (Notice 01/2025):
+
+1. A transactional sales database (`.xlsx`) with hundreds of student records, emails, and purchase metadata.
+2. The Official Gazette of the City of Campinas in vector PDF format, containing hundreds of pages with the nominal list of approved candidates, scores, quotas (LAC, PPP, PcD), and summons acts.
+
+### The Python Reconciliation Pipeline
+
+Instead of accepting empirical approval estimates, we implemented an analytical textual audit pipeline to cross-reference the two sources:
 
 ```
 ┌──────────────────────────┐          ┌──────────────────────────┐
-│   Planilha de Vendas     │          │  Diário Oficial (PDF)    │
-│ (Clientes, CPFs, E-mails)│          │  (Atos de Convocação)    │
+│     Sales Spreadsheet    │          │  Official Gazette (PDF)  │
+│ (Customers, IDs, Emails) │          │     (Summons Acts)       │
 └────────────┬─────────────┘          └────────────┬─────────────┘
              │                                     │
              v                                     v
-     Sanitização e N-Gram              Extração Vetorial (PyPDF)
-   Normalização Unicode (NFD)         Remoção de Metadados / Header
+   Sanitization and N-Gram              Vector Extraction (PyPDF)
+  Unicode Normalization (NFD)         Header/Metadata Removal
              │                                     │
              └──────────────────┬──────────────────┘
                                 │
                                 v
-                   Algoritmo de Conciliação
-               (Exact Matching + Token Fallback)
+                      Reconciliation Algorithm
+                  (Exact Matching + Token Fallback)
                                 │
                                 v
-                  Métricas Oficiais Auditadas:
-             • 12 Alunos Classificados na Lista
-             • 5 Alunos no Top 10 Geral
-             • 4 Convocados / Nomeados Imediatos
+                   Audited Official Metrics:
+              • 12 Students on the Approved List
+              • 5 Students in the Overall Top 10
+              • 4 Immediate Summons / Appointments
 ```
 
-Utilizamos técnicas de normalização Unicode (`NFKD`) para remover acentuações e tratamos correspondências parciais por decomposição de tokens. O cruzamento revelou com precisão cirúrgica: **12 alunos classificados**, sendo **5 deles posicionados no Top 10** (incluindo o 5º lugar geral e o 3º lugar PcD), com convocações comprovadas no Diário Oficial.
+We used Unicode normalization techniques (`NFKD`) to remove accents and handled partial matches via token decomposition. The cross-referencing revealed with surgical precision: **12 approved students**, with **5 of them positioned in the Top 10** (including the 5th place overall and the 3rd place PcD), with proven summons in the Official Gazette.
 
-### O Trade-off Ético: Privacidade vs. Impacto Comercial
+### The Ethical Trade-off: Privacy vs. Commercial Impact
 
-Com a lista de nomes confirmada, a primeira sugestão de marketing foi publicar a lista completa com nome e colocação de cada aluno.
+With the list of names confirmed, the first marketing suggestion was to publish the complete list with the name and placement of each student.
 
-Essa ideia foi descartada. Exibir publicamente o nome civil de concurseiros sem consentimento explícito viola as diretrizes da LGPD e expõe a privacidade de quem muitas vezes presta concursos de forma reservada.
+This idea was discarded. Publicly displaying the civil names of exam candidates without explicit consent violates GDPR (LGPD in Brazil) guidelines and exposes the privacy of those who often take exams confidentially.
 
-Optamos por um padrão inspirado nas melhores plataformas analíticas de estudo:
+We opted for a standard inspired by the best analytical study platforms:
 
-* **Mosaico Estatístico e Big Numbers:** O usuário é impactado pelos dados agregados consolidados (12 classificados, 5 no Top 10, 4 nomeações).
-* **Spotlight Qualificado:** Apenas alunos que enviaram relatos voluntários e autorizados (como o Thiago Darlan, 5º colocado, e a Vanessa de Moraes, 10ª colocada) receberam destaque individual de relato.
-* **Anonimização com Disclaimer Legal:** Inclusão de nota transparente informando a preservação nominal dos demais aprovados.
+* **Statistical Mosaic and Big Numbers:** The user is impacted by consolidated aggregate data (12 approved, 5 in the Top 10, 4 appointments).
+* **Qualified Spotlight:** Only students who sent voluntary and authorized reports (like Thiago Darlan, 5th place, and Vanessa de Moraes, 10th place) received individual highlight reports.
+* **Anonymization with Legal Disclaimer:** Inclusion of a transparent note informing the nominal preservation of the other approved candidates.
 
 ---
 
-## 2. Tangibilizando o "Futuro": Desconstruindo a Insegurança do Pós-Edital
+## 2. Tangibilizing the "Future": Deconstructing Post-Notice Insecurity
 
-Um dos maiores gargalos de conversão em cursos pós-edital reside no fato de que o conteúdo completo quase nunca é entregue no ato da compra. Legislações municipais densas (como o Plano Diretor e a Lei de Licenciamento Ambiental de Santos) demandam tempo de esquematização e gravação.
+One of the biggest conversion bottlenecks in post-notice courses lies in the fact that the complete content is almost never delivered at the time of purchase. Dense municipal legislation (such as the Master Plan and the Environmental Licensing Law of Santos) requires time for schematization and recording.
 
-Se a página oculta essa realidade, os índices de reembolso explodem nos primeiros 7 dias. Se a página expõe essa informação de forma burocrática, a taxa de conversão desaba.
+If the page hides this reality, refund rates explode in the first 7 days. If the page exposes this information bureaucratically, the conversion rate plummets.
 
-### A Decisão de UI/UX: Cronograma de Entregas Como Feature
+### The UI/UX Decision: Delivery Schedule as a Feature
 
-Transformamos o calendário de produção em um ativo de confiança (`ScheduleSection.tsx`):
+We transformed the production calendar into a trust asset (`ScheduleSection.tsx`):
 
-| Atributo | Abordagem Comum de Mercado | Nossa Abordagem no Resumos Santos |
+| Attribute | Common Market Approach | Our Approach in Resumos Santos |
 | --- | --- | --- |
-| **Status do Conteúdo** | Promessas genéricas de "Acesso Imediato" | Linha do tempo visual com datas exatas por norma |
-| **Formato de Entrega** | Venda apenas do PDF sem previsibilidade | Separação explícita entre data do PDF e da videoaula |
-| **Amostra do Produto** | "E-book grátis" genérico com captura de lead | Amostra real e direta da primeira norma no próprio site |
+| **Content Status** | Generic promises of "Immediate Access" | Visual timeline with exact dates per norm |
+| **Delivery Format** | Selling only the PDF with no predictability | Explicit separation between PDF and video class dates |
+| **Product Sample** | Generic "Free E-book" with lead capture | Real, direct sample of the first norm on the site |
 
-Cada uma das 8 legislações municipais recebeu um card visual contendo a data precisa da liberação do resumo esquematizado e a data posterior da videoaula com questões comentadas.
+Each of the 8 municipal laws received a visual card containing the precise release date of the schematized summary and the subsequent date of the video class with commented questions.
 
-Para eliminar qualquer atrito de decisão, a **Lei Complementar nº 1.196/2023** foi disponibilizada imediatamente para download direto (`/Nova-Amostra-Resumo-Santos.pdf`) em um clique, sem formulários ou barreiras. Quando o visitante abre o documento e percebe a profundidade do material, o valor percebido ancora no topo.
+To eliminate any decision friction, **Complementary Law No. 1,196/2023** was made available immediately for direct download (`/Nova-Amostra-Resumo-Santos.pdf`) with one click, without forms or barriers. When the visitor opens the document and realizes the depth of the material, the perceived value anchors at the top.
 
 ---
 
-## 3. Ergonomia Mobile e o Redesenho do Componente de Depoimentos
+## 3. Mobile Ergonomics and the Redesign of the Testimonials Component
 
-Mais de 78% do tráfego qualificado de concursos públicos originado de anúncios e redes sociais acessa a landing page pelo smartphone. Em telas de 390px de largura, erros de ergonomia custam vendas.
+Over 78% of qualified civil service exam traffic originating from ads and social media accesses the landing page via smartphone. On 390px wide screens, ergonomic errors cost sales.
 
-Na primeira iteração da seção de depoimentos, os prints do WhatsApp foram organizados em cards brancos tradicionais, contendo badges coloridas, títulos em negrito, transcrições repetidas do texto e a miniatura da mensagem:
+In the first iteration of the testimonials section, WhatsApp screenshots were organized in traditional white cards, containing colored badges, bold titles, repeated text transcriptions, and the message thumbnail:
 
 ```
 ┌──────────────────────────────────────────────────┐
-│ [BADGE: APROVADO]                           " "  │
-│ "O material foi fundamental pra eu passar!"      │  <-- Redundância de texto
-│ Muito obrigado! O material foi fundamental...    │
+│ [BADGE: APPROVED]                           " "  │
+│ "The material was fundamental for me to pass!"   │  <-- Text redundancy
+│ Thank you so much! The material was fundamental..│
 │ ┌──────────────────────────────────────────────┐ │
-│ │  [Print do WhatsApp com letras ilegíveis]    │ │  <-- Espaço minúsculo
+│ │   [WhatsApp print with illegible letters]    │ │  <-- Tiny space
 │ └──────────────────────────────────────────────┘ │
 └──────────────────────────────────────────────────┘
 ```
 
-Essa estrutura gerava dois problemas críticos:
+This structure generated two critical problems:
 
-1. **Poluição Cognitiva e Redundância:** O visitante lia a mesma frase três vezes no mesmo card.
-2. **Ilegibilidade da Imagem:** Em telas móveis, o texto da conversa dentro do print ficava microscópico, forçando o usuário a desistir da leitura.
+1. **Cognitive Pollution and Redundancy:** The visitor read the same sentence three times on the same card.
+2. **Image Illegibility:** On mobile screens, the conversation text inside the print became microscopic, forcing the user to give up reading.
 
-### A Refatoração da Prova Social: Galeria Touch e Lightbox Nativo
+### Social Proof Refactoring: Touch Gallery and Native Lightbox
 
-Reescrevemos o componente (`TestimonialsSection.tsx`) adotando três princípios:
+We rewrote the component (`TestimonialsSection.tsx`) adopting three principles:
 
-1. **Remoção de Ruído Visual:** Eliminamos caixas, sombras pesadas e tags artificiais ("Aprovado", "Aluno"). As capturas reais de tela foram posicionadas diretamente no layout, transmitindo autenticidade orgânica.
-2. **Curadoria Progressiva:** Exibição inicial limitada aos prints mais fortes, complementada por um botão expansível sutil (*"Ver mais depoimentos reais"*), evitando a rolagem vertical infinita no mobile.
-3. **Lightbox com Navegação por Gestos (*Touch Swipe*):** Ao tocar em qualquer imagem, a tela cheia abre instantaneamente com *backdrop blur*. Em vez de obrigar o usuário a fechar o modal para ver o próximo print, implementamos navegação contínua por gestos de arrasto lateral (*swipe*) no celular e botões semitransparentes no desktop.
+1. **Removal of Visual Noise:** We eliminated boxes, heavy shadows, and artificial tags ("Approved", "Student"). The real screenshots were positioned directly on the layout, conveying organic authenticity.
+2. **Progressive Curation:** Initial display limited to the strongest prints, complemented by a subtle expandable button (*"See more real testimonials"*), avoiding infinite vertical scrolling on mobile.
+3. **Lightbox with Gesture Navigation (*Touch Swipe*):** By touching any image, the full screen opens instantly with a *backdrop blur*. Instead of forcing the user to close the modal to see the next print, we implemented continuous navigation through lateral swipe gestures on mobile and semi-transparent buttons on desktop.
 
 ```typescript
-// Lógica simplificada do gesto de swipe para navegação mobile
+// Simplified logic for mobile swipe gesture
 const handleTouchStart = (e: React.TouchEvent) => {
   touchStartX.current = e.targetTouches[0].clientX;
 };
@@ -135,47 +135,47 @@ const handleTouchEnd = (e: React.TouchEvent) => {
 
 ---
 
-## 4. Arquitetura Frontend & Escolhas de Stack
+## 4. Frontend Architecture & Stack Choices
 
-A velocidade de carregamento em redes móveis 4G/5G oscilantes é um dos maiores fatores de ranqueamento e conversão. Adotar uma stack inchada com dezenas de dependências de terceiros degradaria os Core Web Vitals.
+Loading speed on oscillating 4G/5G mobile networks is one of the biggest ranking and conversion factors. Adopting a bloated stack with dozens of third-party dependencies would degrade Core Web Vitals.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                 Next.js 14+ (App Router)                    │
-│             SSG / ISR com Otimização no Edge                │
+│             SSG / ISR with Edge Optimization                │
 └──────────────┬───────────────────────────────┬──────────────┘
                │                               │
-       Next/Font (Google)                Tailwind CSS
-  Plus Jakarta Sans + Inter           Design System Atômico
- (Zero Layout Shift - CLS = 0)         Purge de CSS (< 18KB)
+        Next/Font (Google)               Tailwind CSS
+    Plus Jakarta Sans + Inter         Atomic Design System
+  (Zero Layout Shift - CLS = 0)         CSS Purge (< 18KB)
                │                               │
                └───────────────┬───────────────┘
                                │
                                v
-                    Vercel Edge Network
-            (LCP < 1.1s | TTFB < 90ms no Brasil)
+                      Vercel Edge Network
+              (LCP < 1.1s | TTFB < 90ms in Brazil)
 ```
 
-* **Next.js App Router com Renderização Estática:** A landing page é compilada no build como HTML/CSS puramente estático. O Time to First Byte (TTFB) opera abaixo de 90ms na borda da Vercel no Brasil, garantindo Largest Contentful Paint (LCP) inferior a 1,1 segundo.
-* **Tipografia Racionalizada:** Eliminamos fontes experimentais de alto peso que causavam *Cumulative Layout Shift* (CLS). Adotamos a `Plus Jakarta Sans` para títulos e hierarquia de autoridade, combinada com a `Inter` para leitura longa, pré-carregadas nativamente pelo `next/font`.
-* **Tailwind CSS e Zero Fuga de Tráfego:** O CSS compilado final pesa menos de 18 KB. O header da página foi deliberadamente desenhado sem links de navegação âncora ("Quem Somos", "Dúvidas"), canalizando 100% da atenção visual para os botões de conversão e para o download da amostra.
+* **Next.js App Router with Static Rendering:** The landing page is compiled at build as purely static HTML/CSS. The Time to First Byte (TTFB) operates below 90ms on the Vercel edge in Brazil, ensuring a Largest Contentful Paint (LCP) of less than 1.1 seconds.
+* **Rationalized Typography:** We eliminated heavy experimental fonts that caused *Cumulative Layout Shift* (CLS). We adopted `Plus Jakarta Sans` for titles and authority hierarchy, combined with `Inter` for long reading, natively preloaded by `next/font`.
+* **Tailwind CSS and Zero Traffic Leakage:** The final compiled CSS weighs less than 18 KB. The page header was deliberately designed without anchor navigation links ("About Us", "FAQ"), channeling 100% of visual attention to the conversion buttons and sample download.
 
 ---
 
-## 5. Engenharia de Preço e Redução do Atrito de Compra
+## 5. Price Engineering and Purchase Friction Reduction
 
-Uma boa interface não sobrevive a uma estratégia comercial mal comunicada. O checkout precisava ancorar o valor do curso sem parecer confuso entre a compra avulsa da legislação e o combo de preparação integrada.
+A good interface cannot survive a poorly communicated commercial strategy. The checkout needed to anchor the course value without seeming confusing between the individual purchase of legislation and the integrated preparation combo.
 
-### Ancoragem Dinâmica e Apresentação do Parcelamento
+### Dynamic Anchoring and Installment Presentation
 
-Em compras digitais de tíquete médio, o valor total à vista muitas vezes assusta o comprador que está no início da preparação. Implementamos uma ancoragem tripla no card de checkout:
+In medium-ticket digital purchases, the total upfront value often scares the buyer who is at the beginning of their preparation. We implemented a triple anchor on the checkout card:
 
-1. **Preço Cheio Ancorado:** Exibição do valor nominal (`R$ 234,00`) riscado.
-2. **Desconto Ativo por Cupom:** Destaque do preço promocional à vista com código aplicado (`R$ 210,60 com SANTOS10`).
-3. **Parcelamento de Baixo Atrito:** Cálculo visual direto do parcelamento no cartão (`12x de R$ 24,20`), reduzindo a barreira psicológica de entrada para um valor menor que uma refeição por mês.
+1. **Anchored Full Price:** Display of the crossed-out nominal value (`R$ 234.00`).
+2. **Active Coupon Discount:** Highlight of the promotional upfront price with applied code (`R$ 210.60 with SANTOS10`).
+3. **Low-Friction Installments:** Direct visual calculation of credit card installments (`12x of R$ 24.20`), reducing the psychological barrier of entry to a value lower than a meal per month.
 
-Todos os fluxos foram configurados para direcionar diretamente ao gateway da Eduzz com selos nativos de segurança e garantia incondicional de 7 dias, neutralizando de forma antecipada as principais objeções de risco levantadas no FAQ interativo.
+All flows were configured to route directly to the Eduzz gateway with native security seals and a 7-day unconditional guarantee, preemptively neutralizing the main risk objections raised in the interactive FAQ.
 
 ---
 
-O resultado técnico e comercial do Resumos Santos comprova que uma landing page de alta performance não nasce de templates prontos ou fórmulas mágicas de marketing. Ela é fruto da convergência entre rigor na análise de dados, clareza sobre as dores reais do usuário e uma engenharia de frontend disciplinada que trata cada milissegundo de carregamento e cada pixel da interface como fatores determinantes para o sucesso do produto.
+The technical and commercial result of Resumos Santos proves that a high-performance landing page is not born from ready-made templates or magic marketing formulas. It is the result of the convergence between rigorous data analysis, clarity regarding real user pain points, and a disciplined frontend engineering that treats every loading millisecond and every interface pixel as determining factors for product success.

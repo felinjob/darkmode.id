@@ -1,172 +1,172 @@
-# Da Bancada de Corte ao Cloud Run: Decisões de Arquitetura e Engenharia no Dora MES
+# From the Cutting Table to Cloud Run: Architecture and Engineering Decisions in Dora MES
 
-*Como a modelagem orientada à física real de uma confecção têxtil transformou o que parecia um simples CRUD em uma plataforma industrial resiliente.*
-
----
-
-Na teoria, uma Ordem de Produção (OP) parece um fluxo linear clássico: um pedido é criado, o tecido é cortado, as peças são costuradas, passam pelo controle de qualidade e seguem para o faturamento.
-
-Na física de um galpão têxtil, essa linearidade simplesmente não existe.
-
-Um lote de 500 peças raramente anda junto. Fardos de tamanho P costumam ser finalizados dias antes de tamanhos maiores; malhas do mesmo rolo variam de rendimento por umidade e tensão; operadoras experientes costuram fardos em paralelo a facções externas; e tablets em bancadas industriais operam sob condições severas de poeira de malha, luz solar indireta e conexões oscilantes.
-
-Quando começamos a desenhar o **Dora MES** — sistema de chão de fábrica e Planejamento e Controle de Produção (PCP) desenvolvido sob medida para a confecção Dora Pinheiro —, a meta não era apenas digitalizar fichas de papel e planilhas de Excel. O objetivo era **projetar uma arquitetura de software que espelhasse a mecânica real da manufatura**, sem criar fricção operacional.
-
-Abaixo, detalho as decisões de engenharia, os trade-offs arquiteturais e as lições aprendidas ao longo da evolução do sistema.
+*How physics-oriented modeling of a textile manufacturing process transformed what seemed like a simple CRUD into a resilient industrial platform.*
 
 ---
 
-## 1. Quebrando o "Monolito da OP": Ciclo de Vida Assíncrono de Fardos
+In theory, a Production Order (OP) seems like a classic linear flow: an order is created, the fabric is cut, the pieces are sewn, they go through quality control, and move on to billing.
 
-O primeiro instinto ao desenhar um sistema fabril é tratar a Ordem de Produção como uma máquina de estados finita convencional:
+In the physics of a textile warehouse, this linearity simply does not exist.
+
+A batch of 500 pieces rarely moves together. Bundles of size S are usually finished days before larger sizes; fabrics from the same roll vary in yield due to humidity and tension; experienced operators sew bundles in parallel with external contractors; and tablets on industrial benches operate under severe conditions of fabric dust, indirect sunlight, and oscillating connections.
+
+When we began designing **Dora MES** — a shop floor and Production Planning and Control (PCP) system custom-developed for the Dora Pinheiro apparel factory —, the goal was not just to digitize paper forms and Excel spreadsheets. The objective was **to design a software architecture that mirrored the real mechanics of manufacturing**, without creating operational friction.
+
+Below, I detail the engineering decisions, architectural trade-offs, and lessons learned throughout the evolution of the system.
+
+---
+
+## 1. Breaking the "OP Monolith": Asynchronous Bundle Lifecycle
+
+The first instinct when designing a factory system is to treat the Production Order as a conventional finite state machine:
 
 ```
-[FILA] ───> [CORTE] ───> [COSTURA] ───> [ACABAMENTO] ───> [FINALIZADO]
+[QUEUE] ───> [CUTTING] ───> [SEWING] ───> [FINISHING] ───> [COMPLETED]
 ```
 
-Esse modelo falha no primeiro dia de uso real.
+This model fails on the first day of real use.
 
-Se uma OP de 1.200 camisas polo tem 12 fardos de 100 peças e 4 deles já estão sendo revisados enquanto 2 ainda aguardam máquina galoneira, em qual estado a OP está? Tratar a ordem inteira em um único status trava o chão de fábrica ou gera dados estatísticos falsos.
+If an OP of 1,200 polo shirts has 12 bundles of 100 pieces and 4 of them are already being reviewed while 2 are still waiting for the coverstitch machine, what state is the OP in? Treating the entire order under a single status locks up the shop floor or generates false statistical data.
 
-### A Decisão Arquitetural
+### The Architectural Decision
 
-Desacoplamos a entidade macro (**Ordem de Produção**) da sua unidade física mínima de movimentação (**Fardo / Bundle**):
+We decoupled the macro entity (**Production Order**) from its minimum physical handling unit (**Bundle**):
 
-* **A OP** atua como contêiner financeiro, comercial e de prazos (metadados, referências técnicas, tecidos alocados e deadline).
-* **O Fardo** é uma entidade viva e autônoma, mapeada por cor, tamanho e operadora responsável. Cada fardo possui sua própria esteira de estados:
+* **The OP** acts as the financial, commercial, and deadline container (metadata, technical references, allocated fabrics, and deadline).
+* **The Bundle** is a living and autonomous entity, mapped by color, size, and responsible operator. Each bundle has its own state pipeline:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Ordem de Produção (Macro)                │
-│  OP-2609-042 | Ref: F2401 | 1.200 peças | Deadline: 22/Set  │
+│                 Production Order (Macro)                    │
+│ OP-2609-042 | Ref: F2401 | 1,200 pieces | Deadline: Sep 22  │
 └──────────────────────────────┬──────────────────────────────┘
                                │
        ┌───────────────────────┼───────────────────────┐
        v                       v                       v
-  Fardo #01 (P)           Fardo #05 (M)           Fardo #12 (GG)
-  [Revisão QC]             [Costura]               [Aguardando]
+  Bundle #01 (S)          Bundle #05 (M)          Bundle #12 (XL)
+  [QC Review]              [Sewing]                [Waiting]
   Resp: Ivanilde          Resp: Araceli           Resp: Facção X
 ```
 
-O status visual da OP no painel do PCP tornou-se um **estado derivado**: a ordem só conclui quando todos os seus fardos individuais transitam pelo controle de qualidade.
+The visual status of the OP on the PCP dashboard became a **derived state**: the order only concludes when all of its individual bundles pass through quality control.
 
-Para a interface móvel nos tablets, adotamos uma arquitetura de acordeão expansível: a operadora enxerga o lote agrupado de forma limpa e, com um toque, expande apenas os fardos que estão fisicamente na sua máquina.
+For the mobile interface on the tablets, we adopted an expandable accordion architecture: the operator sees the grouped batch cleanly and, with one tap, expands only the bundles that are physically at their machine.
 
 ---
 
-## 2. A "Física da Malha": Rendimento Teórico vs. Auditoria do Corte Real
+## 2. The "Physics of Fabric": Theoretical Yield vs. Actual Cut Audit
 
-Em desenvolvimento de software comum, espera-se que entradas determinísticas gerem saídas determinísticas. Na indústria têxtil, o corte é estocástico.
+In standard software development, deterministic inputs are expected to generate deterministic outputs. In the textile industry, cutting is stochastic.
 
-Quando o PCP projeta cortar 50 kg de malha com rendimento nominal de 3,2 m/kg, o cálculo matemático prevê exatamente $X$ peças. No entanto, o descanso inadequado do rolo, o encolhimento térmico ou perdas de ponta de enfesto fazem com que a quantidade real de peças cortadas quase nunca seja igual à estimada.
+When the PCP plans to cut 50 kg of fabric with a nominal yield of 3.2 m/kg, the mathematical calculation predicts exactly $X$ pieces. However, inadequate resting of the roll, thermal shrinkage, or fabric spread losses mean that the actual number of pieces cut is almost never equal to the estimate.
 
-### A Decisão de Engenharia
+### The Engineering Decision
 
-Em vez de forçar a consistência com validações rígidas no banco, desenhamos um **módulo de auditoria em duas fases**:
+Instead of forcing consistency with rigid database validations, we designed a **two-phase audit module**:
 
-1. **Fase Preditiva (PCP):** O sistema calcula a razão matricial do risco ($P:1, M:2, G:2 \dots$) e gera os números esperados de fardos e peças.
-2. **Fase de Apontamento Real (Corte):** Ao final do enfesto, o operador registra as peças físicas reais apuradas.
+1. **Predictive Phase (PCP):** The system calculates the matrix ratio of the marker ($S:1, M:2, L:2 \dots$) and generates the expected numbers of bundles and pieces.
+2. **Actual Entry Phase (Cutting):** At the end of the spreading process, the operator records the actual physical pieces counted.
 
 ```typescript
-// Modelo simplificado do apontamento de auditoria pós-corte
+// Simplified model of the post-cutting audit entry
 interface FabricAudit {
   fabricId: string;
   nominalWeightKg: number;
   nominalYieldRatio: number;
-  estimatedPieces: number;  // Calculado pelo PCP
-  actualPiecesCut: number;    // Apontado na bancada de corte
+  estimatedPieces: number;  // Calculated by PCP
+  actualPiecesCut: number;    // Entered at the cutting bench
   lossDiscrepancy: number;   // actualPiecesCut - estimatedPieces
 }
 ```
 
-O sistema armazena a discrepância histórica entre o estimado e o real. Essa métrica alimenta um ciclo contínuo de aprendizado para calibração das compras de tecido, transformando uma perda operacional em inteligência de dados para a empresa.
+The system stores the historical discrepancy between the estimate and the actual. This metric feeds a continuous learning loop to calibrate fabric purchases, transforming an operational loss into data intelligence for the company.
 
 ---
 
-## 3. Segregação de Contextos: Gerência (PCP) vs. Operações (Tablet)
+## 3. Segregation of Contexts: Management (PCP) vs. Operations (Tablet)
 
-Sistemas corporativos frequentemente sofrem de sobrecarga cognitiva por colocarem todas as ações em uma tela só, protegidas apenas por botões desabilitados.
+Corporate systems frequently suffer from cognitive overload by placing all actions on a single screen, protected only by disabled buttons.
 
-Em um chão de fábrica, cada segundo gasto rolando telas ou decifrando gráficos desnecessários representa atraso na esteira.
+On a shop floor, every second spent scrolling screens or deciphering unnecessary charts represents a delay on the assembly line.
 
-### Segregação Funcional e de Acesso (RBAC)
+### Functional and Access Segregation (RBAC)
 
-Criamos duas personas mutuamente exclusivas suportadas no Firebase Authentication e no Firestore Security Rules:
+We created two mutually exclusive personas supported by Firebase Authentication and Firestore Security Rules:
 
-| Camada | Gerência (PCP / Admin) | Operações (Chão de Fábrica) |
+| Layer | Management (PCP / Admin) | Operations (Shop Floor) |
 | --- | --- | --- |
-| **Dispositivo Principal** | Desktop / Notebook | Tablet em suporte de bancada |
-| **Foco Cognitivo** | Planejamento, prazos, edição e custos | Execução física, apontamento ágil de fardos |
-| **Visibilidade** | Enxerga pedidos em fila, ativos e arquivados | Enxerga **somente** ordens com corte liberado |
-| **Métricas** | Análise de gargalos e balanceamento de linha | Focado estritamente na sua etapa de trabalho |
+| **Primary Device** | Desktop / Notebook | Tablet on bench mount |
+| **Cognitive Focus** | Planning, deadlines, editing, and costs | Physical execution, agile bundle entry |
+| **Visibility** | Sees queued, active, and archived orders | Sees **only** orders cleared for cutting |
+| **Metrics** | Bottleneck analysis and line balancing | Focused strictly on their workflow stage |
 
-#### A Decisão Contra o "Ranking de Produtividade"
+#### The Decision Against the "Productivity Ranking"
 
-Uma decisão deliberada de design foi a remoção de rankings públicos de produtividade entre costureiras na visualização do chão de fábrica.
+A deliberate design decision was the removal of public productivity rankings among seamstresses in the shop floor view.
 
-Em auditorias de processos industriais, a gamificação agressiva em linhas de costura costuma gerar atrito interpessoal e incentiva o aumento de velocidade à custa de defeitos no controle de qualidade. Substituímos qualquer métrica individual agressiva por uma tela gerencial de **Distribuição de Carga**: o PCP visualiza a distribuição dos lotes para evitar sobrecarregar uma costureira enquanto outra aguarda abastecimento.
+In industrial process audits, aggressive gamification on sewing lines usually generates interpersonal friction and encourages increased speed at the expense of defects in quality control. We replaced any aggressive individual metric with a management screen for **Load Distribution**: the PCP visualizes the batch distribution to avoid overloading one seamstress while another awaits supply.
 
 ---
 
-## 4. Arquitetura de Software & Escolhas da Stack
+## 4. Software Architecture & Stack Choices
 
 ```
    ┌────────────────────────────────────────────────────────┐
-   │                  Cliente Web / PWA                     │
+   │                  Web Client / PWA                      │
    │      Next.js 14+ (App Router) + Tailwind CSS           │
    └───────────┬────────────────────────────────┬───────────┘
                │                                │
-    Leituras em Tempo Real              Chamadas de Servidor
-       (IndexedDB Cache)                 (SSR / Next APIs)
+    Real-Time Reads                   Server Calls
+   (IndexedDB Cache)                 (SSR / Next APIs)
                │                                │
                v                                v
    ┌───────────────────────┐        ┌───────────────────────┐
    │   Firebase Firestore  │        │   Cloud Run Container │
-   │  Coleção /orders      │        │  (Firebase App Host)  │
-   │  Coleção /users (RBAC)│        └───────────┬───────────┘
+   │  /orders Collection   │        │  (Firebase App Host)  │
+   │  /users Collection    │        └───────────┬───────────┘
    └───────────────────────┘                    │
                                        Google Calendar API
                                        (Service Account Sync)
 ```
 
-### Por que Next.js 14 (App Router) + Firebase?
+### Why Next.js 14 (App Router) + Firebase?
 
-* **Reatividade em Tempo Real:** O Firestore fornece WebSockets nativos com escuta reativa (`onSnapshot`). Quando a bancada de corte avança um lote, a tela do PCP no escritório atualiza instantaneamente sem necessidade de recarregar a página.
-* **Tolerância a Quedas de Rede (Offline First):** Com o cache do IndexedDB habilitado, o tablet continua navegável mesmo durante oscilações momentâneas do sinal de Wi-Fi no galpão.
-* **Segurança e APIs de Background:** A sincronização de cronogramas de entrega com a **Google Calendar API** utiliza Service Accounts com chaves criptográficas RSA privadas. Essas chaves não podem vazar para o cliente; a camada de Server Actions/Route Handlers do Next.js nos permitiu executar a integração com o Google Workspace de forma isolada e segura.
+* **Real-Time Reactivity:** Firestore provides native WebSockets with reactive listening (`onSnapshot`). When the cutting bench advances a batch, the PCP screen in the office updates instantly without the need to reload the page.
+* **Offline First Tolerance:** With the IndexedDB cache enabled, the tablet remains navigable even during momentary fluctuations in the Wi-Fi signal in the warehouse.
+* **Security and Background APIs:** Synchronizing delivery schedules with the **Google Calendar API** utilizes Service Accounts with private RSA cryptographic keys. These keys cannot leak to the client; the Next.js Server Actions/Route Handlers layer allowed us to execute the integration with Google Workspace in an isolated and secure manner.
 
-### Por que Migrar para o Firebase App Hosting (Cloud Run)?
+### Why Migrate to Firebase App Hosting (Cloud Run)?
 
-Inicialmente, o hosting tradicional estático do Firebase parecia suficiente. Porém, a presença de rotas dinâmicas de servidor (SSR) e a comunicação com APIs externas exigiam um ambiente com backend escalável.
+Initially, traditional static Firebase hosting seemed sufficient. However, the presence of dynamic server routes (SSR) and communication with external APIs required a scalable backend environment.
 
-Optamos pelo **Firebase App Hosting**:
+We opted for **Firebase App Hosting**:
 
-* A aplicação é empacotada em um contêiner Linux gerenciado no **Cloud Run** (Node 22).
-* Ganhamos escalabilidade de 0 instâncias (custo zero quando a fábrica está fechada) até réplicas automáticas em picos de sincronização.
-* O fluxo de CI/CD ficou integrado ao repositório no GitHub, compilando automaticamente novos commits da branch de produção.
-
----
-
-## 5. Resiliência Operacional: O Diabo está nos Detalhes
-
-Sistemas industriais não podem falhar silenciosamente. Três soluções pontuais de engenharia garantiram a solidez da ferramenta em produção:
-
-1. **Lixeira com Retenção Lógica (*Soft Delete* de 7 dias):**
-Exclusões acidentais em telas sensíveis ao toque são comuns. Nenhuma OP é apagada do Firestore com um clique. Ao deletar, o documento recebe `isDeleted: true` e uma data de expiração, saindo instantaneamente da esteira fabril, mas permanecendo recuperável pelo PCP em uma aba isolada.
-2. **Semáforo Visual de Deadline:**
-O PCP lida com dezenas de datas. Criamos um sistema de alerta visual baseado em dias corridos restantes:
-* **Verde (`emerald`):** Folga operacional (> 5 dias).
-* **Âmbar (`amber`):** Janela de risco (2 a 5 dias).
-* **Carmim (`rose`):** Risco crítico de atraso (< 48 horas ou vencido).
-
-
-3. **Disciplina Rigorosa com as Regras de Hooks do React:**
-Durante o refatoramento da edição de múltiplos tecidos, eliminamos o uso de hooks (`useMemo`) dentro de laços de repetição dinâmicos (`array.map`), substituindo cálculos desnecessariamente memoizados por operações aritméticas síncronas diretas. O resultado foi a erradicação de bugs de hidratação e travamento de tela em produção.
+* The application is packaged in a managed Linux container on **Cloud Run** (Node 22).
+* We gained scalability from 0 instances (zero cost when the factory is closed) to automatic replicas during synchronization peaks.
+* The CI/CD flow was integrated with the GitHub repository, automatically compiling new commits from the production branch.
 
 ---
 
-## Conclusão: O Valor do Software Orientado ao Domínio
+## 5. Operational Resilience: The Devil is in the Details
 
-O diferencial de um bom software industrial não está na quantidade de bibliotecas importadas, mas na **fidelidade com que sua arquitetura traduz o mundo real**.
+Industrial systems cannot fail silently. Three specific engineering solutions ensured the solidity of the tool in production:
 
-O Dora MES saiu da prancheta como um CRUD de pedidos e se consolidou como uma espinha dorsal operacional. Ao abraçar a descontinuidade dos fardos, a imprevisibilidade física da malha e a necessidade de interfaces sem ruído para tablets de fábrica, construímos uma plataforma que não tenta mudar a física do chão de fábrica — mas a organiza com precisão, previsibilidade e elegância técnica.
+1. **Logical Retention Trash (*7-day Soft Delete*):**
+Accidental deletions on touch screens are common. No OP is erased from Firestore with a single click. Upon deletion, the document receives `isDeleted: true` and an expiration date, instantly leaving the factory line but remaining recoverable by the PCP in an isolated tab.
+2. **Visual Deadline Semaphore:**
+The PCP deals with dozens of dates. We created a visual alert system based on remaining calendar days:
+* **Green (`emerald`):** Operational slack (> 5 days).
+* **Amber (`amber`):** Risk window (2 to 5 days).
+* **Crimson (`rose`):** Critical risk of delay (< 48 hours or overdue).
+
+
+3. **Strict Discipline with React Hooks Rules:**
+During the refactoring of multiple fabrics editing, we eliminated the use of hooks (`useMemo`) inside dynamic loops (`array.map`), replacing unnecessarily memoized calculations with direct synchronous arithmetic operations. The result was the eradication of hydration bugs and screen freezing in production.
+
+---
+
+## Conclusion: The Value of Domain-Driven Software
+
+The differentiator of good industrial software lies not in the number of imported libraries, but in the **fidelity with which its architecture translates the real world**.
+
+Dora MES started on the drawing board as an order CRUD and consolidated itself as an operational backbone. By embracing the discontinuity of bundles, the physical unpredictability of fabric, and the need for noise-free interfaces for factory tablets, we built a platform that does not try to change the physics of the shop floor — but organizes it with precision, predictability, and technical elegance.

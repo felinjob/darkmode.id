@@ -22,7 +22,7 @@ export default async function Home({ params }: PageProps) {
         {/* Sprint 03: Hero & Founder Module */}
         <section className="grid grid-cols-1 md:grid-cols-12 gap-6 px-4 md:px-8 lg:px-12 xl:px-16 pt-0 md:pt-4 pb-16 md:pb-32 border-b border-[var(--border-subtle)] max-w-[1920px] mx-auto w-full">
           <HeroManifesto dict={dict.hero} />
-          <FounderModule />
+          <FounderModule dict={dict.founder} />
         </section>
 
         {/* Sprint 04: Vitrine Nobre (Selected Works) */}
@@ -30,15 +30,16 @@ export default async function Home({ params }: PageProps) {
           <SelectedWorks dict={dict.works} />
         </section>
 
-        {/* Sprint 05: Lab & Capabilities */}
-        <section className="grid grid-cols-1 xl:grid-cols-12 border-b border-[var(--border-subtle)]">
-          <div id="lab" className="xl:col-span-7 xl:border-r border-[var(--border-subtle)]">
-            <LabArchive dict={dict.lab} />
-          </div>
-          <div id="capabilities" className="xl:col-span-5">
+        {/* Sprint 05: Lab & Capabilities Stacked */}
+        <div className="flex flex-col w-full">
+          <section id="capabilities" className="w-full border-b border-[var(--border-subtle)]">
             <CapabilitiesGrid dict={dict.capabilities} />
-          </div>
-        </section>
+          </section>
+          
+          <section id="lab" className="w-full border-b border-[var(--border-subtle)]">
+            <LabArchive dict={dict.lab} />
+          </section>
+        </div>
       </main>
     </>
   );

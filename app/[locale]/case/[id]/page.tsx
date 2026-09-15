@@ -45,13 +45,13 @@ export default async function CaseStudy({ params }: CaseStudyProps) {
       {/* Navbar / Top Bar */}
       <header className="sticky top-0 z-50 flex items-center justify-between p-4 md:p-6 bg-[var(--bg-base)]/90 backdrop-blur-md border-b border-[var(--border-subtle)]">
         <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)]">
-          // CASE STUDY: {id}
+          // {locale === 'en' ? 'CASE STUDY' : 'ESTUDO DE CASO'}: {id}
         </div>
         <Link 
           href={`/${locale}#works`}
           className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-primary)] border border-[var(--border-subtle)] hover:border-[var(--text-primary)] bg-[var(--bg-elevated)] transition-colors px-4 py-2 focus:outline-none"
         >
-          FECHAR ✕
+          {locale === 'en' ? 'CLOSE ✕' : 'FECHAR ✕'}
         </Link>
       </header>
 
@@ -68,13 +68,13 @@ export default async function CaseStudy({ params }: CaseStudyProps) {
       <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] py-12">
         <div className="container mx-auto px-4 text-center flex flex-col items-center gap-6">
           <div className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-widest">
-            [ END OF REPORT ]
+            [ {locale === 'en' ? 'END OF REPORT' : 'FIM DO RELATÓRIO'} ]
           </div>
           <Link 
             href={`/${locale}#works`}
             className="inline-flex font-mono text-xs uppercase tracking-widest text-black bg-[var(--accent-focus)] hover:brightness-110 transition-colors px-8 py-4 focus:outline-none font-bold"
           >
-            VOLTAR AO PORTFÓLIO
+            {locale === 'en' ? 'BACK TO PORTFOLIO' : 'VOLTAR AO PORTFÓLIO'}
           </Link>
         </div>
       </footer>

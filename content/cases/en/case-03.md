@@ -1,69 +1,69 @@
-# Da Modelagem Plus Size ao Edge: Arquitetura Mobile-First, Fit Tech e Engenharia de E-Commerce na Use Azevedo
+# From Plus Size Modeling to the Edge: Mobile-First Architecture, Fit Tech, and E-Commerce Engineering at Use Azevedo
 
-*Como decisões de UI/UX silenciosas, um algoritmo dimensional de recomendação de caimento e uma arquitetura headless em Next.js 16 transformaram um ateliê sob encomenda em uma plataforma de varejo de alta conversão.*
-
----
-
-No ecossistema de comércio eletrônico, a tentação mais comum ao lançar uma marca de vestuário é recorrer a atalhos pré-fabricados: subir um template genérico no Shopify ou WooCommerce, instalar uma dúzia de plugins pesados para frete e pop-ups de desconto, e torcer para que o tráfego converta.
-
-No nicho de moda feminina mid e plus size (tamanhos 44 ao 56+), esse modelo superficial quebra de imediato.
-
-A compra de vestuário online no Brasil já lida naturalmente com uma das maiores taxas de devolução do varejo global — variando entre 25% e 40% —, impulsionada pela assimetria de expectativa de caimento. Quando transpomos essa realidade para o público plus size, a fricção dobra: o medo de a peça não fechar no busto, prender no quadril ou ter uma modelagem inconsistente gera abandono em massa no carrinho. Se a plataforma parece amadora ou se a cliente não sente segurança absoluta na ergonomia das medidas, ela simplesmente não passa o cartão.
-
-Ao estruturar a engenharia e o design da **Use Azevedo**, o objetivo não era montar uma simples vitrine virtual de catálogo. O desafio residia em conceber uma plataforma headless transacional de alta velocidade, orientada a dispositivos móveis, capaz de resolver a dor de caimento (*Fit Tech*), orquestrar itens de pronta entrega com confecção sob demanda e entregar autonomia operacional total à lojista através de um CMS próprio.
-
-Abaixo, registro as decisões de arquitetura de software, engenharia de produto, trade-offs estéticos e técnicas de otimização de conversão (CRO) adotadas no desenvolvimento da plataforma.
+*How quiet UI/UX decisions, a dimensional fit recommendation algorithm, and a headless architecture in Next.js 16 transformed a custom-made atelier into a high-conversion retail platform.*
 
 ---
 
-## 1. Identidade Visual "Quiet Luxury" e a Ergonomia do Polegar no Mobile-First
+In the e-commerce ecosystem, the most common temptation when launching an apparel brand is to resort to pre-made shortcuts: uploading a generic template on Shopify or WooCommerce, installing a dozen heavy plugins for shipping and discount pop-ups, and hoping that the traffic converts.
 
-A primeira iteração visual da loja padecia de um vício comum em projetos conceituais de e-commerce: o uso de contrastes estridentes. Elementos em amarelo e dourado saturado sobrepostos ao verde floresta criavam uma estética de varejo promocional agressivo, colidindo com a proposta de valor da marca, que produz peças artesanais e alfaiataria autoral.
+In the mid and plus size women's fashion niche (sizes 14 to 26+), this superficial model breaks down immediately.
 
-### A Transição Cromática: Marfim e Verde Floresta Profundo
+Purchasing apparel online in Brazil already naturally deals with one of the highest return rates in global retail — ranging between 25% and 40% —, driven by the asymmetry of fit expectation. When we transpose this reality to the plus size audience, the friction doubles: the fear of the piece not closing at the bust, snagging on the hips, or having an inconsistent modeling generates mass cart abandonment. If the platform looks amateurish or if the customer does not feel absolute security in the ergonomics of the measurements, she simply does not swipe her card.
 
-Decidimos reformular a base de design tokens no Tailwind CSS orientando o projeto aos princípios do *quiet luxury* (referências editoriais como Jacquemus e The Row):
+When structuring the engineering and design of **Use Azevedo**, the goal was not to set up a simple virtual catalog storefront. The challenge lay in conceiving a high-speed, mobile-oriented headless transactional platform, capable of solving the fit pain (*Fit Tech*), orchestrating ready-to-ship items with on-demand manufacturing, and delivering total operational autonomy to the store owner through a proprietary CMS.
 
-* **Base Cromática Nobre:** O Verde Floresta (`#0B3B24`) assumiu o papel institucional no cabeçalho, rodapé e botões primários.
-* **Erradicação do Dourado/Amarelo:** Todos os textos e elementos decorativos sobre o fundo verde foram migrados para o Marfim Suave (`#F4F0E8` / Ivory). Isso garantiu uma razão de contraste WCAG AA nítida, sem reflexos visuais amarelados.
-* **Canvas de Respiro:** O corpo da loja e as páginas de produto (PDP) adotaram o Canvas Off-White (`#FAF8F5`), criando um contraste macio que valoriza as fotos reais dos tecidos em vez de ofuscá-los com o branco puro (`#FFFFFF`).
+Below, I record the software architecture decisions, product engineering, aesthetic trade-offs, and conversion rate optimization (CRO) techniques adopted in the development of the platform.
 
-### A Arquitetura da "Thumb Zone"
+---
 
-Mais de 84% das consumidoras de moda navegam via smartphone. Em telas de 390px a 430px de largura, elementos interativos essenciais não podem ficar isolados no topo da tela.
+## 1. "Quiet Luxury" Visual Identity and Thumb Ergonomics in Mobile-First
+
+The first visual iteration of the store suffered from a common vice in conceptual e-commerce projects: the use of strident contrasts. Elements in saturated yellow and gold overlaid on forest green created a tone of aggressive promotional retail, colliding with the brand's value proposition, which produces handcrafted pieces and artisanal tailoring.
+
+### The Chromatic Transition: Ivory and Deep Forest Green
+
+We decided to reformulate the design tokens base in Tailwind CSS, orienting the project to the principles of *quiet luxury* (editorial references like Jacquemus and The Row):
+
+* **Noble Chromatic Base:** Forest Green (`#0B3B24`) assumed the institutional role in the header, footer, and primary buttons.
+* **Eradication of Gold/Yellow:** All texts and decorative elements over the green background were migrated to Soft Ivory (`#F4F0E8` / Ivory). This guaranteed a crisp WCAG AA contrast ratio, without yellowish visual reflections.
+* **Breathing Canvas:** The body of the store and product display pages (PDP) adopted the Off-White Canvas (`#FAF8F5`), creating a soft contrast that values the real photos of the fabrics instead of overshadowing them with pure white (`#FFFFFF`).
+
+### The "Thumb Zone" Architecture
+
+More than 84% of fashion consumers browse via smartphone. On screens from 390px to 430px wide, essential interactive elements cannot be isolated at the top of the screen.
 
 ```
 ┌──────────────────────────────────────┐  ^
-│ [Menu]        [LOGO]        [Sacola] │  │ Zona de Estiramento
-├──────────────────────────────────────┤  │ (Acesso Difícil)
+│ [Menu]        [LOGO]          [Cart] │  │ Stretch Zone
+├──────────────────────────────────────┤  │ (Hard to Reach)
 │                                      │  v
-│     Hero Editorial / Vitrine         │
-│     Scroll Natural com Swipe         │
+│       Hero Editorial / Storefront    │
+│        Natural Scroll with Swipe     │
 │                                      │
 ├──────────────────────────────────────┤  ^
-│ [ Barra de Compra Flutuante (PDP) ]  │  │ ZONA NATURAL DO POLEGAR
-├──────────────────────────────────────┤  │ (Conversão Imediata:
-│ [Home]  [Buscar]  [Sacola]  [Whats]  │  │  Bottom Nav & Sticky Cart)
+│ [ Floating Purchase Bar (PDP) ]      │  │ NATURAL THUMB ZONE
+├──────────────────────────────────────┤  │ (Immediate Conversion:
+│ [Home]  [Search]  [Cart]  [Whats]    │  │  Bottom Nav & Sticky Cart)
 └──────────────────────────────────────┘  v
 ```
 
-Para garantir que a jornada inteira pudesse ser executada com uma única mão, implementamos três componentes dedicados:
+To ensure that the entire journey could be executed with a single hand, we implemented three dedicated components:
 
-1. **Bottom Navigation Bar (`MobileTabBar.tsx`):** Fixada no rodapé das visualizações móveis (`md:hidden`), disponibiliza atalhos imediatos para Home, Gaveta de Busca com sugestões rápidas, Sacola (com contagem reativa) e WhatsApp humanizado.
-2. **Barra de Compra Fixa na PDP (`MobileStickyCartBar.tsx`):** Ao rolar a página de um vestido e ultrapassar o botão de compra tradicional, uma barra compacta desliza suavemente na base contendo a miniatura da peça, o seletor ágil de tamanhos (44 ao 56) e a chamada para ação. A cliente não precisa rolar a tela inteira de volta para comprar.
-3. **Carrosséis Nativos com Aceleração de Hardware:** Substituímos bibliotecas genéricas por `embla-carousel-react`, garantindo arrasto com inércia física real nos carrosséis editoriais e nas categorias circulares (*Stories*), sem perda de frames por repintura de DOM.
+1. **Bottom Navigation Bar (`MobileTabBar.tsx`):** Fixed to the footer in mobile views (`md:hidden`), it provides immediate shortcuts to Home, Search Drawer with quick suggestions, Cart (with reactive count), and humanized WhatsApp.
+2. **Sticky Purchase Bar on PDP (`MobileStickyCartBar.tsx`):** Upon scrolling past the traditional purchase button on a dress page, a compact bar smoothly slides in at the base containing the piece's thumbnail, the agile size selector (14 to 26), and the call to action. The customer doesn't have to scroll all the way back up to buy.
+3. **Native Carousels with Hardware Acceleration:** We replaced generic libraries with `embla-carousel-react`, ensuring swipe with real physical inertia in the editorial carousels and circular categories (*Stories*), without frame loss due to DOM repainting.
 
 ---
 
-## 2. O Algoritmo de Fit Tech: Eliminando a Barreira Dimensional do Plus Size
+## 2. The Fit Tech Algorithm: Eliminating the Plus Size Dimensional Barrier
 
-O principal gargalo de conversão no vestuário plus size não é o preço: é o ceticismo em relação à modelagem. Uma cliente que veste tamanho 48 em uma marca pode precisar do 52 em outra. Disponibilizar apenas uma tabela de texto estática com números em centímetros transfere todo o esforço cognitivo para a usuária, gerando paralisia de decisão.
+The main conversion bottleneck in plus size apparel isn't price: it's skepticism regarding sizing. A customer who wears size 18 in one brand might need size 22 in another. Providing only a static text table with numbers in centimeters transfers all the cognitive effort to the user, generating decision paralysis.
 
-Construímos um **Provador Virtual Interativo (`FitFinderModal.tsx`)** baseado em um algoritmo determinístico de recomendação dimensional.
+We built an **Interactive Virtual Fitting Room (`FitFinderModal.tsx`)** based on a deterministic dimensional recommendation algorithm.
 
-### O Modelo Dimensional no Banco de Dados
+### The Dimensional Model in the Database
 
-Em vez de modelar apenas tamanhos textuais genéricos ("G", "GG"), cada variante física do produto carrega suas dimensões reais de modelagem:
+Instead of modeling only generic textual sizes ("L", "XL"), each physical product variant carries its real modeling dimensions:
 
 ```prisma
 model ProductVariant {
@@ -78,9 +78,9 @@ model ProductVariant {
 }
 ```
 
-### O Algoritmo de Proximidade e Folga de Vestibilidade
+### The Proximity and Wearability Ease Algorithm
 
-Quando a cliente insere suas três medidas corporais básicas (Busto, Cintura e Quadril) por meio de controles deslizantes sensíveis ao toque, o sistema executa o cálculo de caimento direto contra todas as variantes disponíveis para aquela peça:
+When the customer inputs her three basic body measurements (Bust, Waist, and Hips) through touch-sensitive sliders, the system executes the direct fit calculation against all available variants for that piece:
 
 ```typescript
 interface BodyMeasurement {
@@ -104,7 +104,7 @@ export function calculateIdealSize(
   user: BodyMeasurement,
   variants: VariantMeasurements[]
 ): FitScore | null {
-  // Folga mínima recomendada para conforto de tecido plano (em cm)
+  // Minimum ease recommended for woven fabric comfort (in cm)
   const EASE_TOLERANCE = { min: 2.0, ideal: 4.0, max: 8.0 };
 
   let bestMatch: FitScore | null = null;
@@ -115,12 +115,12 @@ export function calculateIdealSize(
     const deltaWaist = v.waistCm - user.waist;
     const deltaHip = v.hipCm - user.hip;
 
-    // Se a peça for menor que o corpo em qualquer ponto crítico, penaliza severamente
+    // If the piece is smaller than the body in any critical point, penalize severely
     if (deltaBust < 0 || deltaWaist < 0 || deltaHip < 0) {
       continue;
     }
 
-    // Cálculo da distância euclidiana ponderada em relação à folga ideal
+    // Weighted Euclidean distance calculation relative to ideal ease
     const penalty =
       Math.pow(deltaBust - EASE_TOLERANCE.ideal, 2) * 1.2 +
       Math.pow(deltaWaist - EASE_TOLERANCE.ideal, 2) * 1.0 +
@@ -145,18 +145,18 @@ export function calculateIdealSize(
 }
 ```
 
-O resultado é apresentado em linguagem humanizada: *"Tamanho Recomendado: 48 — Caimento confortável no busto, ajuste natural na cintura e fluido no quadril"*. Ao clicar em "Aplicar Tamanho", a variante é selecionada na página sem que a cliente precise interpretar tabelas numéricas complexas.
+The result is presented in humanized language: *"Recommended Size: 48 — Comfortable fit on the bust, natural adjustment on the waist, and fluid on the hips"*. By clicking "Apply Size", the variant is selected on the page without the customer needing to interpret complex numerical tables.
 
 ---
 
-## 3. Arquitetura Next.js 16, Prisma v6 e Reatividade com SearchParams Assíncronos
+## 3. Next.js 16 Architecture, Prisma v6, and Reactivity with Async SearchParams
 
-Na camada de engenharia de software, o projeto foi arquitetado sob o Next.js 16 (App Router) com TypeScript rigoroso e Prisma v6 conectando-se a uma instância PostgreSQL gerenciada no Supabase.
+At the software engineering layer, the project was architected under Next.js 16 (App Router) with strict TypeScript and Prisma v6 connecting to a managed PostgreSQL instance on Supabase.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                 Next.js 16 (App Router)                    │
-│        Server Component: Vitrine Reativa (page.tsx)         │
+│        Server Component: Reactive Storefront (page.tsx)     │
 └──────────────────────────────┬──────────────────────────────┘
                                │
             ┌──────────────────┴──────────────────┐
@@ -168,15 +168,15 @@ Na camada de engenharia de software, o projeto foi arquitetado sob o Next.js 16 
                                v
 ┌─────────────────────────────────────────────────────────────┐
 │                     Supabase Postgres                       │
-│    Filtro Combinado: Categoria + Disponibilidade + Busca    │
+│    Combined Filter: Category + Availability + Search        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### O Desafio dos `searchParams` Assíncronos
+### The Challenge of Async `searchParams`
 
-No Next.js 15 e 16, o acesso a parâmetros de URL em páginas de servidor passou a ser uma `Promise` nativa (`searchParams: Promise<{ ... }>`).
+In Next.js 15 and 16, accessing URL parameters on server pages became a native `Promise` (`searchParams: Promise<{ ... }>`).
 
-Em vez de forçar o uso de componentes de cliente com `useSearchParams` — o que causaria desidratação, layout shift e obrigaria o uso de `Suspense` em toda a página inicial —, estruturamos o `page.tsx` como um Server Component que aguarda a resolução dos parâmetros diretamente na borda:
+Instead of forcing the use of client components with `useSearchParams` — which would cause dehydration, layout shifts, and force the use of `Suspense` across the entire homepage —, we structured `page.tsx` as a Server Component that awaits the resolution of parameters directly at the edge:
 
 ```tsx
 interface HomePageProps {
@@ -191,7 +191,7 @@ interface HomePageProps {
 export default async function HomePage({ searchParams }: HomePageProps) {
   const params = await searchParams;
 
-  // Montagem dinâmica e tipada da query do Prisma
+  // Dynamic and typed construction of the Prisma query
   const whereClause: Prisma.ProductWhereInput = {
     active: true,
     ...(params.disponibilidade && { availability: params.disponibilidade }),
@@ -214,17 +214,17 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 }
 ```
 
-Essa abordagem garante **Time to First Byte (TTFB)** consistente, elimina saltos visuais na renderização e permite que URLs com filtros compartilhadas via WhatsApp ou Instagram cheguem pré-renderizadas diretamente do servidor.
+This approach guarantees a consistent **Time to First Byte (TTFB)**, eliminates visual jumps during rendering, and allows URLs with filters shared via WhatsApp or Instagram to arrive pre-rendered directly from the server.
 
 ---
 
-## 4. O Dilema do CMS: Autonomia Total sem Dependência Técnica
+## 4. The CMS Dilemma: Total Autonomy Without Technical Dependency
 
-Um problema recorrente em aplicações customizadas é o acoplamento do layout com o código: o programador entrega o site, mas a lojista não consegue alterar uma foto de banner ou trocar a campanha da semana sem acionar suporte técnico.
+A recurring problem in custom applications is the coupling of layout with code: the programmer delivers the site, but the store owner cannot change a banner photo or swap the weekly campaign without triggering technical support.
 
-### Modelagem Dinâmica de Banners e Destaques
+### Dynamic Modeling of Banners and Highlights
 
-Para desacoplar 100% da identidade visual, criamos uma camada de CMS integrada ao banco de dados relacional:
+To decouple 100% of the visual identity, we created a CMS layer integrated with the relational database:
 
 ```prisma
 enum HighlightType {
@@ -246,78 +246,78 @@ model BannerHighlight {
 }
 ```
 
-No painel `/admin/personalizacao`, a fundadora gerencia os slides editoriais do carrossel e as bolinhas de *Stories* com upload direto via Supabase Storage. Para evitar que o front-end consulte o banco a cada requisição de imagem estática, toda mutação dispara uma revalidação atômica de cache (`revalidatePath('/')`). O resultado une a flexibilidade de um CMS moderno com a velocidade de páginas estáticas em cache.
+In the `/admin/personalizacao` panel, the founder manages the editorial carousel slides and the *Stories* bubbles with direct uploads via Supabase Storage. To prevent the front-end from querying the database on every static image request, every mutation triggers an atomic cache revalidation (`revalidatePath('/')`). The result combines the flexibility of a modern CMS with the speed of cached static pages.
 
 ---
 
-## 5. Engenharia Financeira, CRO e a Integração com a InfinitePay
+## 5. Financial Engineering, CRO, and InfinitePay Integration
 
-O encerramento da jornada de compra precisava responder a dois objetivos: proteger as margens de confecção da empresa e minimizar o atrito no momento do pagamento.
+The closing of the purchase journey needed to respond to two objectives: protect the company's manufacturing margins and minimize friction at the time of payment.
 
-### Frete Escalonado como Alavanca de Ticket Médio
+### Scaled Shipping as an Average Ticket Lever
 
-As taxas de parcelamento no cartão de crédito custam mais à operação do que pagamentos à vista via Pix. Em vez de simplesmente aplicar um desconto percentual genérico, implementamos uma régua de frete grátis calibrada no motor logístico (`shipping.ts`):
+Credit card installment fees cost the operation more than upfront payments via Pix. Instead of simply applying a generic percentage discount, we implemented a free shipping ruler calibrated in the logistics engine (`shipping.ts`):
 
-* **Frete Grátis no Pix:** Pedidos com subtotal a partir de **R$ 199,00**.
-* **Frete Grátis no Cartão:** Pedidos com subtotal a partir de **R$ 299,00**.
+* **Free Shipping on Pix:** Orders with a subtotal starting at **R$ 199.00**.
+* **Free Shipping on Credit Card:** Orders with a subtotal starting at **R$ 299.00**.
 
-Na gaveta do carrinho (`CartDrawer.tsx`), a consumidora visualiza uma barra de progresso reativa conectada à store Zustand:
+In the cart drawer (`CartDrawer.tsx`), the consumer visualizes a reactive progress bar connected to the Zustand store:
 
 ```
-Subtotal: R$ 160,00
+Subtotal: R$ 160.00
 [████████████████░░░░░░░░] R$ 160 / R$ 199
-"Adicione mais R$ 39,00 para desbloquear FRETE GRÁTIS no Pix!"
+"Add R$ 39.00 more to unlock FREE SHIPPING on Pix!"
 ```
 
-Ao atingir a primeira faixa, a barra celebra o frete no Pix e recalcula instantaneamente a distância até os R$ 299,00 para liberar o benefício também no parcelamento em 12x. O resultado é o aumento natural do número de peças por pedido (*itens por cesta*).
+Upon reaching the first tier, the bar celebrates free shipping on Pix and instantly recalculates the distance to R$ 299.00 to also unlock the benefit for 12x installments. The result is a natural increase in the number of items per order (*items per basket*).
 
-### Arquitetura de Pagamento com a InfinitePay
+### Payment Architecture with InfinitePay
 
-Diferente de soluções legadas que exigem formulários complexos no front-end e impõem alto risco de conformidade PCI, estruturamos a transação financeira em duas etapas seguras:
+Unlike legacy solutions that require complex forms on the front-end and impose high PCI compliance risk, we structured the financial transaction in two secure steps:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ Cliente clica em "Finalizar Compra" (One-Step Guest Checkout)│
+│ Customer clicks "Finalizar Compra" (One-Step Guest Checkout)│
 └──────────────────────────────┬──────────────────────────────┘
                                │
                                v
-                 Server Action: createOrder()
-              • Cria pedido PENDING no Supabase
-              • Gera cobrança na API CloudWalk / InfinitePay
+                  Server Action: createOrder()
+               • Creates PENDING order in Supabase
+               • Generates charge on CloudWalk / InfinitePay API
                                │
             ┌──────────────────┴──────────────────┐
             v                                     v
-   Retorno da InfinitePay               Redirect Seguro
- (Handle / Link Transacional)          (Pix ou Cartão em 12x)
+   InfinitePay Return                   Secure Redirect
+ (Handle / Transactional Link)      (Pix or Card in 12x)
                                                   │
                                                   v
 ┌─────────────────────────────────────────────────────────────┐
-│           Webhook Seguro (/api/webhooks/infinitepay)        │
-│   • Validação de Assinatura Criptográfica HMAC (Secret)     │
-│   • Transição Atômica: Order status -> PAID                 │
-│   • Baixa de Estoque Real na ProductVariant                 │
+│           Secure Webhook (/api/webhooks/infinitepay)        │
+│   • HMAC Cryptographic Signature Validation (Secret)        │
+│   • Atomic Transition: Order status -> PAID                 │
+│   • Real Inventory Deduction in ProductVariant              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-Ao isolar a captura dos dados de cartão no ambiente homologado da adquirente e tratar o fechamento por meio de um webhook criptografado, o sistema garante segurança bancária rigorosa, reduz custos de antecipação e assegura baixa automática de estoque no exato momento da confirmação.
+By isolating the capture of card data in the acquirer's homologated environment and handling the closing via an encrypted webhook, the system guarantees rigorous banking security, reduces anticipation costs, and ensures automatic inventory deduction at the exact moment of confirmation.
 
 ---
 
-## 6. Comparativo de Arquitetura: Decisões de Engenharia
+## 6. Architecture Comparison: Engineering Decisions
 
-| Aspecto | Abordagem Típica de E-commerce | Abordagem Implementada na Use Azevedo |
+| Aspect | Typical E-commerce Approach | Approach Implemented at Use Azevedo |
 | --- | --- | --- |
-| **Arquitetura Base** | Monólito em Shopify / WooCommerce com temas prontos e plugins de terceiros. | Arquitetura Headless com Next.js 16 (App Router), Prisma v6 e Supabase. |
-| **Dimensionamento & Fit** | Tabela estática de centímetros em imagem ou pop-up burocrático. | Provador Virtual Interativo (*Fit Tech*) com cálculo de tolerância de caimento. |
-| **Gestão de Mídia / CMS** | Edição manual via código ou painéis de terceiros lentos e desacoplados. | CMS integrado no `/admin` com upload direto no Supabase Storage e `revalidatePath`. |
-| **Navegação Mobile** | Menus verticais clássicos com sobrecarga visual e botões fora do alcance. | Bottom Navigation Bar dedicada, Sticky Cart na PDP e gestos touch com aceleração gráfica. |
-| **Regra de Frete** | Frete fixo ou valor único genérico de corte. | Frete escalonado dinâmico (R$ 199 Pix / R$ 299 Cartão) com barra reativa na sacola. |
-| **Segurança Financeira** | Armazenamento de dados sensíveis ou plugins de checkout lentos e fragmentados. | Integração direta via API/Webhook com InfinitePay e conformidade PCI nativa. |
+| **Base Architecture** | Monolith on Shopify / WooCommerce with ready-made themes and third-party plugins. | Headless Architecture with Next.js 16 (App Router), Prisma v6, and Supabase. |
+| **Sizing & Fit** | Static table of centimeters in an image or bureaucratic pop-up. | Interactive Virtual Fitting Room (*Fit Tech*) with wearability tolerance calculation. |
+| **Media Management / CMS** | Manual editing via code or slow, decoupled third-party panels. | Integrated CMS in `/admin` with direct upload to Supabase Storage and `revalidatePath`. |
+| **Mobile Navigation** | Classic vertical menus with visual overload and out-of-reach buttons. | Dedicated Bottom Navigation Bar, Sticky Cart on PDP, and touch gestures with graphics acceleration. |
+| **Shipping Rule** | Flat rate or generic single cutoff value. | Dynamic scaled shipping (R$ 199 Pix / R$ 299 Card) with reactive bar in the cart. |
+| **Financial Security** | Storage of sensitive data or slow and fragmented checkout plugins. | Direct integration via API/Webhook with InfinitePay and native PCI compliance. |
 
 ---
 
-## Conclusão
+## Conclusion
 
-O projeto da Use Azevedo consolida uma visão fundamental sobre o desenvolvimento de software para o comércio digital moderno: **estética e engenharia não operam em silos separados**.
+The Use Azevedo project consolidates a fundamental vision about software development for modern digital commerce: **aesthetics and engineering do not operate in separate silos**.
 
-A paleta de cores equilibrada em marfim e verde floresta não é apenas uma escolha decorativa; ela estabelece a percepção de alto valor necessária para justificar o tíquete médio. O provador virtual algorítmico não é um recurso supérfluo; ele combate diretamente a dor mais severa de devoluções no vestuário plus size. E a escolha por uma stack de ponta em Next.js 16 e Prisma v6 não é fetiche tecnológico; é a garantia de que a loja responde em milissegundos na rede móvel, sem travamentos e com autonomia operacional absoluta nas mãos de quem realmente toca o negócio.
+The balanced color palette in ivory and forest green is not just a decorative choice; it establishes the perception of high value necessary to justify the average ticket. The algorithmic virtual fitting room is not a superfluous feature; it directly combats the most severe pain point of returns in plus size apparel. And the choice for a cutting-edge stack in Next.js 16 and Prisma v6 is not a technological fetish; it is the guarantee that the store responds in milliseconds on the mobile network, without crashing, and with absolute operational autonomy in the hands of those who truly run the business.
