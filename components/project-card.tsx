@@ -34,8 +34,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               fill
               sizes="(max-width: 1024px) 100vw, 1024px"
               className="object-cover transition-transform duration-700 hover:scale-[1.02]"
-              quality={100}
-              unoptimized={true}
+              quality={85}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">

@@ -70,15 +70,7 @@ export function SystemHeader({ locale = 'pt' }: SystemHeaderProps) {
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 font-mono text-[11px] text-[var(--text-secondary)]">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--signal-state)] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--signal-state)]" />
-            </span>
-            <span className="tracking-tight text-[var(--signal-state)] font-medium">
-              available for Q3/Q4
-            </span>
-          </div>
+
         </div>
       </div>
     </header>

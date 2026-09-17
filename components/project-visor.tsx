@@ -49,8 +49,7 @@ export function ProjectVisor({ title, media }: ProjectVisorProps) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover z-10 opacity-95"
-            quality={100}
-            unoptimized={true}
+            quality={85}
           />
         ) : (
           <div className="absolute inset-0 w-full h-full z-10 flex items-center justify-center">

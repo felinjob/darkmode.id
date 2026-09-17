@@ -29,8 +29,7 @@ export function FounderModule({ dict }: FounderModuleProps) {
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover object-top"
-          quality={100}
-          unoptimized={true}
+          quality={85}
         />
         
         {/* Camada de sombra pesada (Vignette) para reforçar o chiaroscuro */}
