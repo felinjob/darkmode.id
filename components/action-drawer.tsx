@@ -178,7 +178,7 @@ export function ActionDrawer({ isOpen, onClose }: ActionDrawerProps) {
                   02 // HIGH-SPEED CHANNEL
                 </h3>
                 <a 
-                  href="https://wa.me/5521975659408?text=Ol%C3%A1%20Felipe%2C%20analisei%20o%20portf%C3%B3lio%20no%20darkmode.id%20e%20gostaria%20de%20avaliar%20a%20viabilidade%20de%20um%20projeto."
+                  href="https://wa.me/5521975659408?text=Ol%C3%A1%20Felipe%2C%20analisei%20o%20darkmode.id%20e%20gostaria%20de%20avaliar%20a%20viabilidade%20de%20um%20projeto."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-[var(--accent-focus)] text-black p-4 font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center transition-colors hover:brightness-110 min-h-[48px]"

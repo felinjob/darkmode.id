@@ -8,98 +8,76 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <article className="flex flex-col w-full bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-      {/* Cabeçalho do Case */}
+      {/* Cabeçalho do Case: Identificador, Título e Descrição Única (máx 2 linhas) */}
       <header className="p-6 md:p-8 space-y-3">
         <div className="flex items-center justify-between font-mono text-[11px] tracking-widest uppercase">
-          <span className="text-[var(--text-muted)]">CASE {project.index} // 03</span>
-          <span className="text-[var(--accent-focus)]">[{project.category}]</span>
+          <span className="text-[var(--text-muted)] tabular-nums">CASE {project.index} // 03</span>
+          <span className="text-[var(--accent-focus)] font-medium">[{project.category}]</span>
         </div>
         <h3 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-[var(--text-primary)] leading-tight">
           {project.title}
         </h3>
-        <p className="font-sans text-sm text-[var(--text-primary)] font-medium">
+        <p className="font-sans text-sm md:text-base text-[var(--text-secondary)] leading-relaxed line-clamp-2 max-w-4xl">
           {project.summary}
         </p>
       </header>
 
-      {/* Meio: Imagem e Desafio Operacional Lado a Lado no Desktop */}
-      <div className="flex flex-col lg:flex-row w-full border-y border-[var(--border-subtle)]">
-        
-        {/* Coluna da Imagem (Full cover) */}
-        <div className="relative w-full lg:w-[55%] aspect-video lg:aspect-auto border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] bg-[var(--bg-base)] overflow-hidden">
-          {project.media?.src ? (
-            <Image
-              src={project.media.src}
-              alt={`Preview do projeto ${project.title}`}
-              fill
-              sizes="(max-width: 1024px) 100vw, 1024px"
-              className="object-cover transition-transform duration-700 hover:scale-[1.02]"
-              quality={85}
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-mono text-[10px] tracking-widest text-[var(--text-muted)]">
-                [VISUAL_DATA_PENDING]
+      {/* Imagem do Projeto em Alta Definição */}
+      <div className="relative w-full aspect-video md:aspect-[21/9] border-y border-[var(--border-subtle)] bg-[var(--bg-base)] overflow-hidden">
+        {project.media?.src ? (
+          <Image
+            src={project.media.src}
+            alt={`Preview de ${project.title}`}
+            fill
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            className="object-cover transition-transform duration-700 hover:scale-[1.015]"
+            quality={90}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-mono text-[10px] tracking-widest text-[var(--text-muted)]">
+              [VISUAL_DATA_PENDING]
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Dados Técnicos: Stack Compacta e Grade de Métricas */}
+      <div className="p-6 md:p-8 space-y-6">
+        {/* Stack Técnica Compacta em Badges */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] mr-2">
+            STACK //
+          </span>
+          {project.architecture?.map((tech: string, i: number) => (
+            <span 
+              key={i} 
+              className="px-2.5 py-1 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[10px] text-[var(--text-secondary)] tracking-wide uppercase tabular-nums"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Grade de Métricas em Destaque (tabular-nums) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 pt-2 border-t border-[var(--border-subtle)]/50">
+          {project.metrics?.map((metric: any, i: number) => (
+            <div 
+              key={i} 
+              className="flex flex-col space-y-1 bg-[var(--bg-base)]/50 p-4 border border-[var(--border-subtle)]"
+            >
+              <span className="font-mono text-2xl md:text-3xl font-bold tracking-tighter text-[var(--text-primary)] tabular-nums">
+                {metric.value}
+              </span>
+              <span className="font-sans text-[11px] text-[var(--text-secondary)] uppercase tracking-wide">
+                {metric.label}
               </span>
             </div>
-          )}
+          ))}
         </div>
-
-        {/* Coluna do Desafio Operacional */}
-        <div className="w-full lg:w-[45%] flex flex-col justify-center p-6 md:p-8 lg:p-12 xl:p-16 bg-[var(--bg-surface)]">
-          <section className="space-y-4">
-            <h4 className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] border-b border-[var(--border-subtle)]/50 pb-2">
-              {project.challengeLabel}
-            </h4>
-            <p className="font-sans text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
-              {project.challenge}
-            </p>
-          </section>
-        </div>
-
       </div>
 
-      {/* Conteúdo Analítico Inferior (Arquitetura e Métricas) */}
-      <div className="p-6 md:p-8 space-y-8">
-        
-        {/* Decisões de Arquitetura */}
-        <section className="space-y-3">
-          <h4 className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] border-b border-[var(--border-subtle)]/50 pb-2">
-            {project.architectureLabel}
-          </h4>
-          <ul className="flex flex-wrap gap-2">
-            {project.architecture.map((tech: any, i: number) => (
-              <li 
-                key={i} 
-                className="px-2 py-1 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[10px] text-[var(--text-secondary)] tracking-wide uppercase"
-              >
-                {tech}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Métricas de Impacto */}
-        <section className="space-y-3">
-          <h4 className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] border-b border-[var(--border-subtle)]/50 pb-2">
-            {project.metricsLabel}
-          </h4>
-          <div className="grid grid-cols-2 gap-4">
-            {project.metrics.map((metric: any, i: number) => (
-              <div key={i} className="flex flex-col space-y-1">
-                <span className="font-mono text-2xl md:text-3xl font-bold tracking-tighter text-[var(--text-primary)] tabular-nums">
-                  {metric.value}
-                </span>
-                <span className="font-sans text-[11px] text-[var(--text-secondary)] uppercase tracking-wide">
-                  {metric.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      {/* Botões */}
+      {/* Links de Ação Direta */}
       <footer className="flex flex-col sm:flex-row gap-3 p-6 md:p-8 pt-0">
         {project.actions?.map((action: any, i: number) => {
           const isExternal = action.url.startsWith('http');

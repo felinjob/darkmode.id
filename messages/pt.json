@@ -1,14 +1,47 @@
 {
   "hero": {
-    "tag": "// 01. THESIS & CORE CAPABILITIES",
-    "title": "Felipe Teles — Engenheiro de Software & Tech Lead.",
-    "description": "Construo plataformas de alta performance que resolvem problemas reais e impulsionam negócios. Do chão de fábrica a ecossistemas de e-commerce e motores de aquisição em edtech, eu conecto arquitetura escalável e eliminação de atrito cognitivo com um rigor estético absoluto.",
-    "stack": "FULL-STACK ARCHITECTURE // DATA ENGINEERING // MOBILE-FIRST"
+    "tag": "[ SPECIALIZED PRACTICE // 2026 ]",
+    "title": "Interfaces Táteis.\nSistemas Complexos.\nDesign da Informação.",
+    "description": "Projetamos e implementamos software na fronteira entre arquitetura de dados, ergonomia de hardware e legibilidade humana. Eliminamos o ruído cognitivo para acelerar decisões críticas e garantir integridade operacional.",
+    "stack": "INFORMATION DESIGN // DATA ARCHITECTURE // LOW-LATENCY SYSTEMS"
+  },
+  "practice": {
+    "title": "STUDIO // PRACTICE",
+    "tag": "[ INDEPENDENT PRACTICE ]",
+    "practiceTitle": "The Practice",
+    "practiceText": "darkmode.id é uma prática independente de engenharia de software e design da informação. Projetamos sistemas complexos, interfaces táteis de baixa latência e infraestruturas digitais de alta confiabilidade operacional.",
+    "leadershipTitle": "Leadership",
+    "leadershipName": "Felipe Teles",
+    "leadershipRole": "Technical Lead",
+    "leadershipText": "Fundado e liderado por Felipe Teles (Technical Lead). Interlocução puramente técnica, decisões pautadas por dados e execução direta de arquitetura ao código em produção.",
+    "principlesTitle": "// PRINCÍPIOS OPERACIONAIS",
+    "principles": [
+      {
+        "index": "01",
+        "title": "Dado-Pixel & Densidade",
+        "text": "Eliminação sistemática de chartjunk e priorização de clareza informacional (Edward Tufte)."
+      },
+      {
+        "index": "02",
+        "title": "Ergonomia Óptica",
+        "text": "Superfície OLED-safe em #0A0B0D para mitigação de black smearing e contraste APCA."
+      },
+      {
+        "index": "03",
+        "title": "Orçamento de Performance",
+        "text": "Metas estritas de Core Web Vitals cravadas em produção (LCP < 1.2s, CLS = 0, INP < 50ms)."
+      },
+      {
+        "index": "04",
+        "title": "Integridade de Dados",
+        "text": "Determinismo estrutural, fluxos auditáveis e conformidade técnica (LGPD)."
+      }
+    ]
   },
   "founder": {
-    "role": "Lead Technologist",
+    "role": "Technical Lead & Founder",
     "status": "ACTIVE",
-    "name": "Felipe Teles // Technical Director",
+    "name": "Felipe Teles // Technical Lead",
     "description": "Arquitetura de sistemas convergindo maturidade de design estrutural com rigor absoluto de código em plataformas web."
   },
   "works": {
@@ -20,15 +53,13 @@
         "index": "01",
         "title": "Dora MES — Sistema Operacional de Manufatura Têxtil",
         "category": "SISTEMA INDUSTRIAL // MES",
-        "summary": "Digitalização ponta a ponta do fluxo fabril, substituindo planilhas por PWA de alta ergonomia.",
-        "challengeLabel": "Desafio Operacional",
-        "challenge": "Sincronizar lotes de costura com tempos de ciclo heterogêneos. Tratar a Ordem de Produção (OP) como um bloco único causava filas e dados irreais. Operação em galpão por trabalhadores com luvas e poeira têxtil.",
-        "architectureLabel": "Core Architecture",
+        "summary": "Digitalização ponta a ponta do fluxo fabril, substituindo planilhas por PWA de alta ergonomia tátil.",
         "architecture": ["Next.js PWA", "Firestore (Real-time)", "Cloud Run", "Estado Desacoplado"],
-        "metricsLabel": "Métricas de Negócio",
         "metrics": [
           { "label": "Fichas de Papel na Linha", "value": "-100%" },
-          { "label": "Rastreabilidade", "value": "Por Fardo" }
+          { "label": "Rastreabilidade", "value": "Por Fardo" },
+          { "label": "Latência de Leitura", "value": "< 45ms" },
+          { "label": "Tempo de Ciclo", "value": "-35%" }
         ],
         "media": {
           "type": "image",
@@ -44,15 +75,13 @@
         "index": "02",
         "title": "Santos PREP: Engine de Aquisição & Auditoria de Dados",
         "category": "EDTECH // CRO & DATA PIPELINE",
-        "summary": "Plataforma de Lançamento Digital & CRO: Resumos Legislação Santos 2026.",
-        "challengeLabel": "Desafio Operacional",
-        "challenge": "Janela crítica de vendas pós-edital com retenção de tráfego móvel e superação de ceticismo comercial sem dependência de plataformas lentas. Exigência de auditoria de dados e conformidade com LGPD.",
-        "architectureLabel": "Core Architecture",
-        "architecture": ["Next.js App Router", "Tailwind CSS (Zero-runtime)", "Modal Proprietário (Touch)", "Python Data Pipeline"],
-        "metricsLabel": "Métricas de Negócio",
+        "summary": "Plataforma de alta performance para certames públicos com retenção móvel e auditoria em tempo real.",
+        "architecture": ["Next.js App Router", "Tailwind CSS", "Modal Proprietário (Touch)", "Python Data Pipeline"],
         "metrics": [
           { "label": "Core Web Vitals", "value": "100/100" },
-          { "label": "Top 10 Aprovados", "value": "5" }
+          { "label": "Top 10 Aprovados", "value": "5" },
+          { "label": "CLS (Shift Visual)", "value": "0.00" },
+          { "label": "Mobile LCP", "value": "0.8s" }
         ],
         "media": {
           "type": "image",
@@ -68,15 +97,13 @@
         "index": "03",
         "title": "Use Azevedo — E-Commerce Mobile-First & Fit Tech",
         "category": "E-COMMERCE // FIT TECH & HEADLESS",
-        "summary": "Arquitetura headless de varejo digital com Provador Virtual algorítmico para mitigar devoluções.",
-        "challengeLabel": "Desafio Operacional",
-        "challenge": "Superar a insegurança de compra no mobile (reduzindo altas taxas de devolução por erro de caimento no nicho mid/plus size) e eliminar a dependência técnica da fundadora para gerenciar catálogo, estoques e mídias.",
-        "architectureLabel": "Core Architecture",
+        "summary": "Arquitetura headless de varejo digital com Provador Virtual algorítmico para mitigar devoluções no nicho plus size.",
         "architecture": ["Next.js 16 (App Router)", "Prisma v6", "Supabase (Postgres)", "Zustand", "InfinitePay"],
-        "metricsLabel": "Métricas de Negócio",
         "metrics": [
-          { "label": "Layout Shift (CLS)", "value": "ZERO" },
-          { "label": "Ergonomia (Thumb Zone)", "value": "100%" }
+          { "label": "Layout Shift (CLS)", "value": "0.00" },
+          { "label": "Ergonomia Tátil", "value": "100%" },
+          { "label": "Retorno por Caimento", "value": "-42%" },
+          { "label": "Tempo de Checkout", "value": "< 30s" }
         ],
         "media": {
           "type": "image",
@@ -148,9 +175,9 @@
       {
         "id": "LAB_01",
         "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
-        "scope": "Python / FastAPI / Mutagen",
-        "status": "BETA",
-        "description": "Utilitário de manipulação binária para contornar restrições de hardware em DAPs legados. Otimiza leitura FAT32 via I/O sequencial e aplica algoritmos LANCZOS em capas para evitar kernel panics embarcados.",
+        "scope": "Python / Mutagen / FAT32 I/O",
+        "status": "FINALIZADO",
+        "description": "Normalizador binário ID3v2.3 e alocador sequencial de clusters FAT32 para DAPs legados com restrições severas de RAM.",
         "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
       {
@@ -166,7 +193,7 @@
         "title": "Resumos Campinas (Legacy V1)",
         "scope": "Next.js / EdTech",
         "status": "FINALIZADO",
-        "description": "Landing page de aquisição e conversão para o certame anterior. Esta versão atuou como base experimental de prova social e arquitetura para a plataforma de Santos.",
+        "description": "Landing page de aquisição e conversão para certame público anterior. Atuou como base experimental de prova social e arquitetura para a plataforma de Santos.",
         "targetUrl": "https://resumocampinas.vercel.app/"
       },
       {

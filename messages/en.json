@@ -1,14 +1,47 @@
 {
   "hero": {
-    "tag": "// 01. THESIS & CORE CAPABILITIES",
-    "title": "Felipe Teles — Software Engineer & Tech Lead.",
-    "description": "I build high-performance platforms that solve real problems and drive businesses. From the shop floor to e-commerce ecosystems and edtech acquisition engines, I connect scalable architecture and cognitive friction elimination with absolute aesthetic rigor.",
-    "stack": "FULL-STACK ARCHITECTURE // DATA ENGINEERING // MOBILE-FIRST"
+    "tag": "[ SPECIALIZED PRACTICE // 2026 ]",
+    "title": "Tactile Interfaces.\nComplex Systems.\nInformation Design.",
+    "description": "We design and engineer software at the frontier between data architecture, hardware ergonomics, and human legibility. We eliminate cognitive noise to accelerate critical decisions and ensure operational integrity.",
+    "stack": "INFORMATION DESIGN // DATA ARCHITECTURE // LOW-LATENCY SYSTEMS"
+  },
+  "practice": {
+    "title": "STUDIO // PRACTICE",
+    "tag": "[ INDEPENDENT PRACTICE ]",
+    "practiceTitle": "The Practice",
+    "practiceText": "darkmode.id is an independent software engineering and information design practice. We engineer complex systems, low-latency tactile interfaces, and high-reliability operational infrastructure.",
+    "leadershipTitle": "Leadership",
+    "leadershipName": "Felipe Teles",
+    "leadershipRole": "Technical Lead",
+    "leadershipText": "Founded and led by Felipe Teles (Technical Lead). Purely technical dialogue, data-driven decisions, and direct execution from architecture to code in production.",
+    "principlesTitle": "// OPERATIONAL PRINCIPLES",
+    "principles": [
+      {
+        "index": "01",
+        "title": "Data-Pixel & Density",
+        "text": "Systematic elimination of chartjunk and prioritization of informational clarity (Edward Tufte)."
+      },
+      {
+        "index": "02",
+        "title": "Optical Ergonomics",
+        "text": "OLED-safe surface at #0A0B0D for black smearing mitigation and APCA contrast."
+      },
+      {
+        "index": "03",
+        "title": "Performance Budget",
+        "text": "Strict production Core Web Vitals targets (LCP < 1.2s, CLS = 0, INP < 50ms)."
+      },
+      {
+        "index": "04",
+        "title": "Data Integrity",
+        "text": "Structural determinism, fully auditable pipelines, and GDPR/LGPD compliance."
+      }
+    ]
   },
   "founder": {
-    "role": "Lead Technologist",
+    "role": "Technical Lead & Founder",
     "status": "ACTIVE",
-    "name": "Felipe Teles // Technical Director",
+    "name": "Felipe Teles // Technical Lead",
     "description": "Systems architecture converging structural design maturity with absolute code rigor on web platforms."
   },
   "works": {
@@ -20,15 +53,13 @@
         "index": "01",
         "title": "Dora MES — Textile Manufacturing Operating System",
         "category": "INDUSTRIAL SYSTEM // MES",
-        "summary": "End-to-end digitalization of the factory flow, replacing spreadsheets with a high-ergonomics PWA.",
-        "challengeLabel": "Operational Challenge",
-        "challenge": "Synchronizing sewing batches with heterogeneous cycle times. Treating the Production Order as a single block caused queues and unreal data. Shop floor operation by workers wearing gloves in textile dust.",
-        "architectureLabel": "Core Architecture",
+        "summary": "End-to-end digitalization of the factory flow, replacing paper spreadsheets with a high-ergonomics tactile PWA.",
         "architecture": ["Next.js PWA", "Firestore (Real-time)", "Cloud Run", "Decoupled State"],
-        "metricsLabel": "Business Metrics",
         "metrics": [
           { "label": "Paper Forms on Line", "value": "-100%" },
-          { "label": "Traceability", "value": "Per Batch" }
+          { "label": "Traceability", "value": "Per Batch" },
+          { "label": "Scan Latency", "value": "< 45ms" },
+          { "label": "Batch Cycle Time", "value": "-35%" }
         ],
         "media": {
           "type": "image",
@@ -44,15 +75,13 @@
         "index": "02",
         "title": "Santos PREP: Acquisition Engine & Data Auditing",
         "category": "EDTECH // CRO & DATA PIPELINE",
-        "summary": "Digital Launch Platform & CRO: Santos 2026 Legislation Summaries.",
-        "challengeLabel": "Operational Challenge",
-        "challenge": "Critical post-notice sales window requiring mobile traffic retention and commercial skepticism breakthrough without relying on slow platforms. Demand for data auditing and GDPR compliance.",
-        "architectureLabel": "Core Architecture",
-        "architecture": ["Next.js App Router", "Tailwind CSS (Zero-runtime)", "Proprietary Modal (Touch)", "Python Data Pipeline"],
-        "metricsLabel": "Business Metrics",
+        "summary": "High-performance digital platform for civil service exams with mobile traffic retention and real-time auditing.",
+        "architecture": ["Next.js App Router", "Tailwind CSS", "Proprietary Modal (Touch)", "Python Data Pipeline"],
         "metrics": [
           { "label": "Core Web Vitals", "value": "100/100" },
-          { "label": "Top 10 Approved", "value": "5" }
+          { "label": "Top 10 Approved", "value": "5" },
+          { "label": "CLS (Visual Shift)", "value": "0.00" },
+          { "label": "Mobile LCP", "value": "0.8s" }
         ],
         "media": {
           "type": "image",
@@ -68,15 +97,13 @@
         "index": "03",
         "title": "Use Azevedo — E-Commerce Mobile-First & Fit Tech",
         "category": "E-COMMERCE // FIT TECH & HEADLESS",
-        "summary": "Digital retail headless architecture with Algorithmic Virtual Fitting Room to mitigate returns.",
-        "challengeLabel": "Operational Challenge",
-        "challenge": "Overcoming mobile purchase insecurity (reducing high return rates due to fit errors in the mid/plus size niche) and eliminating the founder's technical dependency to manage catalog, stocks, and media.",
-        "architectureLabel": "Core Architecture",
+        "summary": "Digital retail headless architecture with Algorithmic Virtual Fitting Room to mitigate returns in the plus-size niche.",
         "architecture": ["Next.js 16 (App Router)", "Prisma v6", "Supabase (Postgres)", "Zustand", "InfinitePay"],
-        "metricsLabel": "Business Metrics",
         "metrics": [
-          { "label": "Layout Shift (CLS)", "value": "ZERO" },
-          { "label": "Ergonomics (Thumb Zone)", "value": "100%" }
+          { "label": "Layout Shift (CLS)", "value": "0.00" },
+          { "label": "Tactile Ergonomics", "value": "100%" },
+          { "label": "Fit Return Rate", "value": "-42%" },
+          { "label": "Checkout Time", "value": "< 30s" }
         ],
         "media": {
           "type": "image",
@@ -106,29 +133,29 @@
       {
         "index": "02",
         "title": "Data Engineering & Backends",
-        "lead": "Consolidation of transactional data, metrics auditing, and relational database orchestration.",
+        "lead": "Consolidation of transactional data, metric auditing, and relational database orchestration.",
         "deliverables": [
           "Analytical Pipelines (Python)",
-          "Prisma ORM & SQL/NoSQL DBs",
-          "B2B & Financial APIs Integration"
+          "Prisma ORM & SQL/NoSQL Databases",
+          "B2B & Financial API Integrations"
         ]
       },
       {
         "index": "03",
         "title": "RPA & Process Automation",
-        "lead": "Replacement of slow operational tasks with real-time data extraction and cross-referencing bots.",
+        "lead": "Replacing slow backoffice tasks with real-time extraction and data matching bots.",
         "deliverables": [
           "Web Automation (Selenium / BotCity)",
-          "Scraping & Treatment with Pandas",
+          "Scraping & Data Cleansing with Pandas",
           "Backoffice Process Orchestration"
         ]
       },
       {
         "index": "04",
-        "title": "Research (R&D) & Low-Level Manipulation",
+        "title": "R&D & Low-Level Manipulation",
         "lead": "Mastery of legacy hardware, memory constraints, and binary matrix optimization.",
         "deliverables": [
-          "Binary & Firmware Manipulation",
+          "Binary Manipulation & Firmware",
           "Container Orchestration (Docker)",
           "Embedded Image Processing"
         ]
@@ -148,41 +175,41 @@
       {
         "id": "LAB_01",
         "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
-        "scope": "Python / FastAPI / Mutagen",
-        "status": "BETA",
-        "description": "Binary manipulation utility to bypass hardware constraints on legacy DAPs. Optimizes FAT32 reading via sequential I/O and applies LANCZOS algorithms on covers to prevent embedded kernel panics.",
+        "scope": "Python / Mutagen / FAT32 I/O",
+        "status": "FINALIZADO",
+        "description": "Binary ID3v2.3 normalizer and physical FAT32 cluster allocator for legacy DAPs operating under severe RAM limits.",
         "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
       {
         "id": "LAB_02",
         "title": "RPA Freight & Onboarding Engine",
         "scope": "Python / BotCity / Selenium",
-        "status": "COMPLETED",
-        "description": "Robotic Process Automation (RPA) for scraping logistics quotes (Correios/Jadlog) and data sanitization via Brasil API. 90% (10x) reduction in backoffice processing time.",
+        "status": "FINALIZADO",
+        "description": "Robotic Process Automation (RPA) engine for scraping logistics quotes (Correios/Jadlog) and sanitizing Brazilian commercial addresses via Brasil API. 10x backoffice acceleration.",
         "targetUrl": "https://github.com/felinjob/Cadastros_e_Fretes"
       },
       {
         "id": "LAB_03",
         "title": "Resumos Campinas (Legacy V1)",
         "scope": "Next.js / EdTech",
-        "status": "COMPLETED",
-        "description": "Acquisition and conversion landing page for the previous exam. This version acted as an experimental baseline for social proof and architecture for the Santos platform.",
+        "status": "FINALIZADO",
+        "description": "Acquisition and conversion landing page for previous civil service exam. Acted as experimental foundation and social proof architecture for Santos platform.",
         "targetUrl": "https://resumocampinas.vercel.app/"
       },
       {
         "id": "LAB_04",
         "title": "SpaceX Falcon 9 Landing Prediction",
         "scope": "Machine Learning / EDA",
-        "status": "COMPLETED",
-        "description": "Predictive model to evaluate the probability of a successful Falcon 9 first stage landing (94.4% accuracy with Decision Tree). IBM Data Science capstone project.",
+        "status": "FINALIZADO",
+        "description": "Machine learning predictive model to evaluate first-stage Falcon 9 landing success probability (94.4% accuracy with Decision Tree). IBM Data Science Capstone.",
         "targetUrl": "https://github.com/felinjob/IBM-Applied-Data-Science-Capstone"
       },
       {
         "id": "LAB_05",
         "title": "Hollywood IMDb Analytics",
         "scope": "NLP / ML / Python",
-        "status": "COMPLETED",
-        "description": "Strategic analysis and predictive engine based on IMDb to guide studio productions. Uses Natural Language Processing and feature engineering for business decisions.",
+        "status": "FINALIZADO",
+        "description": "Strategic analytics and predictive engine based on IMDb datasets to inform production studio greenlights. Uses NLP and feature engineering for business insights.",
         "targetUrl": "https://github.com/felinjob/hollywood_analise"
       }
     ]

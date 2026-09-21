@@ -35,29 +35,40 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'darkmode.id // Creative Technology Studio',
-  description: 'Studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
+  title: 'darkmode.id // Information Design & Software Engineering',
+  description: 'Prática técnica independente de engenharia de software e design da informação. Interfaces táteis de baixa latência, arquitetura de dados e sistemas de alto desempenho.',
   metadataBase: new URL('https://darkmode.id'),
+  keywords: [
+    'Information Design',
+    'Software Engineering',
+    'Complex Systems',
+    'MES Industrial',
+    'Next.js',
+    'Tactile Interfaces',
+    'Data Architecture',
+    'OLED Ergonomics',
+    'Felipe Teles',
+  ],
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://darkmode.id',
-    title: 'darkmode.id // Creative Technology Studio',
-    description: 'Studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
+    title: 'darkmode.id // Information Design & Software Engineering',
+    description: 'Prática técnica independente de engenharia de software e design da informação. Interfaces táteis de baixa latência, arquitetura de dados e sistemas de alto desempenho.',
     siteName: 'darkmode.id',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'darkmode.id - Creative Technology Studio',
+        alt: 'darkmode.id // Information Design & Software Engineering',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'darkmode.id // Creative Technology Studio',
-    description: 'Studio de engenharia de software e tecnologia criativa. Sistemas web de alto desempenho, arquiteturas escaláveis e interfaces táteis sob rigor visual.',
+    title: 'darkmode.id // Information Design & Software Engineering',
+    description: 'Prática técnica independente de engenharia de software e design da informação. Interfaces táteis de baixa latência, arquitetura de dados e sistemas de alto desempenho.',
     images: ['/og-image.png'],
   },
   robots: {

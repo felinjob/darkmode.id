@@ -98,4 +98,11 @@
     padding: 0 !important;
     color: var(--accent-focus) !important;
   }
+
+  /* Rigor Tipográfico: Numerais tabulares para métricas, identificadores e latências */
+  .tabular-nums,
+  [data-tabular-nums="true"],
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
 }

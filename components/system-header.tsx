@@ -17,11 +17,21 @@ export function SystemHeader({ locale = 'pt' }: SystemHeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[var(--border-subtle)] bg-[var(--bg-base)]/90 backdrop-blur-md px-4 md:px-8 lg:px-12 xl:px-16 py-3">
-      {/* Linha Principal: Logo + Controles + Status */}
+      {/* Linha Principal: Logo + Identidade Institucional + Controles + Status */}
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
-        <DynamicLogo />
+        <div className="flex items-center gap-3 md:gap-4">
+          <DynamicLogo />
+          <span className="hidden md:inline-block font-mono text-[10px] lg:text-[11px] uppercase tracking-widest text-[var(--text-muted)] border-l border-[var(--border-subtle)] pl-3 md:pl-4 select-none">
+            // INFORMATION DESIGN & SOFTWARE ENGINEERING
+          </span>
+        </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Indicador de Status do Sistema */}
+          <div className="hidden sm:flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] border border-[var(--border-subtle)] px-2.5 py-1 bg-[var(--bg-surface)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="tabular-nums">SYSTEM: OPERATIONAL</span>
+          </div>
           
           <div className="flex items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-2 py-1">
             {/* Language Toggle */}
