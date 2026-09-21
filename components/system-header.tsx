@@ -27,12 +27,7 @@ export function SystemHeader({ locale = 'pt' }: SystemHeaderProps) {
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4">
-          {/* Indicador de Status do Sistema */}
-          <div className="hidden sm:flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)] border border-[var(--border-subtle)] px-2.5 py-1 bg-[var(--bg-surface)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="tabular-nums">SYSTEM: OPERATIONAL</span>
-          </div>
-          
+
           <div className="flex items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-2 py-1">
             {/* Language Toggle */}
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase font-bold tracking-widest text-[var(--text-secondary)] border-r border-[var(--border-subtle)] pr-2 mr-1">
@@ -74,7 +69,7 @@ export function SystemHeader({ locale = 'pt' }: SystemHeaderProps) {
               
               {lightModeError && (
                 <span className="absolute right-0 top-8 whitespace-nowrap bg-red-600 text-white font-mono font-bold text-[10px] px-2 py-1 shadow-lg animate-pulse border border-red-500 z-50">
-                  [ ERROR: APENAS DARK MODE POR AQUI ]
+                  [ ERROR: {locale === 'en' ? 'DARK MODE ONLY' : 'APENAS DARK MODE POR AQUI'} ]
                 </span>
               )}
             </button>

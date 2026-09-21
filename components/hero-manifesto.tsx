@@ -9,7 +9,7 @@ interface HeroManifestoProps {
 
 export function HeroManifesto({ dict }: HeroManifestoProps) {
   return (
-    <div className="flex flex-col justify-start py-6 md:py-12 space-y-6 w-full max-w-5xl">
+    <div className="flex flex-col justify-start py-6 md:py-12 space-y-6 md:col-span-7 lg:col-span-8">
       <div className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-[var(--accent-focus)] font-bold">
         {dict.tag}
       </div>

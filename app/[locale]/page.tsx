@@ -1,6 +1,6 @@
 import { SystemHeader } from '@/components/system-header';
 import { HeroManifesto } from '@/components/hero-manifesto';
-import { StudioPractice } from '@/components/studio-practice';
+import { FounderModule } from '@/components/founder-module';
 import { SelectedWorks } from '@/components/selected-works';
 import { LabArchive } from '@/components/lab-archive';
 import { CapabilitiesGrid } from '@/components/capabilities-grid';
@@ -19,13 +19,11 @@ export default async function Home({ params }: PageProps) {
       <SystemHeader locale={locale} />
       
       <main className="flex flex-col w-full px-4 md:px-8 lg:px-12 xl:px-16">
-        {/* 01. Hero Manifesto: Ponto Focal Brutalista & Teses Centrais */}
-        <section className="pt-4 md:pt-8 pb-12 md:pb-20 border-b border-[var(--border-subtle)] w-full">
+        {/* Sprint 03: Hero & Founder Module */}
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-6 pt-4 md:pt-8 pb-12 md:pb-20 border-b border-[var(--border-subtle)] w-full">
           <HeroManifesto dict={dict.hero} />
+          <FounderModule dict={dict.founder} />
         </section>
-
-        {/* 02. Studio // Practice: Prática Independente, Liderança Técnica & Princípios Operacionais */}
-        <StudioPractice dict={dict.practice} />
 
         {/* 03. Vitrine Nobre: Selected Works com Dimensão de Information Challenge */}
         <section id="works" className="w-full">

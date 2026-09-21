@@ -10,7 +10,6 @@ export function SystemFooter() {
       <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-widest text-center md:text-left flex flex-col gap-1 tabular-nums">
           <span>© {new Date().getFullYear()} darkmode.id // Felipe Teles. Todos os direitos reservados.</span>
-          <span className="text-[10px] text-[var(--text-secondary)]">Information Design & Software Engineering // Direct Execution</span>
         </div>
         <div className="flex items-center gap-6 font-mono text-[10px] text-[var(--text-primary)] uppercase tracking-widest">
           <a 

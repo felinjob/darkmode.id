@@ -29,12 +29,7 @@ export function BottomDock() {
         aria-label="Navegação Tátil Inferior"
       >
         <div className="flex items-center space-x-1 px-2">
-          <button 
-            onClick={() => scrollTo('practice')}
-            className="px-3 md:px-4 h-[40px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-2xl transition-colors"
-          >
-            Practice
-          </button>
+
           <button 
             onClick={() => scrollTo('works')}
             className="px-3 md:px-4 h-[40px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-2xl transition-colors"
