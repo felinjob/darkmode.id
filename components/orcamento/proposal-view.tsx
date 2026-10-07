@@ -88,26 +88,44 @@ export function ProposalView() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Seletor de Tema Scoped (OLED vs Modo Atelier) com destaque visual e micro-animações */}
             <button
               onClick={toggleTheme}
-              aria-label={theme === 'oled' ? 'Ativar modo Atelier (claro)' : 'Ativar modo OLED (escuro)'}
-              title={theme === 'oled' ? 'Alternar para o modo Atelier (claro)' : 'Alternar para o modo OLED (escuro)'}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] font-mono text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              aria-label={theme === 'oled' ? 'Ativar modo Claro (Atelier)' : 'Ativar modo Escuro (OLED)'}
+              title={theme === 'oled' ? 'Alternar para o modo Claro (Atelier Boutique Nê)' : 'Alternar para o modo Escuro (OLED)'}
+              className={`relative group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg font-mono text-xs font-semibold tracking-tight transition-all duration-300 ${
+                theme === 'oled'
+                  ? 'border border-amber-400/40 bg-gradient-to-r from-amber-500/15 via-rose-500/10 to-amber-500/15 hover:from-amber-500/25 hover:to-rose-500/20 text-amber-200 hover:text-amber-100 animate-theme-glow shadow-[0_0_12px_rgba(245,158,11,0.2)]'
+                  : 'border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-100 shadow-[0_2px_10px_rgba(0,0,0,0.18)]'
+              }`}
             >
-              {theme === 'oled' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-              <span className="hidden sm:inline">{theme === 'oled' ? 'Modo Atelier' : 'Modo OLED'}</span>
+              {theme === 'oled' ? (
+                <>
+                  <span className="relative flex items-center justify-center">
+                    <Sun className="w-3.5 h-3.5 text-amber-300 animate-sun-spin group-hover:scale-110 transition-transform" />
+                  </span>
+                  <span>Modo Claro</span>
+                </>
+              ) : (
+                <>
+                  <span className="relative flex items-center justify-center">
+                    <Moon className="w-3.5 h-3.5 text-indigo-300 animate-moon-sway group-hover:scale-110 transition-transform" />
+                  </span>
+                  <span>Modo Escuro</span>
+                </>
+              )}
             </button>
 
             <button
               onClick={handleCopyLink}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] font-mono text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] font-mono text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
               title="Copiar link direto desta proposta"
             >
               {copiedLink ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-[var(--signal-state)]" />
-                  <span className="text-[var(--signal-state)]">Link Copiado</span>
+                  <span className="text-[var(--signal-state)] sm:inline">Copiado</span>
                 </>
               ) : (
                 <>
@@ -121,18 +139,17 @@ export function ProposalView() {
               href={PDF_URL}
               download={PDF_FILENAME}
               title="Baixar a proposta em PDF"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] font-mono text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] font-mono text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
-              <span className="sm:hidden">PDF</span>
-              <span className="hidden sm:inline">Baixar PDF</span>
+              <span>PDF</span>
             </a>
 
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[var(--accent-focus)] hover:brightness-110 font-mono text-xs font-semibold text-white tracking-wider transition-all shadow-[0_0_15px_rgba(255,85,0,0.25)]"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg bg-[var(--accent-focus)] hover:brightness-110 font-mono text-xs font-semibold text-white tracking-wider transition-all shadow-[0_0_15px_rgba(255,85,0,0.25)]"
             >
               <MessageCircle className="w-3.5 h-3.5" />
               <span>Aprovar</span>
