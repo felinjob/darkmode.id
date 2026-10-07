@@ -42,6 +42,32 @@
     --text-secondary: #8F96A3;
     /* Cinza atenuado para referências de sistema */
     --text-muted: #717986;
+
+    /* Tom rosé da marca Boutique Nê (usado apenas na página de proposta) */
+    --rose: #E5A8A0;
+    --rose-wash: rgba(30, 22, 22, 0.4);
+  }
+
+  /* ----------------------------------------------------
+     MODO ATELIER (LIGHT) — escopado à rota /orcamento-boutique-ne
+     Ativado via data-theme="atelier" no <html>; o resto do
+     darkmode.id permanece OLED. Acentos escurecidos para manter
+     contraste AA sobre fundo claro.
+     ---------------------------------------------------- */
+  html[data-theme="atelier"] {
+    color-scheme: light;
+    --bg-base: #F7F5F2;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #F0ECE7;
+    --border-subtle: #E6E1DA;
+    --border-strong: #CFC7BD;
+    --accent-focus: #C43E00;
+    --signal-state: #0B7A48;
+    --text-primary: #18191B;
+    --text-secondary: #4B5260;
+    --text-muted: #6B7280;
+    --rose: #A8554A;
+    --rose-wash: #FBF1EE;
   }
 
   * {

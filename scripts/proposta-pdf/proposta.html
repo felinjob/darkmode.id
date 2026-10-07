@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Proposta Comercial &amp; Especificação de Projeto — Boutique Nê</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm 16mm;
+    @bottom-left {
+      content: "Boutique Nê  ·  Proposta Comercial & Especificação de Projeto  ·  Felipe Teles";
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 7.5pt;
+      color: #8B8F97;
+    }
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 7.5pt;
+      color: #8B8F97;
+    }
+  }
+
+  :root {
+    --ink: #18191B;
+    --ink-soft: #4B5260;
+    --ink-faint: #6B7280;
+    --rule: #E3DDD5;
+    --rose: #B0675B;
+    --rose-soft: #F7ECE8;
+    --paper-soft: #FAF8F5;
+    --ok: #0B7A48;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.5;
+    color: var(--ink);
+    background: #fff;
+  }
+
+  h1, h2, h3, h4 { font-family: Georgia, "Times New Roman", serif; color: var(--ink); margin: 0; }
+  h2 { break-after: avoid; }
+  h3, h4 { break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  strong { font-weight: 600; }
+  ul { margin: 0 0 6pt; padding-left: 14pt; }
+  li { margin-bottom: 3pt; }
+  .mono { font-family: Consolas, "Courier New", monospace; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Papel timbrado ---------- */
+  .letterhead {
+    display: flex;
+    align-items: center;
+    gap: 14pt;
+    padding-bottom: 12pt;
+    border-bottom: 1.5pt solid var(--rose);
+  }
+  .letterhead img { width: 21mm; height: 21mm; border-radius: 3mm; display: block; }
+  .letterhead .kicker {
+    font-size: 7.5pt; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--rose); font-weight: 600; margin-bottom: 3pt;
+  }
+  .letterhead h1 { font-size: 19pt; line-height: 1.15; font-weight: 700; }
+  .letterhead .sub { font-size: 9.5pt; color: var(--ink-soft); margin-top: 3pt; }
+
+  .meta {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin-top: 12pt; border: 0.75pt solid var(--rule); border-radius: 3mm;
+    background: var(--paper-soft); break-inside: avoid;
+  }
+  .meta div { padding: 8pt 10pt; border-right: 0.75pt solid var(--rule); border-bottom: 0.75pt solid var(--rule); }
+  .meta div:nth-child(3n) { border-right: 0; }
+  .meta div:nth-last-child(-n+3) { border-bottom: 0; }
+  .meta .label { font-size: 6.8pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 2pt; }
+  .meta .value { font-size: 9.6pt; font-weight: 600; }
+  .meta .value small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 8pt; }
+
+  /* ---------- Seções ---------- */
+  section { margin-top: 18pt; }
+  .sec-head { display: flex; align-items: baseline; gap: 8pt; border-bottom: 0.75pt solid var(--rule); padding-bottom: 4pt; margin-bottom: 9pt; break-after: avoid; }
+  .sec-num { font-family: Consolas, monospace; color: var(--rose); font-size: 9pt; font-weight: 700; }
+  .sec-head h2 { font-size: 14pt; font-weight: 700; }
+
+  h3 { font-size: 11pt; margin: 11pt 0 5pt; }
+  h4 { font-size: 10pt; margin: 9pt 0 3pt; font-weight: 700; }
+  .sub-label { font-size: 8pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 12pt 0 4pt; font-weight: 600; break-after: avoid; }
+
+  .callout {
+    background: var(--rose-soft); border-left: 2.5pt solid var(--rose);
+    padding: 7pt 10pt; border-radius: 0 2mm 2mm 0; margin: 8pt 0; break-inside: avoid;
+  }
+
+  /* ---------- Pilares ---------- */
+  .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; margin-top: 8pt; }
+  .pillar { border: 0.75pt solid var(--rule); border-radius: 3mm; padding: 9pt 10pt; break-inside: avoid; }
+  .pillar .n { font-family: Consolas, monospace; font-size: 8pt; color: var(--rose); font-weight: 700; }
+  .pillar h4 { margin: 2pt 0 3pt; font-size: 10pt; }
+  .pillar p { margin: 0; font-size: 9pt; color: var(--ink-soft); }
+
+  /* ---------- Tabelas ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 8pt; font-size: 9pt; }
+  thead th {
+    text-align: left; font-size: 7.5pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); background: var(--paper-soft);
+    border-top: 0.75pt solid var(--rule); border-bottom: 0.75pt solid var(--rule);
+    padding: 5pt 7pt; font-weight: 600;
+  }
+  tbody td { padding: 5.5pt 7pt; border-bottom: 0.75pt solid var(--rule); vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.k { font-weight: 600; }
+  td.num { font-family: Consolas, monospace; white-space: nowrap; font-weight: 700; }
+  .ok { color: var(--ok); }
+  .rose { color: var(--rose); font-weight: 600; }
+
+  /* ---------- Investimento ---------- */
+  .total {
+    display: flex; justify-content: space-between; align-items: center; gap: 12pt;
+    border: 1pt solid var(--rose); border-radius: 3mm; padding: 11pt 14pt; margin: 6pt 0 10pt;
+    background: var(--rose-soft); break-inside: avoid;
+  }
+  .total .label { font-size: 7.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+  .total .amount { font-family: Georgia, serif; font-size: 25pt; font-weight: 700; line-height: 1.1; }
+  .total .note { font-size: 8.5pt; color: var(--ok); text-align: right; max-width: 55mm; }
+
+  /* ---------- Cronograma ---------- */
+  .step { display: grid; grid-template-columns: 22mm 1fr; gap: 10pt; padding: 8pt 0; border-bottom: 0.75pt solid var(--rule); break-inside: avoid; }
+  .step:last-child { border-bottom: 0; }
+  .step .when { font-family: Consolas, monospace; font-size: 8.5pt; font-weight: 700; color: var(--rose); }
+  .step .when small { display: block; color: var(--ink-faint); font-weight: 400; margin-top: 2pt; }
+  .step h4 { margin: 0 0 2pt; }
+  .step p { margin: 0; color: var(--ink-soft); }
+
+  /* ---------- Aprovação ---------- */
+  .approval { margin-top: 20pt; border: 0.75pt solid var(--rule); border-radius: 3mm; padding: 12pt 14pt; break-inside: avoid; background: var(--paper-soft); }
+  .approval h3 { margin-top: 0; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24pt; margin-top: 30pt; }
+  .sign div { border-top: 0.75pt solid var(--ink); padding-top: 4pt; font-size: 8.5pt; color: var(--ink-soft); }
+  .sign strong { display: block; color: var(--ink); font-size: 9.5pt; }
+  .contact { margin-top: 12pt; font-size: 8.5pt; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<!-- ============ TIMBRADO ============ -->
+<header class="letterhead">
+  <img src="../../public/boutique-ne-logo.jpg" alt="Boutique Nê" />
+  <div>
+    <div class="kicker">Proposta Comercial &amp; Especificação de Projeto</div>
+    <h1>Loja Virtual Própria &amp; Painel Administrativo Sob Medida</h1>
+    <div class="sub">Preparado para a <strong>Boutique Nê</strong></div>
+  </div>
+</header>
+
+<div class="meta">
+  <div><div class="label">Cliente</div><div class="value">Boutique Nê</div></div>
+  <div><div class="label">Desenvolvedor Responsável</div><div class="value">Felipe Teles<small>Technical Lead</small></div></div>
+  <div><div class="label">Data</div><div class="value">Outubro de 2026</div></div>
+  <div><div class="label">Validade da Proposta</div><div class="value">10 dias corridos</div></div>
+  <div><div class="label">Investimento Total</div><div class="value mono">R$ 1.900,00</div></div>
+  <div><div class="label">Prazo Estimado</div><div class="value">20 a 25 dias úteis</div></div>
+</div>
+
+<!-- ============ 1 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>Visão Geral: Os 4 Pilares da Sua Loja Própria</h2></div>
+  <p>Esta proposta apresenta a criação de uma <strong>loja virtual exclusiva e independente</strong> para a <strong>Boutique Nê</strong>, acompanhada de um <strong>painel de gestão intuitivo</strong> para o controle total do seu negócio.</p>
+  <p>Diferente de plataformas prontas de mercado (como Nuvemshop ou Shopify), que funcionam como um “aluguel digital” onde a lojista paga mensalidades perpétuas e perde uma porcentagem sobre cada venda, a Boutique Nê terá um <strong>ativo digital próprio</strong>:</p>
+
+  <div class="pillars">
+    <div class="pillar"><span class="n">01</span><h4>Zero Mensalidades e Zero Comissões por Venda</h4><p>Você não paga aluguel de plataforma para manter seu site no ar e nenhuma comissão sobre o faturamento. 100% do lucro das suas peças permanece com a Boutique Nê.</p></div>
+    <div class="pillar"><span class="n">02</span><h4>Propriedade Real do Ativo</h4><p>Todo o código-fonte, o banco de dados e as contas de servidores serão registrados no seu nome e da sua empresa. A loja é um patrimônio digital exclusivo da sua marca.</p></div>
+    <div class="pillar"><span class="n">03</span><h4>Design Exclusivo e Alta Velocidade (Mobile-First)</h4><p>O site não utiliza temas genéricos ou repetitivos. A estrutura é construída sob medida para a identidade da Boutique Nê, com carregamento instantâneo no celular, sem travar na rede móvel (4G/5G).</p></div>
+    <div class="pillar"><span class="n">04</span><h4>Flexibilidade Total de Operação</h4><p>As regras do site se adaptam à rotina real do seu negócio — desde a entrega rápida no Rio de Janeiro combinada diretamente pelo WhatsApp até o cálculo automático de frete para outros estados.</p></div>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>Personalização Visual &amp; Escopo Estrutural da Loja</h2></div>
+
+  <h3>Alinhamento de Design em Conjunto</h3>
+  <p>A identidade visual da loja virtual será desenvolvida a partir de uma conversa de alinhamento direto com você. Nessa etapa, definiremos:</p>
+  <ul>
+    <li>Aplicação do seu logotipo e paleta de cores oficial.</li>
+    <li>Seleção da tipografia (fontes) ideal para valorizar suas roupas e acessórios.</li>
+    <li>Estilo dos banners principais e acabamento dos botões da página.</li>
+  </ul>
+  <div class="callout">Essa flexibilidade garante que a Boutique Nê tenha um <strong>visual único e autêntico</strong>. Para manter a segurança de prazos e custos contratuais, a estrutura funcional das páginas segue o escopo fixo e detalhado a seguir.</div>
+
+  <h3>Escopo Estrutural das Páginas</h3>
+
+  <h4>1. Página Inicial (Home)</h4>
+  <ul>
+    <li><strong>Topo (Header):</strong> Logotipo em destaque, menu limpo de categorias, barra de busca rápida, ícone de sacola com contador de itens e botão de contato/ajuda.</li>
+    <li><strong>Área de Banners Principais:</strong> Espaço de destaque para divulgação de novas coleções, lançamentos ou ações sazonais.</li>
+    <li><strong>Vitrine de Produtos:</strong> Grade de produtos organizada e de fácil visualização no celular, com fotos limpas, nomes, preços e acesso rápido aos detalhes de cada peça.</li>
+    <li><strong>Filtros Rápidos:</strong> Navegação por categorias (ex: Roupas, Acessórios) e seletores rápidos por tamanho (grades até o 44 e Tamanho Único).</li>
+    <li><strong>Rodapé Institucional (Footer):</strong> Informações de contato, links para políticas da loja, formas de pagamento aceitas e selos de segurança.</li>
+  </ul>
+
+  <h4>2. Página do Produto</h4>
+  <ul>
+    <li><strong>Galeria Visual:</strong> Apresentação das fotos da peça em proporção vertical elegante (sem distorções ou cortes indevidos).</li>
+    <li><strong>Zoom no Tecido:</strong> Ferramenta de aproximação para destacar acabamentos, texturas e detalhes das peças.</li>
+    <li><strong>Seleção Dinâmica de Cores e Tamanhos:</strong> A cliente clica na cor desejada e visualiza instantaneamente apenas os tamanhos disponíveis para aquela variação.</li>
+    <li><strong>Suporte a Tamanho Único:</strong> Indicação clara e automática para acessórios e peças sem variação de numeração.</li>
+    <li><strong>Botão de Compra em Destaque:</strong> Ação direta e intuitiva para adicionar o produto à sacola.</li>
+  </ul>
+
+  <h4>3. Sacola de Compras &amp; Checkout</h4>
+  <ul>
+    <li><strong>Resumo Visual:</strong> Conferência rápida dos itens, cores, tamanhos e quantidades selecionadas.</li>
+    <li><strong>Campo de Cupom de Desconto:</strong> Aplicação e cálculo imediato de códigos promocionais.</li>
+    <li><strong>Simulador de Frete:</strong> Cálculo automático de prazo e valor para qualquer endereço do Brasil.</li>
+    <li><strong>Checkout Descomplicado:</strong> Fluxo de finalização rápido, sem cadastros longos ou burocráticos, focado em evitar abandono de carrinho.</li>
+  </ul>
+
+  <h4>4. Tela de Confirmação do Pedido</h4>
+  <ul>
+    <li>Resumo completo do pedido com número de identificação exclusivo.</li>
+    <li>Exibição do QR Code Pix e chave Copia e Cola (ou confirmação de pagamento no cartão).</li>
+    <li>Botão direto para abertura do WhatsApp da Boutique Nê para agendamento de entregas locais.</li>
+  </ul>
+</section>
+
+<!-- ============ 3 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Recursos Técnicos e Integrações Inclusas</h2></div>
+
+  <h3>A. Meio de Pagamento Seguro (Provedor à Sua Escolha)</h3>
+  <p>A loja será desenvolvida com uma arquitetura flexível, permitindo conectar o meio de pagamento que for mais vantajoso e conveniente para a Boutique Nê (como <strong>Mercado Pago</strong>, <strong>InfinitePay</strong>, entre outras opções do mercado), respeitando a aprovação de conta e a disponibilidade técnica do provedor escolhido:</p>
+  <ul>
+    <li><strong>Integração Direta via API:</strong> Conexão oficial e segura entre a sua loja virtual e a conta jurídica da Boutique Nê no provedor definido.</li>
+    <li><strong>Pix Instantâneo com Confirmação em Tempo Real:</strong> Geração automática de QR Code e código Copia e Cola na tela final, confirmando a compra na hora.</li>
+    <li><strong>Cartão de Crédito com Checkout Transparente:</strong> A cliente compra direto no site com total segurança e criptografia, sem ser redirecionada para links estranhos, contando com opções de parcelamento.</li>
+    <li><strong>Atualização Automática de Status:</strong> Assim que a cliente conclui o pagamento (no Pix ou no cartão), o sistema da loja atualiza o pedido para “Pago” instantaneamente no seu painel, liberando a peça para separação sem a necessidade de conferir comprovantes manuais no WhatsApp.</li>
+  </ul>
+
+  <h3>B. Logística e Fretes Híbridos</h3>
+  <ul>
+    <li><strong>Vendas Nacionais (Outros Estados):</strong> Integração com Correios (PAC e SEDEX) com cálculo automático de prazo e custo com base no CEP de entrega.</li>
+    <li><strong>Entregas no Rio de Janeiro (“A Combinar via WhatsApp”):</strong> Modalidade pensada para entregas expressas locais. A cliente paga apenas pelas roupas no checkout. Na tela final, um botão com 1 clique abre o WhatsApp da loja com o número do pedido, itens e endereço já preenchidos para combinar o envio por motoboy particular, Uber Flash ou 99 Entrega.</li>
+  </ul>
+
+  <h3>C. Painel Administrativo Próprio (Sua Central de Controle)</h3>
+  <p>Uma ferramenta administrativa protegida por senha, desenvolvida para ser operada com facilidade pelo celular ou computador:</p>
+  <ul>
+    <li><strong>Controle de Estoque Descomplicado:</strong> Cadastro flexível de peças, associando múltiplas cores e suas respectivas quantidades em cada tamanho (P, M, G ou numerações até 44).</li>
+    <li><strong>Upload de Fotos Resiliente em Segundo Plano:</strong> Tecnologia assíncrona que não trava o navegador do celular caso a conexão oscile durante o envio das fotos das peças.</li>
+    <li><strong>Módulo de Cupons de Desconto:</strong>
+      <ul>
+        <li>Criação de códigos promocionais personalizados (ex: <span class="mono">PRIMEIRACOMPRA</span>, <span class="mono">CLIENTEVIP</span>).</li>
+        <li>Descontos em porcentagem (ex: 10% OFF) ou valor fixo (ex: R$ 20,00 de desconto).</li>
+        <li>Regras opcionais: valor mínimo de pedido, limite de utilizações e data de validade.</li>
+      </ul>
+    </li>
+    <li><strong>Gestão de Pedidos em Tempo Real:</strong> Acompanhamento dos status (Pendente, Pago, Enviado), com opção de alteração manual para vendas finalizadas por fora.</li>
+  </ul>
+
+  <h3>D. Configuração do Ecossistema Tecnológico</h3>
+  <p>Toda a infraestrutura técnica pesada será configurada e entregue pronta:</p>
+  <ul>
+    <li><strong>E-mail Administrativo Dedicado:</strong> Criação de conta centralizada para gerenciar os acessos técnicos da loja.</li>
+    <li><strong>GitHub:</strong> Armazenamento seguro de todo o código-fonte em repositório privado da sua marca.</li>
+    <li><strong>Supabase:</strong> Configuração do banco de dados e do armazenamento protegido das imagens.</li>
+    <li><strong>Vercel:</strong> Configuração do servidor em nuvem de alta performance para manter a loja estável e rápida.</li>
+  </ul>
+
+  <h3>E. Treinamento e Suporte</h3>
+  <ul>
+    <li><strong>Treinamento Prático (1 hora):</strong> Sessão guiada em vídeo demonstrando como cadastrar peças, gerenciar estoque, criar cupons e acompanhar pedidos no painel.</li>
+    <li><strong>Garantia de Lançamento (15 dias):</strong> Acompanhamento prioritário pós-publicação para tirar dúvidas operacionais e garantir estabilidade plena.</li>
+  </ul>
+</section>
+
+<!-- ============ 4 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Divisão de Responsabilidades</h2></div>
+  <table>
+    <thead><tr><th style="width:34%">Atribuição</th><th style="width:16%">Responsável</th><th>Detalhes</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Arquitetura, Programação e Design</td><td class="rose">Felipe Teles</td><td>Construção visual, código, checkout e painel administrativo</td></tr>
+      <tr><td class="k">Configuração de Infraestrutura</td><td class="rose">Felipe Teles</td><td>Abertura e integração de GitHub, Vercel, Supabase e e-mail</td></tr>
+      <tr><td class="k">Integração de Pagamento</td><td class="rose">Felipe Teles</td><td>Conexão da API do provedor escolhido (Mercado Pago, InfinitePay, etc.)</td></tr>
+      <tr><td class="k">Treinamento e Suporte de 15 dias</td><td class="rose">Felipe Teles</td><td>Orientação de uso e garantia operacional de lançamento</td></tr>
+      <tr><td class="k">Conta de Pagamento</td><td class="k">Boutique Nê</td><td>Conta no nome/CNPJ da marca no provedor escolhido para recebimento das vendas</td></tr>
+      <tr><td class="k">Alimentação do Catálogo de Peças</td><td class="k">Boutique Nê</td><td>Envio das fotos e cadastro das peças através do painel</td></tr>
+      <tr><td class="k">Registro de Domínio Oficial</td><td class="k">Boutique Nê</td><td>Escolha, verificação de disponibilidade e contratação do endereço próprio (se optado)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 5 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Transparência de Custos Extras e Infraestrutura</h2></div>
+  <p>A arquitetura foi planejada para operar dentro das camadas gratuitas dos servidores, eliminando gastos fixos recorrentes:</p>
+  <table>
+    <thead><tr><th style="width:32%">Serviço</th><th style="width:22%">Custo Estimado</th><th>Observações</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Hospedagem da Loja (Vercel)</td><td class="num ok">R$ 0,00 / mês</td><td>Camada gratuita de alta capacidade para o fluxo da loja</td></tr>
+      <tr><td class="k">Banco de Dados e Imagens (Supabase)</td><td class="num ok">R$ 0,00 / mês</td><td>Gratuito até 500 MB de dados e 1 GB de fotos (suficiente para milhares de acessos)</td></tr>
+      <tr><td class="k">Endereço Web Padrão (Vercel)</td><td class="num ok">R$ 0,00</td><td>Link direto e seguro fornecido sem custos (ex: <span class="mono">boutiquene.vercel.app</span>)</td></tr>
+      <tr><td class="k">Domínio Próprio Oficial (Opcional)</td><td class="num">Valor sob consulta (anual)</td><td>Sujeito à disponibilidade do nome e variação de preço da terminação escolhida (detalhado abaixo)</td></tr>
+      <tr><td class="k">Taxas de Pagamento</td><td class="num">Apenas por venda</td><td>Sem mensalidade fixa; taxas padrão de mercado cobradas pelo provedor sobre vendas concluídas</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Detalhes sobre o Domínio Próprio Oficial (Nome do Site)</h3>
+  <ul>
+    <li><strong>Disponibilidade:</strong> Ter um endereço exclusivo (como <span class="mono">www.boutiquene.com.br</span>) depende de o nome exato estar livre para registro. Caso o termo exato já tenha sido registrado por outra empresa no passado, avaliaremos em conjunto as melhores variações disponíveis (como <span class="mono">useboutiquene.com.br</span>, <span class="mono">boutiqueneoficial.com.br</span>, etc.).</li>
+    <li><strong>Variação de Preço:</strong> O valor anual cobrado pelos órgãos registradores pode variar conforme a terminação desejada. Domínios brasileiros tradicionais (<span class="mono">.com.br</span>) geralmente partem de <strong>R$ 40,00 por ano</strong> no Registro.br, enquanto terminações internacionais (<span class="mono">.com</span>) ou específicas podem ter valores diferentes atrelados à cotação do fornecedor.</li>
+    <li><strong>Opção Sem Custo:</strong> O registro de um domínio próprio é opcional. Se a Boutique Nê optar por não registrar um endereço exclusivo de início, o site poderá ser publicado e operar normalmente pelo endereço web padrão e gratuito (<span class="mono">boutiquene.vercel.app</span>).</li>
+  </ul>
+</section>
+
+<!-- ============ 6 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Investimento e Condições de Pagamento</h2></div>
+  <p>Para o desenvolvimento completo da loja virtual, implementação do painel de controle, conexões de frete/pagamento e treinamento operacional:</p>
+
+  <div class="total">
+    <div>
+      <div class="label">Valor Total do Projeto</div>
+      <div class="amount">R$ 1.900,00</div>
+    </div>
+    <div class="note">Sem mensalidades de plataforma e sem comissão sobre as vendas.</div>
+  </div>
+
+  <div class="sub-label">Modalidades de Pagamento</div>
+  <table>
+    <thead><tr><th style="width:30%">Modalidade</th><th style="width:22%">Valor</th><th>Condições</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="k">1. Condição Padrão (50% / 50%)</td>
+        <td class="num">2 × R$ 950,00</td>
+        <td><strong>Entrada (50%):</strong> R$ 950,00 na aprovação da proposta para início do desenvolvimento e configurações.<br /><strong>Entrega Final (50%):</strong> R$ 950,00 na publicação da loja e conclusão do treinamento prático.</td>
+      </tr>
+      <tr>
+        <td class="k">2. À Vista via Pix (com desconto)</td>
+        <td class="num ok">R$ 1.800,00</td>
+        <td>Valor quitado na aprovação da proposta.</td>
+      </tr>
+      <tr>
+        <td class="k">3. Cartão de Crédito Parcelado</td>
+        <td class="num">3 × R$ 670,00</td>
+        <td>Em até 3x de R$ 670,00 via link de pagamento seguro (total R$ 2.010,00 com taxa de parcelamento inclusa).</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 7 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Cronograma de Execução</h2></div>
+  <p>O prazo total estimado para a conclusão e entrega do sistema é de <strong>20 a 25 dias úteis</strong>, distribuídos nas seguintes etapas:</p>
+
+  <div class="step">
+    <div class="when">ETAPA 1<small>Dias 1 a 6</small></div>
+    <div><h4>Alinhamento Visual, Infraestrutura e Contas</h4><p>Reunião de alinhamento para definição dos detalhes de design, criação das contas técnicas da marca, configuração do banco de dados e montagem da estrutura inicial responsiva.</p></div>
+  </div>
+  <div class="step">
+    <div class="when">ETAPA 2<small>Dias 7 a 15</small></div>
+    <div><h4>Pagamento, Fretes e Painel Administrativo</h4><p>Integração da API do provedor de pagamento definido (Mercado Pago, InfinitePay ou equivalente), regras de frete (Correios e WhatsApp para o Rio de Janeiro) e finalização do painel de controle de estoque e cupons.</p></div>
+  </div>
+  <div class="step">
+    <div class="when">ETAPA 3<small>Dias 16 a 25</small></div>
+    <div><h4>Validação, Treinamento e Publicação</h4><p>Testes práticos de ponta a ponta (compras simuladas, geração de Pix, cupons e atualização de estoque), sessão de treinamento em vídeo com a equipe da Boutique Nê e publicação oficial da loja.</p></div>
+  </div>
+</section>
+
+<!-- ============ APROVAÇÃO ============ -->
+<div class="approval">
+  <h3>Aprovação da Proposta</h3>
+  <p>Para aprovar esta proposta e agendar a reunião de alinhamento visual da Etapa 1, basta responder diretamente a Felipe Teles pelo WhatsApp. Proposta válida por 10 dias corridos a partir de Outubro de 2026.</p>
+  <div class="sign">
+    <div><strong>Boutique Nê</strong>De acordo &nbsp;·&nbsp; Data: ____ / ____ / ________</div>
+    <div><strong>Felipe Teles</strong>Technical Lead</div>
+  </div>
+  <div class="contact">
+    WhatsApp: <span class="mono">+55 (21) 97565-9408</span> &nbsp;·&nbsp; Versão interativa desta proposta: <span class="mono">darkmode.id/orcamento-boutique-ne</span>
+  </div>
+</div>
+
+</body>
+</html>

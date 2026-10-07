@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 
 export function SystemFooter() {
   const pathname = usePathname();
-  if (pathname.includes('/sandbox')) return null;
+  if (pathname?.includes('/sandbox') || pathname?.includes('/orcamento')) return null;
 
   return (
     <footer className="w-full border-t border-[var(--border-subtle)] bg-[var(--bg-base)] py-8 px-4 md:px-8 lg:px-12 xl:px-16 mt-auto">

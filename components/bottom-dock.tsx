@@ -10,7 +10,7 @@ export function BottomDock() {
   const pathname = usePathname();
 
   useEffect(() => {
-    setIsSandbox(pathname?.includes('/sandbox') || false);
+    setIsSandbox(pathname?.includes('/sandbox') || pathname?.includes('/orcamento') || false);
   }, [pathname]);
 
   const scrollTo = (id: string) => {
