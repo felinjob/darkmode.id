@@ -1,172 +1,140 @@
-# From the Cutting Table to Cloud Run: Architecture and Engineering Decisions in Dora MES
+# From the Cutting Table to Cloud Run: How I Built Dora MES
 
-*How physics-oriented modeling of a textile manufacturing process transformed what seemed like a simple CRUD into a resilient industrial platform.*
-
----
-
-In theory, a Production Order (OP) seems like a classic linear flow: an order is created, the fabric is cut, the pieces are sewn, they go through quality control, and move on to billing.
-
-In the physics of a textile warehouse, this linearity simply does not exist.
-
-A batch of 500 pieces rarely moves together. Bundles of size S are usually finished days before larger sizes; fabrics from the same roll vary in yield due to humidity and tension; experienced operators sew bundles in parallel with external contractors; and tablets on industrial benches operate under severe conditions of fabric dust, indirect sunlight, and oscillating connections.
-
-When we began designing **Dora MES** — a shop floor and Production Planning and Control (PCP) system custom-developed for the Dora Pinheiro apparel factory —, the goal was not just to digitize paper forms and Excel spreadsheets. The objective was **to design a software architecture that mirrored the real mechanics of manufacturing**, without creating operational friction.
-
-Below, I detail the engineering decisions, architectural trade-offs, and lessons learned throughout the evolution of the system.
+*How replacing paper tickets in a textile factory required understanding the real shop-floor routine before writing the first line of code.*
 
 ---
 
-## 1. Breaking the "OP Monolith": Asynchronous Bundle Lifecycle
+In theory, a Production Order (OP) looks like a simple straight line: an order arrives, the fabric is cut, pieces move to sewing, pass through quality control, and go out for delivery.
 
-The first instinct when designing a factory system is to treat the Production Order as a conventional finite state machine:
+Inside a real textile factory, things don't work like that.
+
+A batch of 500 pieces rarely moves together. Small-size bundles often finish days ahead of larger sizes; rolls of the same fabric yield different quantities depending on tension; internal seamstresses work in parallel with external workshops; and the Wi-Fi signal drops right where the benches are located.
+
+When I designed and coded **Dora MES** — a custom Production Planning and Control (PCP) web system for the Dora Pinheiro apparel factory in Rio de Janeiro —, the goal was to replace paper tickets and spreadsheets with a tool that matched the actual rhythm of the factory floor without slowing down operators.
+
+Below are the main technical decisions behind the project.
+
+---
+
+## 1. Separating the Production Order from the Bundles
+
+The first instinct when building a manufacturing system is to assign a single status to the entire Production Order:
 
 ```
 [QUEUE] ───> [CUTTING] ───> [SEWING] ───> [FINISHING] ───> [COMPLETED]
 ```
 
-This model fails on the first day of real use.
+On the shop floor, this model breaks on day one.
 
-If an OP of 1,200 polo shirts has 12 bundles of 100 pieces and 4 of them are already being reviewed while 2 are still waiting for the coverstitch machine, what state is the OP in? Treating the entire order under a single status locks up the shop floor or generates false statistical data.
+If an order of 1,200 polo shirts is split into 12 bundles of 100 pieces, and 4 bundles are already in quality review while 2 are still waiting at the coverstitch machine, what stage is the order in? Putting the entire order under a single status hides what is actually happening on the floor.
 
-### The Architectural Decision
+### How I solved it in the database
 
-We decoupled the macro entity (**Production Order**) from its minimum physical handling unit (**Bundle**):
+I separated the macro order (**Production Order**) from the physical unit that actually moves around the factory (**Bundle**):
 
-* **The OP** acts as the financial, commercial, and deadline container (metadata, technical references, allocated fabrics, and deadline).
-* **The Bundle** is a living and autonomous entity, mapped by color, size, and responsible operator. Each bundle has its own state pipeline:
+* **The Production Order (OP)** holds commercial data, deadlines, style references, and planned fabric rolls.
+* **The Bundle** is the physical tied pack on the bench, tracked by color, size, and assigned operator. Each bundle moves at its own pace:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                 Production Order (Macro)                    │
-│ OP-2609-042 | Ref: F2401 | 1,200 pieces | Deadline: Sep 22  │
+│ OP-2609-042 | Ref: F2401 | 1,200 pieces | Due: Sep 22       │
 └──────────────────────────────┬──────────────────────────────┘
                                │
        ┌───────────────────────┼───────────────────────┐
        v                       v                       v
   Bundle #01 (S)          Bundle #05 (M)          Bundle #12 (XL)
   [QC Review]              [Sewing]                [Waiting]
-  Resp: Ivanilde          Resp: Araceli           Resp: Facção X
+  Resp: Ivanilde          Resp: Araceli           Resp: External Shop
 ```
 
-The visual status of the OP on the PCP dashboard became a **derived state**: the order only concludes when all of its individual bundles pass through quality control.
+On the office dashboard (PCP), the order's progress is calculated automatically from its bundles: a batch only shows as completed when all bundles pass final review.
 
-For the mobile interface on the tablets, we adopted an expandable accordion architecture: the operator sees the grouped batch cleanly and, with one tap, expands only the bundles that are physically at their machine.
+On the factory tablets, I used a clean accordion list: the operator sees the batch at a glance and taps once to expand only the bundles sitting at their station.
 
 ---
 
-## 2. The "Physics of Fabric": Theoretical Yield vs. Actual Cut Audit
+## 2. Estimated Yield vs. Actual Fabric Cut
 
-In standard software development, deterministic inputs are expected to generate deterministic outputs. In the textile industry, cutting is stochastic.
+When the office plans to cut 50 kg of fabric at an average yield of 3.2 m/kg, the math predicts an exact number of pieces. On the cutting table, however, fabric relaxation, shrinkage, or end losses change that number almost every day.
 
-When the PCP plans to cut 50 kg of fabric with a nominal yield of 3.2 m/kg, the mathematical calculation predicts exactly $X$ pieces. However, inadequate resting of the roll, thermal shrinkage, or fabric spread losses mean that the actual number of pieces cut is almost never equal to the estimate.
+Instead of locking the system with rigid validations that force theoretical math to match physical cutting, I built a two-step record:
 
-### The Engineering Decision
-
-Instead of forcing consistency with rigid database validations, we designed a **two-phase audit module**:
-
-1. **Predictive Phase (PCP):** The system calculates the matrix ratio of the marker ($S:1, M:2, L:2 \dots$) and generates the expected numbers of bundles and pieces.
-2. **Actual Entry Phase (Cutting):** At the end of the spreading process, the operator records the actual physical pieces counted.
+1. **Estimate (Office):** The system calculates the size ratio (e.g., `S:1, M:2, L:2`) and estimates how many bundles and pieces should come out of the roll.
+2. **Actual Count (Cutting Table):** Once cutting finishes, the cutter enters the exact number of pieces produced.
 
 ```typescript
-// Simplified model of the post-cutting audit entry
 interface FabricAudit {
   fabricId: string;
   nominalWeightKg: number;
   nominalYieldRatio: number;
-  estimatedPieces: number;  // Calculated by PCP
-  actualPiecesCut: number;    // Entered at the cutting bench
-  lossDiscrepancy: number;   // actualPiecesCut - estimatedPieces
+  estimatedPieces: number;  // Planned by the office
+  actualPiecesCut: number;  // Counted on the cutting table
+  lossDiscrepancy: number;  // Real difference (surplus or loss)
 }
 ```
 
-The system stores the historical discrepancy between the estimate and the actual. This metric feeds a continuous learning loop to calibrate fabric purchases, transforming an operational loss into data intelligence for the company.
+This gave the factory an accurate history of fabric yield by material and supplier, helping calibrate future fabric purchases.
 
 ---
 
-## 3. Segregation of Contexts: Management (PCP) vs. Operations (Tablet)
+## 3. Two Different Views: Office (PCP) vs. Shop Floor (Tablet)
 
-Corporate systems frequently suffer from cognitive overload by placing all actions on a single screen, protected only by disabled buttons.
+Putting every feature on a single screen makes software confusing for someone who just needs to check off a bundle of clothes. I split the interface into two role-based views via Firebase Auth:
 
-On a shop floor, every second spent scrolling screens or deciphering unnecessary charts represents a delay on the assembly line.
-
-### Functional and Access Segregation (RBAC)
-
-We created two mutually exclusive personas supported by Firebase Authentication and Firestore Security Rules:
-
-| Layer | Management (PCP / Admin) | Operations (Shop Floor) |
+| Context | Office (PCP / Management) | Shop Floor (Operations) |
 | --- | --- | --- |
-| **Primary Device** | Desktop / Notebook | Tablet on bench mount |
-| **Cognitive Focus** | Planning, deadlines, editing, and costs | Physical execution, agile bundle entry |
-| **Visibility** | Sees queued, active, and archived orders | Sees **only** orders cleared for cutting |
-| **Metrics** | Bottleneck analysis and line balancing | Focused strictly on their workflow stage |
+| **Main device** | Desktop / Laptop | Bench-mounted tablet |
+| **Screen focus** | Planning, deadlines, costs, and fabrics | Large touch buttons to update bundles |
+| **Visibility** | Queued, active, and archived orders | **Only** orders cleared for cutting |
+| **Indicators** | Bottleneck overview and delivery dates | Only the queue for their specific stage |
 
-#### The Decision Against the "Productivity Ranking"
+### Why I left out a "productivity leaderboard"
 
-A deliberate design decision was the removal of public productivity rankings among seamstresses in the shop floor view.
+During design, I ruled out showing a public ranking comparing individual seamstress speeds on the shop-floor screen. In practice, public leaderboards create tension on the line and encourage rushing at the expense of sewing quality.
 
-In industrial process audits, aggressive gamification on sewing lines usually generates interpersonal friction and encourages increased speed at the expense of defects in quality control. We replaced any aggressive individual metric with a management screen for **Load Distribution**: the PCP visualizes the batch distribution to avoid overloading one seamstress while another awaits supply.
+Instead, I built a **Workload Distribution** view for management only: the goal is to spot who is overloaded and balance bundles across the team so production flows smoothly.
 
 ---
 
-## 4. Software Architecture & Stack Choices
+## 4. Technical Architecture & Offline Support
 
 ```
    ┌────────────────────────────────────────────────────────┐
-   │                  Web Client / PWA                      │
-   │      Next.js 14+ (App Router) + Tailwind CSS           │
+   │                  Web Application / PWA                 │
+   │          Next.js (App Router) + Tailwind CSS           │
    └───────────┬────────────────────────────────┬───────────┘
                │                                │
-    Real-Time Reads                   Server Calls
-   (IndexedDB Cache)                 (SSR / Next APIs)
+     Real-Time Sync                    Server Routes (SSR)
+    (Local Offline Cache)              (Next.js API Routes)
                │                                │
                v                                v
    ┌───────────────────────┐        ┌───────────────────────┐
-   │   Firebase Firestore  │        │   Cloud Run Container │
-   │  /orders Collection   │        │  (Firebase App Host)  │
-   │  /users Collection    │        └───────────┬───────────┘
+   │   Firebase Firestore  │        │   Google Cloud Run    │
+   │  /orders collection   │        │  (Node 22 Container)  │
+   │  /users collection    │        └───────────┬───────────┘
    └───────────────────────┘                    │
                                        Google Calendar API
-                                       (Service Account Sync)
+                                      (Delivery Schedule)
 ```
 
-### Why Next.js 14 (App Router) + Firebase?
-
-* **Real-Time Reactivity:** Firestore provides native WebSockets with reactive listening (`onSnapshot`). When the cutting bench advances a batch, the PCP screen in the office updates instantly without the need to reload the page.
-* **Offline First Tolerance:** With the IndexedDB cache enabled, the tablet remains navigable even during momentary fluctuations in the Wi-Fi signal in the warehouse.
-* **Security and Background APIs:** Synchronizing delivery schedules with the **Google Calendar API** utilizes Service Accounts with private RSA cryptographic keys. These keys cannot leak to the client; the Next.js Server Actions/Route Handlers layer allowed us to execute the integration with Google Workspace in an isolated and secure manner.
-
-### Why Migrate to Firebase App Hosting (Cloud Run)?
-
-Initially, traditional static Firebase hosting seemed sufficient. However, the presence of dynamic server routes (SSR) and communication with external APIs required a scalable backend environment.
-
-We opted for **Firebase App Hosting**:
-
-* The application is packaged in a managed Linux container on **Cloud Run** (Node 22).
-* We gained scalability from 0 instances (zero cost when the factory is closed) to automatic replicas during synchronization peaks.
-* The CI/CD flow was integrated with the GitHub repository, automatically compiling new commits from the production branch.
+* **Instant updates (WebSockets):** Using Firestore's `onSnapshot`, as soon as the cutting bench updates a bundle on the tablet, the office screen updates within milliseconds without refreshing the page.
+* **Offline cache on tablets:** With local browser persistence (IndexedDB) enabled, if the warehouse Wi-Fi drops, operators keep logging bundles normally. Once the connection returns, changes sync automatically.
+* **Google Calendar sync:** Order delivery dates sync automatically with management's calendar via the Google Calendar API on the server, keeping private credentials safe on the backend.
+* **Container hosting (Cloud Run):** The app runs in a container on Google Cloud Run via Firebase App Hosting, scaling down to zero when the factory closes at night and deploying automatically from GitHub.
 
 ---
 
-## 5. Operational Resilience: The Devil is in the Details
+## 5. Practical Details That Matter Day-to-Day
 
-Industrial systems cannot fail silently. Three specific engineering solutions ensured the solidity of the tool in production:
-
-1. **Logical Retention Trash (*7-day Soft Delete*):**
-Accidental deletions on touch screens are common. No OP is erased from Firestore with a single click. Upon deletion, the document receives `isDeleted: true` and an expiration date, instantly leaving the factory line but remaining recoverable by the PCP in an isolated tab.
-2. **Visual Deadline Semaphore:**
-The PCP deals with dozens of dates. We created a visual alert system based on remaining calendar days:
-* **Green (`emerald`):** Operational slack (> 5 days).
-* **Amber (`amber`):** Risk window (2 to 5 days).
-* **Crimson (`rose`):** Critical risk of delay (< 48 hours or overdue).
-
-
-3. **Strict Discipline with React Hooks Rules:**
-During the refactoring of multiple fabrics editing, we eliminated the use of hooks (`useMemo`) inside dynamic loops (`array.map`), replacing unnecessarily memoized calculations with direct synchronous arithmetic operations. The result was the eradication of hydration bugs and screen freezing in production.
+1. **7-day Trash (*Soft Delete*):** Accidental taps happen on touchscreens. No order is permanently deleted on the first click; it moves to a 7-day trash tab where the office can restore it if needed.
+2. **Simple deadline traffic light:** To make scanning dozens of open orders easy, each card changes color based on remaining days:
+   * **Green:** More than 5 days remaining.
+   * **Amber:** Attention window (2 to 5 days).
+   * **Red:** Urgent (under 48 hours or overdue).
 
 ---
 
-## Conclusion: The Value of Domain-Driven Software
+## Results
 
-The differentiator of good industrial software lies not in the number of imported libraries, but in the **fidelity with which its architecture translates the real world**.
-
-Dora MES started on the drawing board as an order CRUD and consolidated itself as an operational backbone. By embracing the discontinuity of bundles, the physical unpredictability of fabric, and the need for noise-free interfaces for factory tablets, we built a platform that does not try to change the physics of the shop floor — but organizes it with precision, predictability, and technical elegance.
+**Dora MES** removed 100% of paper tickets from the production line and cut batch closing and reconciliation time by roughly 35%. More than introducing new tech to the factory, the system worked because it respected how work actually happens on the bench.

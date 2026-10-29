@@ -30,45 +30,48 @@ export const viewport: Viewport = {
   themeColor: '#0A0B0D',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export const metadata: Metadata = {
-  title: 'darkmode.id // Information Design & Software Engineering',
-  description: 'Prática técnica independente de engenharia de software e design da informação. Interfaces táteis de baixa latência, arquitetura de dados e sistemas de alto desempenho.',
+  title: 'Felipe Teles // darkmode.id — Software Engineering, Data & Product Systems',
+  description:
+    'Engenheiro de Software e Cientista de Dados. Desenvolvimento de sistemas operacionais de manufatura (MES), plataformas full-stack de alta conversão, pipelines analíticos em Python e modelos de Machine Learning.',
   metadataBase: new URL('https://darkmode.id'),
   keywords: [
-    'Information Design',
+    'Felipe Teles',
     'Software Engineering',
-    'Complex Systems',
+    'Data Science',
+    'Product Systems',
     'MES Industrial',
     'Next.js',
-    'Tactile Interfaces',
-    'Data Architecture',
-    'OLED Ergonomics',
-    'Felipe Teles',
+    'Python',
+    'Machine Learning',
+    'PyTorch',
+    'RPA',
+    'Full-Stack Engineer',
   ],
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://darkmode.id',
-    title: 'darkmode.id // Information Design & Software Engineering',
-    description: 'Prática técnica independente de engenharia de software e design da informação. Interfaces táteis de baixa latência, arquitetura de dados e sistemas de alto desempenho.',
+    title: 'Felipe Teles // darkmode.id — Software Engineering, Data & Product Systems',
+    description:
+      'Aplicações full-stack, pipelines de dados e automações que tiram operações críticas do papel e escalam negócios.',
     siteName: 'darkmode.id',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'darkmode.id // Information Design & Software Engineering',
+        alt: 'Felipe Teles // darkmode.id — Software Engineering, Data & Product Systems',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'darkmode.id // Information Design & Software Engineering',
-    description: 'Prática técnica independente de engenharia de software e design da informação. Interfaces táteis de baixa latência, arquitetura de dados e sistemas de alto desempenho.',
+    title: 'Felipe Teles // darkmode.id — Software Engineering, Data & Product Systems',
+    description:
+      'Aplicações full-stack, pipelines de dados e automações que tiram operações críticas do papel e escalam negócios.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -93,8 +96,8 @@ export default function RootLayout({
           {children}
           <SystemFooter />
         </div>
-        
-        {/* Sprint 06: Ergonomia Tátil */}
+
+        {/* Navegação Rápida Inferior & Grão Óptico */}
         <BottomDock />
         <FilmGrain />
       </body>

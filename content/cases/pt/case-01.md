@@ -1,172 +1,140 @@
-# Da Bancada de Corte ao Cloud Run: Decisões de Arquitetura e Engenharia no Dora MES
+# Da Bancada de Corte ao Cloud Run: Como construí o Dora MES
 
-*Como a modelagem orientada à física real de uma confecção têxtil transformou o que parecia um simples CRUD em uma plataforma industrial resiliente.*
-
----
-
-Na teoria, uma Ordem de Produção (OP) parece um fluxo linear clássico: um pedido é criado, o tecido é cortado, as peças são costuradas, passam pelo controle de qualidade e seguem para o faturamento.
-
-Na física de um galpão têxtil, essa linearidade simplesmente não existe.
-
-Um lote de 500 peças raramente anda junto. Fardos de tamanho P costumam ser finalizados dias antes de tamanhos maiores; malhas do mesmo rolo variam de rendimento por umidade e tensão; operadoras experientes costuram fardos em paralelo a facções externas; e tablets em bancadas industriais operam sob condições severas de poeira de malha, luz solar indireta e conexões oscilantes.
-
-Quando começamos a desenhar o **Dora MES** — sistema de chão de fábrica e Planejamento e Controle de Produção (PCP) desenvolvido sob medida para a confecção Dora Pinheiro —, a meta não era apenas digitalizar fichas de papel e planilhas de Excel. O objetivo era **projetar uma arquitetura de software que espelhasse a mecânica real da manufatura**, sem criar fricção operacional.
-
-Abaixo, detalho as decisões de engenharia, os trade-offs arquiteturais e as lições aprendidas ao longo da evolução do sistema.
+*Como substituir fichas de papel em uma confecção têxtil exigiu olhar para a rotina real do galpão antes de escrever a primeira linha de código.*
 
 ---
 
-## 1. Quebrando o "Monolito da OP": Ciclo de Vida Assíncrono de Fardos
+Na teoria, uma Ordem de Produção (OP) parece um fluxo simples em linha reta: o pedido chega, o tecido é cortado, as peças vão para a costura, passam pela revisão e seguem para a entrega.
 
-O primeiro instinto ao desenhar um sistema fabril é tratar a Ordem de Produção como uma máquina de estados finita convencional:
+Na prática de um galpão têxtil, as coisas não funcionam assim.
+
+Um lote de 500 peças raramente anda junto. Os pacotes (fardos) de tamanho P costumam ficar prontos dias antes dos tamanhos maiores; rolos da mesma malha rendem quantidades diferentes dependendo da tensão; costureiras internas trabalham em paralelo com facções externas; e o sinal de Wi-Fi oscila justamente onde ficam as bancadas.
+
+Quando desenhei e programei o **Dora MES** — sistema de Planejamento e Controle de Produção (PCP) feito sob medida para a confecção Dora Pinheiro, no Rio de Janeiro —, o objetivo era substituir as fichas de papel e planilhas por um sistema web que acompanhasse o ritmo real da fábrica, sem atrapalhar quem está produzindo.
+
+Abaixo estão as principais decisões técnicas do projeto.
+
+---
+
+## 1. Separando a Ordem de Produção dos Fardos
+
+O primeiro impulso ao criar um sistema de produção é colocar um único status na Ordem de Produção inteira:
 
 ```
 [FILA] ───> [CORTE] ───> [COSTURA] ───> [ACABAMENTO] ───> [FINALIZADO]
 ```
 
-Esse modelo falha no primeiro dia de uso real.
+Na fábrica, esse modelo trava no primeiro dia.
 
-Se uma OP de 1.200 camisas polo tem 12 fardos de 100 peças e 4 deles já estão sendo revisados enquanto 2 ainda aguardam máquina galoneira, em qual estado a OP está? Tratar a ordem inteira em um único status trava o chão de fábrica ou gera dados estatísticos falsos.
+Se uma ordem de 1.200 camisas foi dividida em 12 fardos de 100 peças, e 4 fardos já estão na revisão enquanto 2 ainda esperam na máquina galoneira, em qual etapa a ordem está? Colocar a OP inteira em uma única coluna esconde o que realmente está acontecendo no galpão.
 
-### A Decisão Arquitetural
+### Como resolvi no banco de dados
 
-Desacoplamos a entidade macro (**Ordem de Produção**) da sua unidade física mínima de movimentação (**Fardo / Bundle**):
+Separei o pedido geral (**Ordem de Produção**) da unidade física que realmente circula na fábrica (**Fardo**):
 
-* **A OP** atua como contêiner financeiro, comercial e de prazos (metadados, referências técnicas, tecidos alocados e deadline).
-* **O Fardo** é uma entidade viva e autônoma, mapeada por cor, tamanho e operadora responsável. Cada fardo possui sua própria esteira de estados:
+* **A Ordem de Produção (OP)** guarda os dados comerciais, prazos, referências e rolos de tecido previstos.
+* **O Fardo** é a unidade física amarrada na bancada, identificada por cor, tamanho e responsável. Cada fardo anda no seu próprio ritmo:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Ordem de Produção (Macro)                │
-│  OP-2609-042 | Ref: F2401 | 1.200 peças | Deadline: 22/Set  │
+│  OP-2609-042 | Ref: F2401 | 1.200 peças | Prazo: 22/Set     │
 └──────────────────────────────┬──────────────────────────────┘
                                │
        ┌───────────────────────┼───────────────────────┐
        v                       v                       v
   Fardo #01 (P)           Fardo #05 (M)           Fardo #12 (GG)
-  [Revisão QC]             [Costura]               [Aguardando]
-  Resp: Ivanilde          Resp: Araceli           Resp: Facção X
+  [Revisão]               [Costura]               [Aguardando]
+  Resp: Ivanilde          Resp: Araceli           Resp: Facção Externa
 ```
 
-O status visual da OP no painel do PCP tornou-se um **estado derivado**: a ordem só conclui quando todos os seus fardos individuais transitam pelo controle de qualidade.
+No painel do escritório (PCP), o progresso da OP é calculado automaticamente a partir dos fardos: o lote só aparece como concluído quando todos os fardos passam pela revisão final.
 
-Para a interface móvel nos tablets, adotamos uma arquitetura de acordeão expansível: a operadora enxerga o lote agrupado de forma limpa e, com um toque, expande apenas os fardos que estão fisicamente na sua máquina.
+Nos tablets da fábrica, usei uma lista limpa em formato de sanfona (acordeão): a operadora bate o olho no lote e abre com um toque apenas os fardos que estão na sua bancada.
 
 ---
 
-## 2. A "Física da Malha": Rendimento Teórico vs. Auditoria do Corte Real
+## 2. Rendimento Estimado vs. Corte Real da Malha
 
-Em desenvolvimento de software comum, espera-se que entradas determinísticas gerem saídas determinísticas. Na indústria têxtil, o corte é estocástico.
+Quando o escritório planeja cortar 50 kg de malha com rendimento médio de 3,2 m/kg, a conta prevê um número exato de peças. Mas, na mesa de corte, o descanso do tecido, o encolhimento ou a perda nas pontas mudam esse resultado quase todo dia.
 
-Quando o PCP projeta cortar 50 kg de malha com rendimento nominal de 3,2 m/kg, o cálculo matemático prevê exatamente $X$ peças. No entanto, o descanso inadequado do rolo, o encolhimento térmico ou perdas de ponta de enfesto fazem com que a quantidade real de peças cortadas quase nunca seja igual à estimada.
+Em vez de travar o sistema exigindo que a conta teórica batesse com o corte físico, criei um registro em duas etapas:
 
-### A Decisão de Engenharia
-
-Em vez de forçar a consistência com validações rígidas no banco, desenhamos um **módulo de auditoria em duas fases**:
-
-1. **Fase Preditiva (PCP):** O sistema calcula a razão matricial do risco ($P:1, M:2, G:2 \dots$) e gera os números esperados de fardos e peças.
-2. **Fase de Apontamento Real (Corte):** Ao final do enfesto, o operador registra as peças físicas reais apuradas.
+1. **Previsão (Escritório):** O sistema calcula a proporção da grade (ex: `P:1, M:2, G:2`) e estima quantos fardos e peças devem sair do rolo.
+2. **Apontamento Real (Mesa de Corte):** Assim que termina de cortar, o cortador informa quantas peças realmente saíram.
 
 ```typescript
-// Modelo simplificado do apontamento de auditoria pós-corte
 interface FabricAudit {
   fabricId: string;
   nominalWeightKg: number;
   nominalYieldRatio: number;
-  estimatedPieces: number;  // Calculado pelo PCP
-  actualPiecesCut: number;    // Apontado na bancada de corte
-  lossDiscrepancy: number;   // actualPiecesCut - estimatedPieces
+  estimatedPieces: number;  // Previsto no planejamento
+  actualPiecesCut: number;  // Contado na mesa de corte
+  lossDiscrepancy: number;  // Diferença real (sobra ou quebra)
 }
 ```
 
-O sistema armazena a discrepância histórica entre o estimado e o real. Essa métrica alimenta um ciclo contínuo de aprendizado para calibração das compras de tecido, transformando uma perda operacional em inteligência de dados para a empresa.
+Com isso, a fábrica passou a ter um histórico fiel de aproveitamento por tipo de tecido e fornecedor, ajudando a comprar malha com muito mais precisão nos lotes seguintes.
 
 ---
 
-## 3. Segregação de Contextos: Gerência (PCP) vs. Operações (Tablet)
+## 3. Duas Telas Diferentes: Escritório (PCP) vs. Galpão (Tablet)
 
-Sistemas corporativos frequentemente sofrem de sobrecarga cognitiva por colocarem todas as ações em uma tela só, protegidas apenas por botões desabilitados.
+Colocar todas as funções na mesma tela deixa o sistema confuso para quem só precisa dar baixa em um pacote de roupa. Por isso, separei o sistema em dois modos de uso pelo login (Firebase Auth):
 
-Em um chão de fábrica, cada segundo gasto rolando telas ou decifrando gráficos desnecessários representa atraso na esteira.
-
-### Segregação Funcional e de Acesso (RBAC)
-
-Criamos duas personas mutuamente exclusivas suportadas no Firebase Authentication e no Firestore Security Rules:
-
-| Camada | Gerência (PCP / Admin) | Operações (Chão de Fábrica) |
+| Contexto | Escritório (PCP / Gerência) | Chão de Fábrica (Operação) |
 | --- | --- | --- |
-| **Dispositivo Principal** | Desktop / Notebook | Tablet em suporte de bancada |
-| **Foco Cognitivo** | Planejamento, prazos, edição e custos | Execução física, apontamento ágil de fardos |
-| **Visibilidade** | Enxerga pedidos em fila, ativos e arquivados | Enxerga **somente** ordens com corte liberado |
-| **Métricas** | Análise de gargalos e balanceamento de linha | Focado estritamente na sua etapa de trabalho |
+| **Aparelho principal** | Computador / Notebook | Tablet fixado na bancada |
+| **Foco da tela** | Planejamento, prazos, custos e tecidos | Botões grandes para avançar fardos |
+| **O que aparece** | Pedidos na fila, em produção e histórico | **Apenas** ordens já liberadas para corte |
+| **Indicadores** | Visão de gargalos e prazos de entrega | Apenas a fila da sua própria etapa |
 
-#### A Decisão Contra o "Ranking de Produtividade"
+### Por que tirei o "ranking de produtividade"
 
-Uma decisão deliberada de design foi a remoção de rankings públicos de produtividade entre costureiras na visualização do chão de fábrica.
+Durante o projeto, descartei a ideia de colocar um ranking comparando a velocidade individual das costureiras na tela do galpão. Na prática, esse tipo de placar gera tensão na equipe e faz a pressa aumentar o número de peças com defeito na revisão.
 
-Em auditorias de processos industriais, a gamificação agressiva em linhas de costura costuma gerar atrito interpessoal e incentiva o aumento de velocidade à custa de defeitos no controle de qualidade. Substituímos qualquer métrica individual agressiva por uma tela gerencial de **Distribuição de Carga**: o PCP visualiza a distribuição dos lotes para evitar sobrecarregar uma costureira enquanto outra aguarda abastecimento.
+No lugar disso, criei uma visão de **Distribuição de Carga** apenas para a gerência: o objetivo é ver quem está sobrecarregada e distribuir melhor os fardos para a linha fluir sem gargalos.
 
 ---
 
-## 4. Arquitetura de Software & Escolhas da Stack
+## 4. Arquitetura Técnica e Funcionamento Offline
 
 ```
    ┌────────────────────────────────────────────────────────┐
-   │                  Cliente Web / PWA                     │
-   │      Next.js 14+ (App Router) + Tailwind CSS           │
+   │                  Aplicação Web / PWA                   │
+   │          Next.js (App Router) + Tailwind CSS           │
    └───────────┬────────────────────────────────┬───────────┘
                │                                │
-    Leituras em Tempo Real              Chamadas de Servidor
-       (IndexedDB Cache)                 (SSR / Next APIs)
+    Sincronização em Tempo Real       Rotas de Servidor (SSR)
+       (Cache Offline Local)            (Next.js API Routes)
                │                                │
                v                                v
    ┌───────────────────────┐        ┌───────────────────────┐
-   │   Firebase Firestore  │        │   Cloud Run Container │
-   │  Coleção /orders      │        │  (Firebase App Host)  │
-   │  Coleção /users (RBAC)│        └───────────┬───────────┘
+   │   Firebase Firestore  │        │   Google Cloud Run    │
+   │  Coleção /orders      │        │  (Container Node 22)  │
+   │  Coleção /users       │        └───────────┬───────────┘
    └───────────────────────┘                    │
                                        Google Calendar API
-                                       (Service Account Sync)
+                                     (Agenda de Entregas)
 ```
 
-### Por que Next.js 14 (App Router) + Firebase?
-
-* **Reatividade em Tempo Real:** O Firestore fornece WebSockets nativos com escuta reativa (`onSnapshot`). Quando a bancada de corte avança um lote, a tela do PCP no escritório atualiza instantaneamente sem necessidade de recarregar a página.
-* **Tolerância a Quedas de Rede (Offline First):** Com o cache do IndexedDB habilitado, o tablet continua navegável mesmo durante oscilações momentâneas do sinal de Wi-Fi no galpão.
-* **Segurança e APIs de Background:** A sincronização de cronogramas de entrega com a **Google Calendar API** utiliza Service Accounts com chaves criptográficas RSA privadas. Essas chaves não podem vazar para o cliente; a camada de Server Actions/Route Handlers do Next.js nos permitiu executar a integração com o Google Workspace de forma isolada e segura.
-
-### Por que Migrar para o Firebase App Hosting (Cloud Run)?
-
-Inicialmente, o hosting tradicional estático do Firebase parecia suficiente. Porém, a presença de rotas dinâmicas de servidor (SSR) e a comunicação com APIs externas exigiam um ambiente com backend escalável.
-
-Optamos pelo **Firebase App Hosting**:
-
-* A aplicação é empacotada em um contêiner Linux gerenciado no **Cloud Run** (Node 22).
-* Ganhamos escalabilidade de 0 instâncias (custo zero quando a fábrica está fechada) até réplicas automáticas em picos de sincronização.
-* O fluxo de CI/CD ficou integrado ao repositório no GitHub, compilando automaticamente novos commits da branch de produção.
+* **Atualização na hora (WebSockets):** Usando o `onSnapshot` do Firestore, assim que o cortador dá baixa em um fardo no tablet, a tela do escritório atualiza sozinha no mesmo segundo, sem precisar recarregar a página.
+* **Cache Offline no Tablet:** Com a persistência local no navegador (IndexedDB), se o Wi-Fi do galpão oscilar, a operadora continua registrando os fardos normalmente. Assim que o sinal volta, os dados sincronizam sozinhos.
+* **Integração com Google Agenda:** Os prazos de entrega das ordens são sincronizados automaticamente com a agenda da gerência via Google Calendar API no servidor, mantendo as chaves de acesso protegidas no backend.
+* **Hospedagem em Contêiner (Cloud Run):** A aplicação roda em contêiner no Google Cloud Run via Firebase App Hosting, escalando para zero quando a fábrica está fechada à noite (reduzindo custos) e publicando atualizações automaticamente a cada commit no GitHub.
 
 ---
 
-## 5. Resiliência Operacional: O Diabo está nos Detalhes
+## 5. Detalhes Práticos que Fazem Diferença no Dia a Dia
 
-Sistemas industriais não podem falhar silenciosamente. Três soluções pontuais de engenharia garantiram a solidez da ferramenta em produção:
-
-1. **Lixeira com Retenção Lógica (*Soft Delete* de 7 dias):**
-Exclusões acidentais em telas sensíveis ao toque são comuns. Nenhuma OP é apagada do Firestore com um clique. Ao deletar, o documento recebe `isDeleted: true` e uma data de expiração, saindo instantaneamente da esteira fabril, mas permanecendo recuperável pelo PCP em uma aba isolada.
-2. **Semáforo Visual de Deadline:**
-O PCP lida com dezenas de datas. Criamos um sistema de alerta visual baseado em dias corridos restantes:
-* **Verde (`emerald`):** Folga operacional (> 5 dias).
-* **Âmbar (`amber`):** Janela de risco (2 a 5 dias).
-* **Carmim (`rose`):** Risco crítico de atraso (< 48 horas ou vencido).
-
-
-3. **Disciplina Rigorosa com as Regras de Hooks do React:**
-Durante o refatoramento da edição de múltiplos tecidos, eliminamos o uso de hooks (`useMemo`) dentro de laços de repetição dinâmicos (`array.map`), substituindo cálculos desnecessariamente memoizados por operações aritméticas síncronas diretas. O resultado foi a erradicação de bugs de hidratação e travamento de tela em produção.
+1. **Lixeira de 7 dias (*Soft Delete*):** Em telas de toque, cliques acidentais acontecem. Nenhum pedido é apagado de vez no primeiro clique; ele vai para uma lixeira temporária de 7 dias e pode ser restaurado pelo escritório se tiver sido excluído por engano.
+2. **Semáforo simples de prazos:** Para facilitar a leitura rápida de dezenas de pedidos em aberto, cada cartão muda de cor conforme o prazo restante:
+   * **Verde:** Mais de 5 dias de folga.
+   * **Amarelo:** Atenção (entre 2 e 5 dias).
+   * **Vermelho:** Urgente (menos de 48 horas ou atrasado).
 
 ---
 
-## Conclusão: O Valor do Software Orientado ao Domínio
+## Resultado
 
-O diferencial de um bom software industrial não está na quantidade de bibliotecas importadas, mas na **fidelidade com que sua arquitetura traduz o mundo real**.
-
-O Dora MES saiu da prancheta como um CRUD de pedidos e se consolidou como uma espinha dorsal operacional. Ao abraçar a descontinuidade dos fardos, a imprevisibilidade física da malha e a necessidade de interfaces sem ruído para tablets de fábrica, construímos uma plataforma que não tenta mudar a física do chão de fábrica — mas a organiza com precisão, previsibilidade e elegância técnica.
+O **Dora MES** tirou 100% das fichas de papel da linha de produção e reduziu em cerca de 35% o tempo gasto para fechar e conferir cada lote. Mais do que colocar tecnologia nova na fábrica, o projeto funcionou porque respeitou o jeito como o trabalho real acontece na bancada.

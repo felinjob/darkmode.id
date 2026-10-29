@@ -9,15 +9,19 @@ function getLocale() {
 }
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  
+  // Normaliza barras múltiplas para evitar anomalias de roteamento / open redirect
+  const rawPathname = request.nextUrl.pathname;
+  const pathname = rawPathname.replace(/\/{2,}/g, '/');
+
   // Excluir rotas de arquivos estáticos, imagens, APIs e rotas executivas isoladas
   if (
-    pathname.includes('.') || 
-    pathname.startsWith('/_next') || 
+    pathname.includes('.') ||
+    pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
     pathname === '/orcamento-boutique-ne' ||
-    pathname.startsWith('/orcamento-boutique-ne/')
+    pathname.startsWith('/orcamento-boutique-ne/') ||
+    pathname === '/orcamento-aw-bikes' ||
+    pathname.startsWith('/orcamento-aw-bikes/')
   ) {
     return NextResponse.next();
   }
@@ -32,6 +36,15 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(cleanUrl);
   }
 
+  if (
+    pathname.startsWith('/pt/orcamento-aw-bikes') ||
+    pathname.startsWith('/en/orcamento-aw-bikes')
+  ) {
+    const cleanUrl = request.nextUrl.clone();
+    cleanUrl.pathname = '/orcamento-aw-bikes';
+    return NextResponse.redirect(cleanUrl);
+  }
+
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
@@ -39,8 +52,9 @@ export function proxy(request: NextRequest) {
   if (pathnameHasLocale) return NextResponse.next();
 
   const locale = getLocale();
-  request.nextUrl.pathname = `/${locale}${pathname}`;
-  return NextResponse.redirect(request.nextUrl);
+  const redirectUrl = request.nextUrl.clone();
+  redirectUrl.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
+  return NextResponse.redirect(redirectUrl);
 }
 
 export const config = {

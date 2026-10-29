@@ -5,7 +5,14 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/orcamento-boutique-ne', '/*/orcamento-boutique-ne', '/proposta-boutique-ne.pdf'],
+      disallow: [
+        '/orcamento-boutique-ne',
+        '/*/orcamento-boutique-ne',
+        '/proposta-boutique-ne.pdf',
+        '/orcamento-aw-bikes',
+        '/*/orcamento-aw-bikes',
+        '/proposta-aw-bikes.pdf',
+      ],
     },
     sitemap: 'https://darkmode.id/sitemap.xml',
   };

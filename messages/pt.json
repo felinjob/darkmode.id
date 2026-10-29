@@ -1,217 +1,261 @@
 {
   "hero": {
-    "tag": "[ SPECIALIZED PRACTICE // 2026 ]",
-    "title": "Interfaces Táteis.\nSistemas Complexos.\nDesign da Informação.",
-    "description": "Projetamos e implementamos software na fronteira entre arquitetura de dados, ergonomia de hardware e legibilidade humana. Eliminamos o ruído cognitivo para acelerar decisões críticas e garantir integridade operacional.",
-    "stack": "INFORMATION DESIGN // DATA ARCHITECTURE // LOW-LATENCY SYSTEMS"
-  },
-  "practice": {
-    "title": "STUDIO // PRACTICE",
-    "tag": "[ INDEPENDENT PRACTICE ]",
-    "practiceTitle": "The Practice",
-    "practiceText": "darkmode.id é uma prática independente de engenharia de software e design da informação. Projetamos sistemas complexos, interfaces táteis de baixa latência e infraestruturas digitais de alta confiabilidade operacional.",
-    "leadershipTitle": "Leadership",
-    "leadershipName": "Felipe Teles",
-    "leadershipRole": "Technical Lead",
-    "leadershipText": "Fundado e liderado por Felipe Teles (Technical Lead). Interlocução puramente técnica, decisões pautadas por dados e execução direta de arquitetura ao código em produção.",
-    "principlesTitle": "// PRINCÍPIOS OPERACIONAIS",
-    "principles": [
-      {
-        "index": "01",
-        "title": "Dado-Pixel & Densidade",
-        "text": "Eliminação sistemática de chartjunk e priorização de clareza informacional (Edward Tufte)."
-      },
-      {
-        "index": "02",
-        "title": "Ergonomia Óptica",
-        "text": "Superfície OLED-safe em #0A0B0D para mitigação de black smearing e contraste APCA."
-      },
-      {
-        "index": "03",
-        "title": "Orçamento de Performance",
-        "text": "Metas estritas de Core Web Vitals cravadas em produção (LCP < 1.2s, CLS = 0, INP < 50ms)."
-      },
-      {
-        "index": "04",
-        "title": "Integridade de Dados",
-        "text": "Determinismo estrutural, fluxos auditáveis e conformidade técnica (LGPD)."
-      }
-    ]
+    "tag": "FELIPE TELES // SOFTWARE & DADOS",
+    "title": "Software, dados e automação\npara problemas reais.",
+    "description": "Desenvolvo aplicações web, rotinas de dados e automações que organizam operações e ajudam negócios a trabalhar melhor. Trago 15 anos de direção e edição audiovisual para construir sistemas diretos, rápidos e sem excessos.",
+    "stack": "Python • TypeScript • Next.js • SQL • Automação (RPA)",
+    "primaryCta": "Conversar sobre um projeto ↗",
+    "secondaryCta": "Ver projetos ↓",
+    "scheduleCta": "Agendar conversa"
   },
   "founder": {
-    "role": "Technical Lead & Founder",
-    "status": "ACTIVE",
-    "name": "Felipe Teles // Technical Lead",
-    "description": "Arquitetura de sistemas convergindo maturidade de design estrutural com rigor absoluto de código em plataformas web."
+    "role": "PERFIL",
+    "status": "DISPONÍVEL",
+    "name": "Felipe Teles",
+    "subtitle": "Engenheiro de Software & Dados",
+    "coreStack": [
+      "Python",
+      "TypeScript",
+      "Next.js",
+      "SQL",
+      "Automação"
+    ]
   },
   "works": {
-    "title": "Selected Works",
-    "tag": "[Curated Scarcity // 03 Production Systems]",
+    "title": "Projetos Principais",
+    "tag": "// 03 sistemas em uso real",
+    "subtitle": "Projetos que desenhei e programei do zero para resolver gargalos práticos de fábrica, cruzamento de dados e vendas no celular.",
+    "labels": {
+      "bottleneck": "O Problema",
+      "solution": "O que foi feito",
+      "metrics": "Resultados",
+      "liveBadge": "NO AR"
+    },
     "cases": [
       {
         "id": "case-01",
         "index": "01",
-        "title": "Dora MES — Sistema Operacional de Manufatura Têxtil",
-        "category": "SISTEMA INDUSTRIAL // MES",
-        "summary": "Digitalização ponta a ponta do fluxo fabril, substituindo planilhas por PWA de alta ergonomia tátil.",
-        "architecture": ["Next.js PWA", "Firestore (Real-time)", "Cloud Run", "Estado Desacoplado"],
+        "title": "Dora MES — Controle de Produção Têxtil",
+        "category": "SISTEMA INDUSTRIAL / WEB APP",
+        "location": "Rio de Janeiro, BR",
+        "summary": "Sistema web criado para uma fábrica têxtil substituir o controle em papel por acompanhamento em tempo real de cada fardo no corte, na costura e nas facções.",
+        "bottleneck": "Lotes de 1.200 peças se dividiam em dezenas de fardos difíceis de rastrear no papel. Além disso, o Wi-Fi do galpão oscilava e a equipe precisava de uma tela simples para registrar a produção.",
+        "solution": "Aplicação em Next.js e Firestore com funcionamento offline (salva os apontamentos no aparelho quando a rede cai) e cálculo real de aproveitamento dos rolos de malha.",
+        "architecture": [
+          "Next.js",
+          "Firestore",
+          "Cache Offline",
+          "Docker / Cloud Run"
+        ],
         "metrics": [
-          { "label": "Fichas de Papel na Linha", "value": "-100%" },
-          { "label": "Rastreabilidade", "value": "Por Fardo" },
-          { "label": "Latência de Leitura", "value": "< 45ms" },
-          { "label": "Tempo de Ciclo", "value": "-35%" }
+          { "label": "Fichas de papel", "value": "-100%" },
+          { "label": "Rastreio físico", "value": "Por fardo" },
+          { "label": "Sincronização", "value": "< 45ms" },
+          { "label": "Fechamento de lote", "value": "-35%" }
         ],
         "media": {
           "type": "image",
           "src": "/placeholder-01.png"
         },
         "actions": [
-          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-01", "isPrimary": true },
-          { "label": "[ TESTAR SANDBOX OPERACIONAL ↗ ]", "url": "/pt/sandbox/dora-mes" }
+          { "label": "Ler estudo completo ↗", "url": "/pt/case/case-01", "isPrimary": true },
+          { "label": "Testar sandbox ↗", "url": "/pt/sandbox/dora-mes" }
         ]
       },
       {
         "id": "case-02",
         "index": "02",
-        "title": "Santos PREP: Engine de Aquisição & Auditoria de Dados",
-        "category": "EDTECH // CRO & DATA PIPELINE",
-        "summary": "Plataforma de alta performance para certames públicos com retenção móvel e auditoria em tempo real.",
-        "architecture": ["Next.js App Router", "Tailwind CSS", "Modal Proprietário (Touch)", "Python Data Pipeline"],
+        "title": "Santos PREP — Página de Vendas & Auditoria no Diário Oficial",
+        "category": "DADOS & PERFORMANCE WEB",
+        "location": "Santos, SP",
+        "summary": "Página de vendas super leve para concurso público de Arquitetura e Engenharia, apoiada por um script em Python que conferiu as aprovações reais da turma anterior no Diário Oficial.",
+        "bottleneck": "Para gerar confiança real nos candidatos, precisávamos comprovar as aprovações cruzando a planilha de ex-alunos com centenas de páginas em PDF do Diário Oficial, sem expor dados sensíveis.",
+        "solution": "Script em Python (PyPDF) para limpar os nomes e localizar cada convocação nos PDFs públicos, aliado a uma página estática em Next.js que abre instantaneamente no 4G.",
+        "architecture": [
+          "Python (PyPDF)",
+          "Next.js",
+          "Tailwind CSS",
+          "100/100 Web Vitals"
+        ],
         "metrics": [
-          { "label": "Core Web Vitals", "value": "100/100" },
-          { "label": "Top 10 Aprovados", "value": "5" },
-          { "label": "CLS (Shift Visual)", "value": "0.00" },
-          { "label": "Mobile LCP", "value": "0.8s" }
+          { "label": "Performance Web", "value": "100/100" },
+          { "label": "Aprovados no Top 10", "value": "5" },
+          { "label": "Estabilidade (CLS)", "value": "0.00" },
+          { "label": "Abertura no 4G", "value": "0.8s" }
         ],
         "media": {
           "type": "image",
           "src": "/placeholder-02.png"
         },
         "actions": [
-          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-02", "isPrimary": true },
-          { "label": "[ ACESSAR SITE ↗ ]", "url": "https://resumosantos.vercel.app/" }
+          { "label": "Ler estudo completo ↗", "url": "/pt/case/case-02", "isPrimary": true },
+          { "label": "Ver página no ar ↗", "url": "https://resumosantos.vercel.app/" }
         ]
       },
       {
         "id": "case-03",
         "index": "03",
-        "title": "Use Azevedo — E-Commerce Mobile-First & Fit Tech",
-        "category": "E-COMMERCE // FIT TECH & HEADLESS",
-        "summary": "Arquitetura headless de varejo digital com Provador Virtual algorítmico para mitigar devoluções no nicho plus size.",
-        "architecture": ["Next.js 16 (App Router)", "Prisma v6", "Supabase (Postgres)", "Zustand", "InfinitePay"],
+        "title": "Use Azevedo — E-Commerce & Provador Virtual",
+        "category": "E-COMMERCE FULL-STACK",
+        "location": "Rio de Janeiro, BR",
+        "summary": "Loja virtual própria para uma marca de moda feminina plus size, com recomendador de tamanho integrado e painel administrativo simples para a dona gerenciar o estoque.",
+        "bottleneck": "Tabelas de medidas estáticas geram muita dúvida na compra pelo celular e aumentam as trocas. A marca também precisava sair de plataformas alugadas lentas.",
+        "solution": "E-commerce em Next.js com banco PostgreSQL, cálculo automático de caimento (busto, cintura e quadril), painel próprio de produtos e checkout integrado via InfinitePay.",
+        "architecture": [
+          "Next.js",
+          "PostgreSQL & Prisma",
+          "Provador Virtual",
+          "Webhook InfinitePay"
+        ],
         "metrics": [
-          { "label": "Layout Shift (CLS)", "value": "0.00" },
-          { "label": "Ergonomia Tátil", "value": "100%" },
-          { "label": "Retorno por Caimento", "value": "-42%" },
-          { "label": "Tempo de Checkout", "value": "< 30s" }
+          { "label": "Trocas por tamanho", "value": "-42%" },
+          { "label": "Estabilidade (CLS)", "value": "0.00" },
+          { "label": "Tempo de checkout", "value": "< 30s" },
+          { "label": "Painel próprio", "value": "100%" }
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-03.png"
+          "src": "/use-azevedo.png"
         },
         "actions": [
-          { "label": "[ LER ESTUDO COMPLETO ↗ ]", "url": "/pt/case/case-03", "isPrimary": true },
-          { "label": "[ ACESSAR SITE ↗ ]", "url": "https://useazevedo.vercel.app/" }
+          { "label": "Ler estudo completo ↗", "url": "/pt/case/case-03", "isPrimary": true },
+          { "label": "Ver loja no ar ↗", "url": "https://useazevedo.vercel.app/" }
         ]
       }
     ]
   },
-  "capabilities": {
-    "title": "Capabilities",
-    "tag": "// Core Technical Domains",
-    "categories": [
+  "trajectory": {
+    "tag": "// SOBRE MIM",
+    "title": "Do audiovisual para o código e os dados.",
+    "lead": "Antes de trabalhar com tecnologia, passei mais de 15 anos dirigindo e editando vídeo. Na ilha de edição, aprendi na prática a cortar o que é desnecessário, organizar informações confusas e guiar a atenção de quem está olhando para a tela.",
+    "body": "Hoje levo essa mesma lógica para o desenvolvimento de software e análise de dados. Gosto de entender como a operação funciona na vida real — seja no galpão de uma confecção, no backoffice de uma empresa ou na tela do celular do cliente — para escrever código limpo que resolve o problema sem complicação.",
+    "pillars": [
       {
         "index": "01",
-        "title": "Engenharia Frontend & Mobile-First",
-        "lead": "Estruturação de plataformas de alta performance focadas na conversão (CRO) e retenção tátil.",
-        "deliverables": [
-          "Next.js & React Server Components",
-          "Arquitetura Mobile-First (Thumb Zone)",
-          "Otimização Extrema (Core Web Vitals)"
-        ]
+        "title": "Foco no problema real",
+        "text": "Antes de escolher ferramenta, entendo onde a operação trava e o que realmente precisa ser construído."
       },
       {
         "index": "02",
-        "title": "Engenharia de Dados & Backends",
-        "lead": "Consolidação de dados transacionais, auditoria de métricas e orquestração de bancos relacionais.",
-        "deliverables": [
-          "Pipelines Analíticos (Python)",
-          "Prisma ORM & Bancos SQL/NoSQL",
-          "Integração de APIs B2B & Financeiras"
-        ]
+        "title": "Telas claras e diretas",
+        "text": "Bagagem visual aplicada para criar interfaces legíveis, rápidas e fáceis de usar por qualquer pessoa."
       },
       {
         "index": "03",
-        "title": "RPA & Automação de Processos",
-        "lead": "Substituição de tarefas operacionais lentas por robôs de extração e cruzamento de dados em tempo real.",
+        "title": "Dados e automação na prática",
+        "text": "Uso Python e SQL para substituir trabalho braçal em planilhas por rotinas automáticas e confiáveis."
+      }
+    ]
+  },
+  "capabilities": {
+    "title": "Ferramentas & Prática",
+    "tag": "// O que uso no dia a dia",
+    "categories": [
+      {
+        "index": "01 // WEB",
+        "title": "Aplicações Web & Interfaces",
+        "lead": "Sistemas internos, páginas de vendas rápidas e lojas virtuais sob medida.",
         "deliverables": [
-          "Automação Web (Selenium / BotCity)",
-          "Scraping & Tratamento com Pandas",
-          "Orquestração de Processos de Backoffice"
+          "TypeScript",
+          "React & Next.js",
+          "Tailwind CSS",
+          "Node.js"
         ]
       },
       {
-        "index": "04",
-        "title": "Pesquisa (P&D) & Manipulação de Baixo Nível",
-        "lead": "Domínio de hardwares legados, restrições de memória e otimização de matrizes binárias.",
+        "index": "02 // DADOS",
+        "title": "Dados & Backend",
+        "lead": "Modelagem de bancos de dados, limpeza de arquivos brutos e integração de APIs.",
         "deliverables": [
-          "Manipulação Binária & Firmware",
-          "Orquestração de Containers (Docker)",
-          "Processamento de Imagens Embarcadas"
+          "Python",
+          "SQL / PostgreSQL",
+          "Prisma ORM",
+          "Firebase / Supabase"
+        ]
+      },
+      {
+        "index": "03 // AUTOMAÇÃO",
+        "title": "Automação & RPA",
+        "lead": "Robôs e scripts para eliminar tarefas manuais repetitivas de cadastro e consulta.",
+        "deliverables": [
+          "Selenium",
+          "BotCity",
+          "Pandas",
+          "Web Scraping"
+        ]
+      },
+      {
+        "index": "04 // ESTUDOS & P&D",
+        "title": "IA, Simulação & Infra",
+        "lead": "Projetos experimentais com modelos preditivos, processamento de texto e deploy.",
+        "deliverables": [
+          "Scikit-Learn",
+          "PyTorch",
+          "FastAPI",
+          "Docker"
         ]
       }
     ]
   },
   "lab": {
-    "title": "The Archive / Lab",
-    "tag": "// R&D, Prototypes & Open Source",
+    "title": "Lab & Experimentos",
+    "tag": "// Estudos, automações e código aberto",
+    "subtitle": "Outros projetos pessoais, ferramentas utilitárias e estudos práticos no GitHub.",
     "table": {
       "id": "ID",
-      "experiment": "EXPERIMENTO",
-      "scope": "ESCOPO DE TECNOLOGIA",
+      "experiment": "PROJETO",
+      "scope": "TECNOLOGIAS",
       "status": "STATUS"
     },
     "experiments": [
       {
-        "id": "LAB_01",
-        "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
-        "scope": "Python / Mutagen / FAT32 I/O",
-        "status": "FINALIZADO",
-        "description": "Normalizador binário ID3v2.3 e alocador sequencial de clusters FAT32 para DAPs legados com restrições severas de RAM.",
+        "id": "01",
+        "title": "Digiente (Project Turi)",
+        "scope": "Python / FastAPI / PyTorch / Esper ECS",
+        "status": "EM ESTUDO",
+        "description": "Projeto experimental de simulação de vida artificial em Python, usando arquitetura ECS e redes neurais simples para testar evolução de comportamento.",
+        "targetUrl": "https://github.com/felinjob/digient_proj"
+      },
+      {
+        "id": "02",
+        "title": "EchoOrganize (Utilitário FAT32 & ID3)",
+        "scope": "Python / Mutagen / Pillow",
+        "status": "CONCLUÍDO",
+        "description": "Script criado para organizar cartões SD de players de música dedicados (DAPs), ajustando tags de áudio e capas para carregar a biblioteca muito mais rápido.",
         "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
       {
-        "id": "LAB_02",
-        "title": "RPA Freight & Onboarding Engine",
-        "scope": "Python / BotCity / Selenium",
-        "status": "FINALIZADO",
-        "description": "Robô de Automação de Processos (RPA) para scraping de cotações logísticas (Correios/Jadlog) e sanitização de dados via Brasil API. Redução de 90% (10x) no tempo de processamento de backoffice.",
+        "id": "03",
+        "title": "Robô de Cotação de Fretes & Cadastro",
+        "scope": "Python / BotCity / Selenium / Pandas",
+        "status": "CONCLUÍDO",
+        "description": "Automação que padroniza endereços via Brasil API e consulta fretes nos Correios e Jadlog automaticamente, poupando horas de digitação manual.",
         "targetUrl": "https://github.com/felinjob/Cadastros_e_Fretes"
       },
       {
-        "id": "LAB_03",
-        "title": "Resumos Campinas (Legacy V1)",
-        "scope": "Next.js / EdTech",
-        "status": "FINALIZADO",
-        "description": "Landing page de aquisição e conversão para certame público anterior. Atuou como base experimental de prova social e arquitetura para a plataforma de Santos.",
-        "targetUrl": "https://resumocampinas.vercel.app/"
-      },
-      {
-        "id": "LAB_04",
-        "title": "SpaceX Falcon 9 Landing Prediction",
-        "scope": "Machine Learning / EDA",
-        "status": "FINALIZADO",
-        "description": "Modelo preditivo para avaliar a probabilidade de sucesso no pouso do 1º estágio do Falcon 9 (94.4% de acurácia com Decision Tree). Projeto capstone do IBM Data Science.",
-        "targetUrl": "https://github.com/felinjob/IBM-Applied-Data-Science-Capstone"
-      },
-      {
-        "id": "LAB_05",
-        "title": "Hollywood IMDb Analytics",
-        "scope": "NLP / ML / Python",
-        "status": "FINALIZADO",
-        "description": "Análise estratégica e motor preditivo baseado no IMDb para orientar produções de estúdio. Utiliza processamento de linguagem natural e engenharia de features para decisões de negócio.",
+        "id": "04",
+        "title": "Análise Preditiva de Filmes (IMDb)",
+        "scope": "Python / NLP / Scikit-Learn",
+        "status": "CONCLUÍDO",
+        "description": "Estudo de ciência de dados cruzando histórico do cinema e análise de texto (NLP) para explorar padrões de recepção e viabilidade de roteiros.",
         "targetUrl": "https://github.com/felinjob/hollywood_analise"
+      },
+      {
+        "id": "05",
+        "title": "Resumos Campinas (Primeira Versão)",
+        "scope": "Next.js / Tailwind CSS",
+        "status": "ARQUIVADO",
+        "description": "Primeira versão da página de vendas para concursos municipais que serviu de base para a evolução do projeto de Santos.",
+        "targetUrl": "https://resumocampinas.vercel.app/"
       }
     ]
+  },
+  "cta": {
+    "tag": "// CONTATO DIRETO",
+    "title": "Tem um projeto em mente ou precisa destravar uma operação?",
+    "description": "Você fala direto comigo, do primeiro rascunho até a entrega do código. Disponível para desenvolvimento de sistemas web, páginas de vendas, automações em Python e oportunidades na área de software e dados.",
+    "primaryButton": "Enviar mensagem",
+    "scheduleButton": "Agendar conversa (Cal.com) ↗",
+    "whatsappButton": "Chamar no WhatsApp ↗"
   }
 }

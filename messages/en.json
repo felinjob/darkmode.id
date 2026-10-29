@@ -1,217 +1,261 @@
 {
   "hero": {
-    "tag": "[ SPECIALIZED PRACTICE // 2026 ]",
-    "title": "Tactile Interfaces.\nComplex Systems.\nInformation Design.",
-    "description": "We design and engineer software at the frontier between data architecture, hardware ergonomics, and human legibility. We eliminate cognitive noise to accelerate critical decisions and ensure operational integrity.",
-    "stack": "INFORMATION DESIGN // DATA ARCHITECTURE // LOW-LATENCY SYSTEMS"
-  },
-  "practice": {
-    "title": "STUDIO // PRACTICE",
-    "tag": "[ INDEPENDENT PRACTICE ]",
-    "practiceTitle": "The Practice",
-    "practiceText": "darkmode.id is an independent software engineering and information design practice. We engineer complex systems, low-latency tactile interfaces, and high-reliability operational infrastructure.",
-    "leadershipTitle": "Leadership",
-    "leadershipName": "Felipe Teles",
-    "leadershipRole": "Technical Lead",
-    "leadershipText": "Founded and led by Felipe Teles (Technical Lead). Purely technical dialogue, data-driven decisions, and direct execution from architecture to code in production.",
-    "principlesTitle": "// OPERATIONAL PRINCIPLES",
-    "principles": [
-      {
-        "index": "01",
-        "title": "Data-Pixel & Density",
-        "text": "Systematic elimination of chartjunk and prioritization of informational clarity (Edward Tufte)."
-      },
-      {
-        "index": "02",
-        "title": "Optical Ergonomics",
-        "text": "OLED-safe surface at #0A0B0D for black smearing mitigation and APCA contrast."
-      },
-      {
-        "index": "03",
-        "title": "Performance Budget",
-        "text": "Strict production Core Web Vitals targets (LCP < 1.2s, CLS = 0, INP < 50ms)."
-      },
-      {
-        "index": "04",
-        "title": "Data Integrity",
-        "text": "Structural determinism, fully auditable pipelines, and GDPR/LGPD compliance."
-      }
-    ]
+    "tag": "FELIPE TELES // SOFTWARE & DATA",
+    "title": "Software, data, and automation\nfor real-world operations.",
+    "description": "I build web applications, data pipelines, and automations that organize operations and help businesses work better. Bringing 15 years of audiovisual direction and editing into clean, fast, no-nonsense software.",
+    "stack": "Python • TypeScript • Next.js • SQL • Automation (RPA)",
+    "primaryCta": "Start a conversation ↗",
+    "secondaryCta": "View projects ↓",
+    "scheduleCta": "Book a call"
   },
   "founder": {
-    "role": "Technical Lead & Founder",
-    "status": "ACTIVE",
-    "name": "Felipe Teles // Technical Lead",
-    "description": "Systems architecture converging structural design maturity with absolute code rigor on web platforms."
+    "role": "PROFILE",
+    "status": "AVAILABLE",
+    "name": "Felipe Teles",
+    "subtitle": "Software & Data Engineer",
+    "coreStack": [
+      "Python",
+      "TypeScript",
+      "Next.js",
+      "SQL",
+      "Automation"
+    ]
   },
   "works": {
-    "title": "Selected Works",
-    "tag": "[Curated Scarcity // 03 Production Systems]",
+    "title": "Selected Projects",
+    "tag": "// 03 production systems",
+    "subtitle": "Projects designed and coded from scratch to solve practical bottlenecks in manufacturing, data verification, and mobile commerce.",
+    "labels": {
+      "bottleneck": "The Problem",
+      "solution": "What Was Built",
+      "metrics": "Results",
+      "liveBadge": "LIVE"
+    },
     "cases": [
       {
         "id": "case-01",
         "index": "01",
-        "title": "Dora MES — Textile Manufacturing Operating System",
-        "category": "INDUSTRIAL SYSTEM // MES",
-        "summary": "End-to-end digitalization of the factory flow, replacing paper spreadsheets with a high-ergonomics tactile PWA.",
-        "architecture": ["Next.js PWA", "Firestore (Real-time)", "Cloud Run", "Decoupled State"],
+        "title": "Dora MES — Textile Production Tracking",
+        "category": "MANUFACTURING / WEB APP",
+        "location": "Rio de Janeiro, BR",
+        "summary": "Web system built for a textile factory to replace paper tickets with real-time bundle tracking across cutting, sewing, and external workshops.",
+        "bottleneck": "1,200-piece batches split into dozens of bundles that were hard to track on paper. Factory Wi-Fi also dropped frequently, and operators needed a fast, simple screen.",
+        "solution": "Next.js and Firestore web app with local offline caching (saves updates on the device when Wi-Fi drops) and real fabric yield calculation after cutting.",
+        "architecture": [
+          "Next.js",
+          "Firestore",
+          "Offline Cache",
+          "Docker / Cloud Run"
+        ],
         "metrics": [
-          { "label": "Paper Forms on Line", "value": "-100%" },
-          { "label": "Traceability", "value": "Per Batch" },
-          { "label": "Scan Latency", "value": "< 45ms" },
-          { "label": "Batch Cycle Time", "value": "-35%" }
+          { "label": "Paper tickets", "value": "-100%" },
+          { "label": "Shop-floor tracking", "value": "Per bundle" },
+          { "label": "Network sync", "value": "< 45ms" },
+          { "label": "Batch closing time", "value": "-35%" }
         ],
         "media": {
           "type": "image",
           "src": "/placeholder-01.png"
         },
         "actions": [
-          { "label": "[ READ FULL CASE STUDY ↗ ]", "url": "/en/case/case-01", "isPrimary": true },
-          { "label": "[ TEST OPERATIONAL SANDBOX ↗ ]", "url": "/en/sandbox/dora-mes" }
+          { "label": "Read case study ↗", "url": "/en/case/case-01", "isPrimary": true },
+          { "label": "Try live sandbox ↗", "url": "/en/sandbox/dora-mes" }
         ]
       },
       {
         "id": "case-02",
         "index": "02",
-        "title": "Santos PREP: Acquisition Engine & Data Auditing",
-        "category": "EDTECH // CRO & DATA PIPELINE",
-        "summary": "High-performance digital platform for civil service exams with mobile traffic retention and real-time auditing.",
-        "architecture": ["Next.js App Router", "Tailwind CSS", "Proprietary Modal (Touch)", "Python Data Pipeline"],
+        "title": "Santos PREP — High-Speed Landing Page & Gazette Audit",
+        "category": "DATA & WEB PERFORMANCE",
+        "location": "Santos, BR",
+        "summary": "Fast sales page for a civil-service exam prep course, backed by a Python script that verified real student approvals in Official Gazette PDFs.",
+        "bottleneck": "To build genuine trust with candidates, we needed to verify past approvals by cross-referencing student spreadsheets against hundreds of pages of Official Gazette PDFs.",
+        "solution": "Python script (PyPDF) to normalize names and match each call-up in public PDFs, paired with a lightweight static Next.js page that loads instantly on mobile 4G.",
+        "architecture": [
+          "Python (PyPDF)",
+          "Next.js",
+          "Tailwind CSS",
+          "100/100 Web Vitals"
+        ],
         "metrics": [
-          { "label": "Core Web Vitals", "value": "100/100" },
-          { "label": "Top 10 Approved", "value": "5" },
-          { "label": "CLS (Visual Shift)", "value": "0.00" },
-          { "label": "Mobile LCP", "value": "0.8s" }
+          { "label": "Web Vitals", "value": "100/100" },
+          { "label": "Top-10 approvals", "value": "5" },
+          { "label": "Layout shift (CLS)", "value": "0.00" },
+          { "label": "4G load time", "value": "0.8s" }
         ],
         "media": {
           "type": "image",
           "src": "/placeholder-02.png"
         },
         "actions": [
-          { "label": "[ READ FULL CASE STUDY ↗ ]", "url": "/en/case/case-02", "isPrimary": true },
-          { "label": "[ ACCESS SITE ↗ ]", "url": "https://resumosantos.vercel.app/" }
+          { "label": "Read case study ↗", "url": "/en/case/case-02", "isPrimary": true },
+          { "label": "Visit live page ↗", "url": "https://resumosantos.vercel.app/" }
         ]
       },
       {
         "id": "case-03",
         "index": "03",
-        "title": "Use Azevedo — E-Commerce Mobile-First & Fit Tech",
-        "category": "E-COMMERCE // FIT TECH & HEADLESS",
-        "summary": "Digital retail headless architecture with Algorithmic Virtual Fitting Room to mitigate returns in the plus-size niche.",
-        "architecture": ["Next.js 16 (App Router)", "Prisma v6", "Supabase (Postgres)", "Zustand", "InfinitePay"],
+        "title": "Use Azevedo — Custom E-Commerce & Virtual Fitting",
+        "category": "FULL-STACK E-COMMERCE",
+        "location": "Rio de Janeiro, BR",
+        "summary": "Custom online store for a plus-size women's fashion brand, featuring an integrated size recommender and a simple admin panel for inventory control.",
+        "bottleneck": "Static measurement charts cause hesitation on mobile phones and lead to size returns. The brand also needed to move away from slow rented platforms.",
+        "solution": "Next.js storefront backed by PostgreSQL, automated fit recommendation (bust, waist, and hips), custom product dashboard, and InfinitePay checkout integration.",
+        "architecture": [
+          "Next.js",
+          "PostgreSQL & Prisma",
+          "Virtual Fit Tool",
+          "InfinitePay Webhook"
+        ],
         "metrics": [
-          { "label": "Layout Shift (CLS)", "value": "0.00" },
-          { "label": "Tactile Ergonomics", "value": "100%" },
-          { "label": "Fit Return Rate", "value": "-42%" },
-          { "label": "Checkout Time", "value": "< 30s" }
+          { "label": "Size returns", "value": "-42%" },
+          { "label": "Layout shift (CLS)", "value": "0.00" },
+          { "label": "Checkout time", "value": "< 30s" },
+          { "label": "Custom admin", "value": "100%" }
         ],
         "media": {
           "type": "image",
-          "src": "/placeholder-03.png"
+          "src": "/use-azevedo.png"
         },
         "actions": [
-          { "label": "[ READ FULL CASE STUDY ↗ ]", "url": "/en/case/case-03", "isPrimary": true },
-          { "label": "[ ACCESS SITE ↗ ]", "url": "https://useazevedo.vercel.app/" }
+          { "label": "Read case study ↗", "url": "/en/case/case-03", "isPrimary": true },
+          { "label": "Visit live store ↗", "url": "https://useazevedo.vercel.app/" }
         ]
       }
     ]
   },
-  "capabilities": {
-    "title": "Capabilities",
-    "tag": "// Core Technical Domains",
-    "categories": [
+  "trajectory": {
+    "tag": "// ABOUT ME",
+    "title": "From the editing room to software and data.",
+    "lead": "Before moving into tech, I spent over 15 years directing and editing video. In the editing room, you learn how to cut what doesn't matter, organize complex information, and guide the viewer's attention.",
+    "body": "Today I apply that same mindset to software development and data analysis. I like understanding how an operation actually works on the ground — whether on a factory floor, in a backoffice routine, or on a customer's phone — and writing clean code that solves the problem without unnecessary complexity.",
+    "pillars": [
       {
         "index": "01",
-        "title": "Frontend Engineering & Mobile-First",
-        "lead": "Structuring high-performance platforms focused on conversion (CRO) and tactile retention.",
-        "deliverables": [
-          "Next.js & React Server Components",
-          "Mobile-First Architecture (Thumb Zone)",
-          "Extreme Optimization (Core Web Vitals)"
-        ]
+        "title": "Grounded in real problems",
+        "text": "Before picking tools, I focus on understanding where the workflow gets stuck and what actually needs to be built."
       },
       {
         "index": "02",
-        "title": "Data Engineering & Backends",
-        "lead": "Consolidation of transactional data, metric auditing, and relational database orchestration.",
-        "deliverables": [
-          "Analytical Pipelines (Python)",
-          "Prisma ORM & SQL/NoSQL Databases",
-          "B2B & Financial API Integrations"
-        ]
+        "title": "Clear, fast interfaces",
+        "text": "Visual background applied to build legible, responsive screens that anyone on the team can use without friction."
       },
       {
         "index": "03",
-        "title": "RPA & Process Automation",
-        "lead": "Replacing slow backoffice tasks with real-time extraction and data matching bots.",
+        "title": "Practical data & automation",
+        "text": "Using Python and SQL to replace repetitive spreadsheet work with reliable automated routines."
+      }
+    ]
+  },
+  "capabilities": {
+    "title": "Tools & Daily Practice",
+    "tag": "// What I work with",
+    "categories": [
+      {
+        "index": "01 // WEB",
+        "title": "Web Apps & Interfaces",
+        "lead": "Internal operational tools, fast landing pages, and custom online stores.",
         "deliverables": [
-          "Web Automation (Selenium / BotCity)",
-          "Scraping & Data Cleansing with Pandas",
-          "Backoffice Process Orchestration"
+          "TypeScript",
+          "React & Next.js",
+          "Tailwind CSS",
+          "Node.js"
         ]
       },
       {
-        "index": "04",
-        "title": "R&D & Low-Level Manipulation",
-        "lead": "Mastery of legacy hardware, memory constraints, and binary matrix optimization.",
+        "index": "02 // DATA",
+        "title": "Data & Backend",
+        "lead": "Database modeling, document parsing, and API integrations.",
         "deliverables": [
-          "Binary Manipulation & Firmware",
-          "Container Orchestration (Docker)",
-          "Embedded Image Processing"
+          "Python",
+          "SQL / PostgreSQL",
+          "Prisma ORM",
+          "Firebase / Supabase"
+        ]
+      },
+      {
+        "index": "03 // AUTOMATION",
+        "title": "Automation & RPA",
+        "lead": "Bots and scripts to eliminate repetitive manual data entry and lookups.",
+        "deliverables": [
+          "Selenium",
+          "BotCity",
+          "Pandas",
+          "Web Scraping"
+        ]
+      },
+      {
+        "index": "04 // R&D",
+        "title": "AI Studies, Simulation & Infra",
+        "lead": "Experimental projects with predictive models, text analysis, and deployment.",
+        "deliverables": [
+          "Scikit-Learn",
+          "PyTorch",
+          "FastAPI",
+          "Docker"
         ]
       }
     ]
   },
   "lab": {
-    "title": "The Archive / Lab",
-    "tag": "// R&D, Prototypes & Open Source",
+    "title": "Lab & Experiments",
+    "tag": "// Studies, automations & open source",
+    "subtitle": "Personal experiments, utility scripts, and applied data studies on GitHub.",
     "table": {
       "id": "ID",
-      "experiment": "EXPERIMENT",
-      "scope": "TECH SCOPE",
+      "experiment": "PROJECT",
+      "scope": "STACK",
       "status": "STATUS"
     },
     "experiments": [
       {
-        "id": "LAB_01",
-        "title": "EchoOrganize (Low-Level Audio Firmware Patch)",
-        "scope": "Python / Mutagen / FAT32 I/O",
-        "status": "FINALIZADO",
-        "description": "Binary ID3v2.3 normalizer and physical FAT32 cluster allocator for legacy DAPs operating under severe RAM limits.",
+        "id": "01",
+        "title": "Digiente (Project Turi)",
+        "scope": "Python / FastAPI / PyTorch / Esper ECS",
+        "status": "IN PROGRESS",
+        "description": "Experimental artificial-life simulation in Python using ECS architecture and lightweight neural networks to test behavioral evolution.",
+        "targetUrl": "https://github.com/felinjob/digient_proj"
+      },
+      {
+        "id": "02",
+        "title": "EchoOrganize (FAT32 & ID3 Utility)",
+        "scope": "Python / Mutagen / Pillow",
+        "status": "COMPLETED",
+        "description": "Utility script built to organize SD cards for dedicated audio players (DAPs), fixing ID3 tags and sorting FAT32 tables for faster indexing.",
         "targetUrl": "https://github.com/felinjob/echo-organizer-dap"
       },
       {
-        "id": "LAB_02",
-        "title": "RPA Freight & Onboarding Engine",
-        "scope": "Python / BotCity / Selenium",
-        "status": "FINALIZADO",
-        "description": "Robotic Process Automation (RPA) engine for scraping logistics quotes (Correios/Jadlog) and sanitizing Brazilian commercial addresses via Brasil API. 10x backoffice acceleration.",
+        "id": "03",
+        "title": "Freight Quote & Onboarding Bot",
+        "scope": "Python / BotCity / Selenium / Pandas",
+        "status": "COMPLETED",
+        "description": "Automation script that standardizes addresses via Brasil API and quotes shipping across carriers automatically, saving hours of manual typing.",
         "targetUrl": "https://github.com/felinjob/Cadastros_e_Fretes"
       },
       {
-        "id": "LAB_03",
-        "title": "Resumos Campinas (Legacy V1)",
-        "scope": "Next.js / EdTech",
-        "status": "FINALIZADO",
-        "description": "Acquisition and conversion landing page for previous civil service exam. Acted as experimental foundation and social proof architecture for Santos platform.",
-        "targetUrl": "https://resumocampinas.vercel.app/"
-      },
-      {
-        "id": "LAB_04",
-        "title": "SpaceX Falcon 9 Landing Prediction",
-        "scope": "Machine Learning / EDA",
-        "status": "FINALIZADO",
-        "description": "Machine learning predictive model to evaluate first-stage Falcon 9 landing success probability (94.4% accuracy with Decision Tree). IBM Data Science Capstone.",
-        "targetUrl": "https://github.com/felinjob/IBM-Applied-Data-Science-Capstone"
-      },
-      {
-        "id": "LAB_05",
-        "title": "Hollywood IMDb Analytics",
-        "scope": "NLP / ML / Python",
-        "status": "FINALIZADO",
-        "description": "Strategic analytics and predictive engine based on IMDb datasets to inform production studio greenlights. Uses NLP and feature engineering for business insights.",
+        "id": "04",
+        "title": "Film Predictive Analysis (IMDb)",
+        "scope": "Python / NLP / Scikit-Learn",
+        "status": "COMPLETED",
+        "description": "Data science study combining cinema datasets and text analysis (NLP) to explore reception patterns and script viability.",
         "targetUrl": "https://github.com/felinjob/hollywood_analise"
+      },
+      {
+        "id": "05",
+        "title": "Resumos Campinas (V1 Landing Page)",
+        "scope": "Next.js / Tailwind CSS",
+        "status": "ARCHIVED",
+        "description": "First version of the civil-service exam landing page that served as the foundation for the Santos project.",
+        "targetUrl": "https://resumocampinas.vercel.app/"
       }
     ]
+  },
+  "cta": {
+    "tag": "// DIRECT CONTACT",
+    "title": "Have a project in mind or a workflow to streamline?",
+    "description": "You talk directly with me from the first sketch to the final code. Available for custom web systems, high-converting landing pages, Python automations, and software/data roles.",
+    "primaryButton": "Send a message",
+    "scheduleButton": "Book a call (Cal.com) ↗",
+    "whatsappButton": "Chat on WhatsApp ↗"
   }
 }

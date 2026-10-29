@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Proposta de Desenvolvimento Web — AW Bikes</title>
+<style>
+  @page {
+    size: A4;
+    margin: 16mm 15mm 18mm 15mm;
+    @bottom-left {
+      content: "AW Bikes  ·  Proposta de Desenvolvimento Web  ·  Felipe Teles (darkmode.id)";
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 7.5pt;
+      color: #6B7280;
+    }
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 7.5pt;
+      color: #6B7280;
+    }
+  }
+
+  :root {
+    --ink: #0B0C0E;
+    --ink-soft: #3E4552;
+    --ink-faint: #646C7A;
+    --rule: #DCDFD6;
+    --volt-dark: #A16207;
+    --volt-bright: #EAB308;
+    --volt-soft: #FEF9C3;
+    --paper-soft: #F6F7F4;
+    --ok: #047857;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 9.4pt;
+    line-height: 1.48;
+    color: var(--ink);
+    background: #fff;
+  }
+
+  h1, h2, h3, h4 { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); margin: 0; }
+  h2, h3, h4 { break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  strong { font-weight: 600; }
+  ul { margin: 0 0 6pt; padding-left: 14pt; }
+  li { margin-bottom: 2.5pt; }
+  .mono { font-family: Consolas, "Courier New", monospace; font-variant-numeric: tabular-nums; }
+
+  .letterhead {
+    display: flex;
+    align-items: center;
+    gap: 14pt;
+    padding-bottom: 11pt;
+    border-bottom: 2pt solid var(--ink);
+  }
+  .badge-aw {
+    width: 19mm;
+    height: 19mm;
+    background: #0B0C0E;
+    color: #FFD400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 13pt;
+    letter-spacing: -0.03em;
+    border: 1.5pt solid #EAB308;
+    flex-shrink: 0;
+  }
+  .badge-aw span {
+    font-family: Consolas, monospace;
+    font-size: 6.2pt;
+    letter-spacing: 0.16em;
+    color: #FFFFFF;
+    font-weight: 700;
+    margin-top: -1pt;
+  }
+  .letterhead .kicker {
+    font-family: Consolas, monospace;
+    font-size: 7.5pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--volt-dark);
+    font-weight: 700;
+    margin-bottom: 2pt;
+  }
+  .letterhead h1 { font-size: 16.5pt; line-height: 1.15; font-weight: 800; }
+  .letterhead .sub { font-size: 9pt; color: var(--ink-soft); margin-top: 3pt; }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 10pt;
+    border: 0.75pt solid var(--rule);
+    background: var(--paper-soft);
+    break-inside: avoid;
+  }
+  .meta div { padding: 7pt 9pt; border-right: 0.75pt solid var(--rule); border-bottom: 0.75pt solid var(--rule); }
+  .meta div:nth-child(3n) { border-right: 0; }
+  .meta div:nth-last-child(-n+3) { border-bottom: 0; }
+  .meta .label { font-family: Consolas, monospace; font-size: 6.8pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 2pt; }
+  .meta .value { font-size: 9.4pt; font-weight: 700; }
+  .meta .value small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 7.8pt; }
+
+  section { margin-top: 14pt; }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 7pt;
+    border-bottom: 1pt solid var(--rule);
+    padding-bottom: 3.5pt;
+    margin-bottom: 8pt;
+    break-after: avoid;
+  }
+  .sec-num { font-family: Consolas, monospace; color: var(--volt-dark); font-size: 9pt; font-weight: 700; }
+  .sec-head h2 { font-size: 12.5pt; font-weight: 800; }
+
+  h3 { font-size: 10.2pt; margin: 8pt 0 3.5pt; font-weight: 700; }
+  h4 { font-size: 9.4pt; margin: 6.5pt 0 2pt; font-weight: 700; }
+
+  .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 7pt; margin-top: 7pt; }
+  .pillar { border: 0.75pt solid var(--rule); padding: 8pt 9pt; break-inside: avoid; background: #fff; }
+  .pillar .n { font-family: Consolas, monospace; font-size: 7.2pt; color: var(--volt-dark); font-weight: 700; text-transform: uppercase; }
+  .pillar h4 { margin: 2pt 0 3pt; font-size: 9.6pt; }
+  .pillar p { margin: 0; font-size: 8.6pt; color: var(--ink-soft); }
+
+  table { width: 100%; border-collapse: collapse; margin: 5pt 0 7pt; font-size: 8.6pt; }
+  thead th {
+    text-align: left;
+    font-family: Consolas, monospace;
+    font-size: 7.2pt;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--paper-soft);
+    border-top: 0.75pt solid var(--rule);
+    border-bottom: 0.75pt solid var(--rule);
+    padding: 5pt 7pt;
+    font-weight: 700;
+  }
+  tbody td { padding: 5pt 7pt; border-bottom: 0.75pt solid var(--rule); vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.k { font-weight: 600; }
+  td.num { font-family: Consolas, monospace; white-space: nowrap; font-weight: 700; }
+  .ok { color: var(--ok); }
+  .volt { color: var(--volt-dark); font-weight: 700; }
+
+  .packages { display: grid; grid-template-columns: 1fr 1fr; gap: 9pt; margin: 7pt 0; }
+  .pkg {
+    border: 1pt solid var(--rule);
+    padding: 10pt 11pt;
+    background: var(--paper-soft);
+    break-inside: avoid;
+  }
+  .pkg.highlight {
+    border: 1.5pt solid var(--volt-bright);
+    background: #FFFDF5;
+  }
+  .pkg .tag {
+    font-family: Consolas, monospace;
+    font-size: 7.2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--volt-dark);
+    font-weight: 700;
+  }
+  .pkg h3 { margin: 3pt 0 4pt; font-size: 10.8pt; }
+  .pkg .price {
+    font-size: 17.5pt;
+    font-weight: 800;
+    margin: 5pt 0;
+    font-family: Consolas, monospace;
+  }
+  .pkg ul { padding-left: 13pt; margin: 4pt 0 0; font-size: 8.5pt; }
+
+  .step { display: grid; grid-template-columns: 24mm 1fr; gap: 9pt; padding: 6pt 0; border-bottom: 0.75pt solid var(--rule); break-inside: avoid; }
+  .step:last-child { border-bottom: 0; }
+  .step .when { font-family: Consolas, monospace; font-size: 8pt; font-weight: 700; color: var(--volt-dark); }
+  .step .when small { display: block; color: var(--ink-faint); font-weight: 400; margin-top: 1.5pt; }
+  .step h4 { margin: 0 0 2pt; }
+  .step p { margin: 0; color: var(--ink-soft); font-size: 8.6pt; }
+
+  .approval { margin-top: 14pt; border: 0.75pt solid var(--rule); padding: 10pt 12pt; break-inside: avoid; background: var(--paper-soft); }
+  .approval h3 { margin-top: 0; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24pt; margin-top: 22pt; }
+  .sign div { border-top: 0.75pt solid var(--ink); padding-top: 4pt; font-size: 8.2pt; color: var(--ink-soft); }
+  .sign strong { display: block; color: var(--ink); font-size: 9pt; }
+  .contact { margin-top: 9pt; font-size: 8pt; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="letterhead">
+  <div class="badge-aw">AW<span>BIKES</span></div>
+  <div>
+    <div class="kicker">Proposta de Desenvolvimento Web // AW Bikes</div>
+    <h1>Página de vendas rápida para bicicletas elétricas e divulgação da oficina presencial</h1>
+    <div class="sub">Preparado para a <strong>AW Bikes</strong> &nbsp;·&nbsp; Estilo urbano e moderno (inspirado na linha Vire Store)</div>
+  </div>
+</header>
+
+<div class="meta">
+  <div><div class="label">Cliente</div><div class="value">AW Bikes<small>E-Bikes &amp; Oficina Presencial RJ</small></div></div>
+  <div><div class="label">Desenvolvedor</div><div class="value">Felipe Teles<small>Software &amp; Dados // darkmode.id</small></div></div>
+  <div><div class="label">Data &amp; Validade</div><div class="value">Outubro de 2026<small>Válida por 10 dias corridos</small></div></div>
+  <div><div class="label">Opção 1 (Catálogo Fixo)</div><div class="value mono">R$ 950,00<small>ou R$ 880,00 à vista no Pix</small></div></div>
+  <div><div class="label">Opção 2 (+ Painel Admin)</div><div class="value mono">R$ 1.350,00<small>ou R$ 1.250,00 à vista no Pix</small></div></div>
+  <div><div class="label">Mensalidade de Sistema</div><div class="value mono ok">R$ 0,00 / mês<small>Zero aluguel de plataforma</small></div></div>
+</div>
+
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>Por que construir uma estrutura própria (e não usar plataformas alugadas)?</h2></div>
+  <p>Esta proposta foi montada pensando no funcionamento real da <strong>AW Bikes</strong>: unir um produto de alto valor agregado — que o cliente escolhe pelo visual em movimento e pela confiança técnica — a uma estrutura física de oficina e manutenção que passa segurança para quem compra pela internet.</p>
+  <p>A ideia é construir uma ferramenta de vendas rápida para quem clica no anúncio pelo celular no 4G/5G, quer ver a bike rodando em vídeo sem travar, entender a autonomia e falar com a equipe decidido a fechar negócio:</p>
+
+  <div class="pillars">
+    <div class="pillar"><span class="n">01 // Zero Aluguel</span><h4>Sem mensalidade de plataforma</h4><p>Depois que a página estiver pronta e entregue, você não paga mensalidade de sistema para mantê-la no ar. O retorno das vendas e da oficina fica 100% no seu caixa.</p></div>
+    <div class="pillar"><span class="n">02 // Celular 4G/5G</span><h4>Vídeos e fotos leves no celular</h4><p>Bicicleta elétrica se vende mostrando os detalhes em movimento. Os vídeos e imagens recebem compressão inteligente para abrir rápido no celular do cliente, sem travar.</p></div>
+    <div class="pillar"><span class="n">03 // Foco em Venda</span><h4>Respostas claras logo de cara</h4><p>Responde visualmente às dúvidas de quem quer comprar: <em>autonomia da bateria (km), velocidade máxima, peso suportado, cores, parcelamento, frete no RJ e onde consertar</em>.</p></div>
+    <div class="pillar"><span class="n">04 // Patrimônio Seu</span><h4>O site pertence à AW Bikes</h4><p>Todo o código e as contas de hospedagem ficam registrados em nome da AW Bikes. Você não fica preso a ninguém.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>Como vai funcionar a página (Os 6 Blocos)</h2></div>
+  <p>Antes de começar a programar, faremos uma conversa rápida de alinhamento para definir as cores, o estilo das letras (seguindo uma linha urbana e moderna, como a <em>Vire Store</em>) e escolher os melhores vídeos e fotos das bicicletas. A página será dividida em <strong>6 blocos</strong>:</p>
+
+  <h4>1. Abertura de Impacto (Topo da Página)</h4>
+  <ul>
+    <li>Vídeo da bicicleta em ação rodando de forma fluida e silenciosa no fundo (ou foto de destaque), menu rápido no topo (<em>Modelos, Ficha Técnica, Oficina, Garantia</em>) e botão claro para comprar ou chamar no WhatsApp.</li>
+  </ul>
+
+  <h4>2. Vitrine Interativa de Modelos, Cores e Preços</h4>
+  <ul>
+    <li>O cliente clica nas cores disponíveis de cada modelo e vê a foto da bike mudar na hora na tela, além de galeria mostrando painel digital, bateria, pneus e freios. Preço à vista (com destaque para o Pix) e parcelamento ficam claros para evitar curiosos sem perfil de compra.</li>
+  </ul>
+
+  <h4>3. Painel Visual de Ficha Técnica</h4>
+  <ul>
+    <li>Sem textos longos: cartões visuais rápidos com ícones destacando <strong>autonomia da bateria (km por carga)</strong>, <strong>velocidade máxima</strong> e <strong>capacidade de peso suportada</strong>.</li>
+  </ul>
+
+  <h4>4. Logística e Frete para o Rio de Janeiro</h4>
+  <ul>
+    <li>Área destacando as regiões do RJ onde a AW Bikes oferece <strong>Frete Grátis</strong> (forte gatilho para destravar a venda) e deixando claro o valor de <strong>Frete Fixo</strong> para os demais bairros e municípios do estado.</li>
+  </ul>
+
+  <h4>5. Oficina e Assistência Técnica Presencial</h4>
+  <ul>
+    <li>Apresentação dos serviços de manutenção preventiva, revisão elétrica e troca de peças, com o <strong>endereço completo e botão integrado ao Google Maps / Waze</strong> (rota com um clique) e botão direto para agendar revisão.</li>
+  </ul>
+
+  <h4>6. Garantia e História da AW Bikes</h4>
+  <ul>
+    <li>Apresentação da história da marca, quadro explicando os prazos de garantia de motor, bateria e estrutura, e rodapé com todos os canais oficiais, redes sociais e horário da oficina.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Bastidores, Divisão de Responsabilidades e Custos</h2></div>
+  <ul>
+    <li><strong>Direcionamento Inteligente para o WhatsApp:</strong> Quando o cliente escolhe um modelo, seleciona uma cor na vitrine ou clica na seção da oficina, o site captura o que ele estava olhando e já monta a mensagem pronta no WhatsApp.</li>
+    <li><strong>Avisos no E-mail &amp; Servidores Rápidos:</strong> Disparos automáticos para o e-mail da loja em pedidos fora do horário e hospedagem configurada na Vercel com cópia de segurança no GitHub oficial da marca.</li>
+  </ul>
+
+  <table>
+    <thead><tr><th style="width:34%">O que precisa ser feito</th><th style="width:16%">Quem faz</th><th>Como funciona na prática</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Design, Programação e Vídeos</td><td class="volt">Felipe Teles</td><td>Criação da página para celular e computador, compressão dos vídeos e programação das funções</td></tr>
+      <tr><td class="k">Configuração de Servidores</td><td class="volt">Felipe Teles</td><td>Criação do e-mail administrativo, contas na Vercel/GitHub/Supabase e ligação do domínio</td></tr>
+      <tr><td class="k">Suporte Pós-Lançamento (15 dias)</td><td class="volt">Felipe Teles</td><td>Acompanhamento próximo após o site ir ao ar para qualquer ajuste fino</td></tr>
+      <tr><td class="k">Fotos, Vídeos e Tabelas</td><td class="k">AW Bikes</td><td>Envio dos vídeos/fotos das bikes, preços, opções de cores e a regra de bairros do frete</td></tr>
+      <tr><td class="k">Domínio Próprio (Opcional)</td><td class="k">AW Bikes</td><td>Caso queira um endereço <span class="mono">.com.br</span> (~R$ 40/ano), o pagamento anual é feito direto no nome da AW Bikes</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Opções de Investimento: Qual escolher?</h2></div>
+  <p>A aparência e a velocidade do site para o seu cliente final serão exatamente as mesmas nas duas opções. A única diferença está na forma como você vai atualizar preços e modelos no dia a dia:</p>
+
+  <div class="packages">
+    <div class="pkg">
+      <div class="tag">Opção 1 // Catálogo Fixo no Código</div>
+      <h3>Landing Page Direta (Catálogo Fixo)</h3>
+      <p style="font-size:8.5pt; color:var(--ink-soft);">Ideal se a tabela de preços, modelos e frete mudam pouco ao longo do ano. Mais rápida e econômica.</p>
+      <div class="price">R$ 950,00</div>
+      <ul>
+        <li><strong>Parcelado 50% / 50%:</strong> R$ 475,00 de entrada + R$ 475,00 na entrega final.</li>
+        <li><strong class="ok">À vista no Pix (com desconto): R$ 880,00.</strong></li>
+        <li><strong>Cartão de Crédito:</strong> Em até 3x de R$ 335,00.</li>
+        <li><strong>Prazo estimado:</strong> 12 a 18 dias úteis.</li>
+      </ul>
+    </div>
+
+    <div class="pkg highlight">
+      <div class="tag">Opção 2 // Liberdade Total (+ Painel Admin)</div>
+      <h3>Landing Page Dinâmica + Painel Próprio</h3>
+      <p style="font-size:8.5pt; color:var(--ink-soft);">Inclui tudo da Opção 1 + banco de dados e área restrita com senha (e 1h de treinamento) para alterar preços, fretes, cores e fotos pelo celular na hora.</p>
+      <div class="price">R$ 1.350,00</div>
+      <ul>
+        <li><strong>Parcelado 50% / 50%:</strong> R$ 675,00 de entrada + R$ 675,00 na entrega final.</li>
+        <li><strong class="ok">À vista no Pix (com desconto): R$ 1.250,00.</strong></li>
+        <li><strong>Cartão de Crédito:</strong> Em até 3x de R$ 475,00.</li>
+        <li><strong>Prazo estimado:</strong> 15 a 22 dias úteis.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Prazo de Entrega e Etapas</h2></div>
+  <div class="step">
+    <div class="when">ETAPA 1<small>Alinhamento</small></div>
+    <div><h4>Alinhamento e Base</h4><p>Conversa inicial sobre o visual, recebimento das fotos/vídeos das bikes, tratamento dos arquivos para ficarem leves e configuração dos servidores.</p></div>
+  </div>
+  <div class="step">
+    <div class="when">ETAPA 2<small>Construção</small></div>
+    <div><h4>Construção e Funções</h4><p>Programação do seletor de cores, vitrine de preços, painel de especificações, regras de frete do RJ, mapa da oficina e gatilhos de WhatsApp/e-mail (mais Painel na Opção 2).</p></div>
+  </div>
+  <div class="step">
+    <div class="when">ETAPA 3<small>Lançamento</small></div>
+    <div><h4>Testes no Celular e Publicação</h4><p>Revisão geral com a AW Bikes, testes práticos de carregamento no celular (4G/5G), treinamento de 1h (na Opção 2) e publicação oficial.</p></div>
+  </div>
+</section>
+
+<div class="approval">
+  <h3>Aprovação e Início</h3>
+  <p>Informe qual das duas opções faz mais sentido para o momento atual da <strong>AW Bikes</strong> pelo WhatsApp para organizarmos o início da Etapa 1. Proposta válida por 10 dias corridos (Outubro de 2026).</p>
+  <div class="sign">
+    <div><strong>AW Bikes</strong>De acordo &nbsp;·&nbsp; Opção escolhida: ( &nbsp; ) Opção 1 — R$ 950 &nbsp;&nbsp; ( &nbsp; ) Opção 2 — R$ 1.350</div>
+    <div><strong>Felipe Teles</strong>Engenheiro de Software &amp; Dados // darkmode.id</div>
+  </div>
+  <div class="contact">
+    WhatsApp Direto: <span class="mono">+55 (21) 97565-9408</span> &nbsp;·&nbsp; Versão online: <span class="mono">darkmode.id/orcamento-aw-bikes</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -6,54 +6,43 @@
     /* ----------------------------------------------------
        SUPERFÍCIES E ELEVAÇÃO ÓPTICA (OLED-SAFE)
        ---------------------------------------------------- */
-    /* Fundo estrutural com 4% de luminância: estabiliza a corrente
-       elétrica residual dos diodos sem desligá-los, mitigando o 
-       black smearing físico em rolagens a 120Hz */
     --bg-base: #0A0B0D;
-
-    /* Superfície primária para cartões modulares (+4% elevação de luminância) */
     --bg-surface: #131518;
-
-    /* Superfície elevada para gavetas (drawers), bottom dock e modais */
     --bg-elevated: #1C1E22;
 
     /* ----------------------------------------------------
        LINHAS ESTRUTURAIS BRUTALISTAS
        ---------------------------------------------------- */
-    /* Margem de 1px com corte seco, sem ruído decorativo */
     --border-subtle: #22262C;
-    /* Borda para estados de foco, hover e divisores ativos */
     --border-strong: #323742;
 
     /* ----------------------------------------------------
        ACENTOS FUNCIONAIS
        ---------------------------------------------------- */
-    /* Acento industrial de conversão/ação primária */
     --accent-focus: #FF5500;
-    /* Verde terminal para indicadores de compilação e disponibilidade */
     --signal-state: #00DF81;
 
     /* ----------------------------------------------------
        ESCALA TIPOGRÁFICA (WCAG 2.2 AAA & APCA COMPLIANT)
        ---------------------------------------------------- */
-    /* Cinza-claro neutro: evita a halação luminosa provocada pelo #FFFFFF */
     --text-primary: #EDEDF0;
-    /* Cinza tático para metadados, tabelas mono, dados de código e métricas */
     --text-secondary: #8F96A3;
-    /* Cinza atenuado para referências de sistema */
     --text-muted: #717986;
 
     /* Tom rosé da marca Boutique Nê (usado apenas na página de proposta) */
     --rose: #E5A8A0;
     --rose-wash: rgba(30, 22, 22, 0.4);
+
+    /* Tom Volt de mobilidade elétrica AW Bikes (usado na proposta AW Bikes) */
+    --volt: #FFD400;
+    --volt-fg: #0A0B0D;
+    --volt-wash: rgba(255, 212, 0, 0.08);
+    --volt-border: rgba(255, 212, 0, 0.32);
   }
 
   /* ----------------------------------------------------
-     MODO ATELIER (LIGHT) — escopado à rota /orcamento-boutique-ne
-     Ativado via data-theme="atelier" no <html>; o resto do
-     darkmode.id permanece OLED. Acentos escurecidos para manter
-     contraste AA sobre fundo claro.
-     ---------------------------------------------------- */
+      MODO ATELIER (LIGHT) — escopado à rota /orcamento-boutique-ne
+      ---------------------------------------------------- */
   html[data-theme="atelier"] {
     color-scheme: light;
     --bg-base: #F7F5F2;
@@ -68,6 +57,27 @@
     --text-muted: #6B7280;
     --rose: #A8554A;
     --rose-wash: #FBF1EE;
+  }
+
+  /* ----------------------------------------------------
+      MODO URBANO (DAYLIGHT ASPHALT) — escopado à rota /orcamento-aw-bikes
+      ---------------------------------------------------- */
+  html[data-theme="asphalt-light"] {
+    color-scheme: light;
+    --bg-base: #F4F5F2;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #E9ECE5;
+    --border-subtle: #DCDFD6;
+    --border-strong: #BDC2B5;
+    --accent-focus: #C2410C;
+    --signal-state: #047857;
+    --text-primary: #0B0C0E;
+    --text-secondary: #3E4552;
+    --text-muted: #646C7A;
+    --volt: #A16207;
+    --volt-fg: #FFFFFF;
+    --volt-wash: rgba(250, 204, 21, 0.16);
+    --volt-border: rgba(161, 98, 7, 0.35);
   }
 
   * {
@@ -92,12 +102,11 @@
 
   ::selection {
     background-color: var(--accent-focus);
-    color: #000000;
+    color: #FFFFFF;
   }
 }
 
 @layer components {
-  /* Estiliza apenas código inline (força a sobrescrever o Typography plugin) */
   .prose :where(code):not(:where(pre code)) {
     background-color: var(--bg-elevated) !important;
     color: var(--accent-focus) !important;
@@ -105,13 +114,11 @@
     border-radius: 0.25rem;
   }
   
-  /* Remove os backticks chatos que o plugin de typography insere por padrão */
   .prose :where(code)::before,
   .prose :where(code)::after {
     display: none !important;
   }
 
-  /* Garante que o texto de blocos preformatados (como ASCII art) seja renderizado corretamente */
   .prose pre {
     margin-inline: auto !important;
     width: fit-content !important;
@@ -125,7 +132,6 @@
     color: var(--accent-focus) !important;
   }
 
-  /* Rigor Tipográfico: Numerais tabulares para métricas, identificadores e latências */
   .tabular-nums,
   [data-tabular-nums="true"],
   .font-mono {
@@ -173,3 +179,42 @@
   animation: button-ambient-glow 2.5s ease-in-out infinite;
 }
 
+/* Luz de LED caminhando suavemente no caminho superior (Laranja -> Verde -> Transparente) */
+@keyframes led-path-walk {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.led-border-flow {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 85, 0, 0.15) 12%,
+    var(--accent-focus) 30%,
+    var(--signal-state) 55%,
+    rgba(0, 223, 129, 0.15) 72%,
+    transparent 88%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: led-path-walk 8s linear infinite;
+}
+
+.led-border-glow {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent-focus) 30%,
+    var(--signal-state) 55%,
+    transparent 85%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  filter: blur(6px);
+  opacity: 0.55;
+  animation: led-path-walk 8s linear infinite;
+}

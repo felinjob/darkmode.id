@@ -6,12 +6,24 @@ import { ActionDrawer } from './action-drawer';
 
 export function BottomDock() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [initialShowCal, setInitialShowCal] = useState(false);
   const [isSandbox, setIsSandbox] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     setIsSandbox(pathname?.includes('/sandbox') || pathname?.includes('/orcamento') || false);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleOpenDrawer = (event: Event) => {
+      const customEvent = event as CustomEvent<{ cal?: boolean }>;
+      setInitialShowCal(Boolean(customEvent.detail?.cal));
+      setIsDrawerOpen(true);
+    };
+
+    window.addEventListener('open-contact-drawer', handleOpenDrawer);
+    return () => window.removeEventListener('open-contact-drawer', handleOpenDrawer);
+  }, []);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -24,43 +36,52 @@ export function BottomDock() {
 
   return (
     <>
-      <nav 
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-max bg-[var(--bg-elevated)]/40 backdrop-blur-xl border border-[var(--border-subtle)]/60 flex items-center justify-between p-1 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
-        aria-label="Navegação Tátil Inferior"
+      <nav
+        className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-max bg-[var(--bg-elevated)]/90 backdrop-blur-xl border border-[var(--border-strong)] flex items-center justify-between p-1.5 rounded-full shadow-[0_12px_40px_rgba(0,0,0,0.65)]"
+        aria-label="Navegação Rápida Inferior"
       >
-        <div className="flex items-center space-x-1 px-2">
-
-          <button 
+        <div className="flex items-center space-x-0.5 sm:space-x-1 px-1.5">
+          <button
             onClick={() => scrollTo('works')}
-            className="px-3 md:px-4 h-[40px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-2xl transition-colors"
+            className="px-3 md:px-4 h-[38px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-full transition-colors cursor-pointer"
           >
-            Works
+            Projetos
           </button>
-          <button 
+          <button
+            onClick={() => scrollTo('trajectory')}
+            className="px-3 md:px-4 h-[38px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-full transition-colors cursor-pointer"
+          >
+            Sobre
+          </button>
+          <button
             onClick={() => scrollTo('capabilities')}
-            className="px-3 md:px-4 h-[40px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-2xl transition-colors"
+            className="px-3 md:px-4 h-[38px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-full transition-colors cursor-pointer"
           >
-            Cap
+            Stack
           </button>
-          <button 
+          <button
             onClick={() => scrollTo('lab')}
-            className="px-3 md:px-4 h-[40px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-2xl transition-colors"
+            className="px-3 md:px-4 h-[38px] flex items-center justify-center font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-wider hover:text-[var(--text-primary)] hover:bg-white/5 rounded-full transition-colors cursor-pointer"
           >
             Lab
           </button>
         </div>
-        
-        <button 
-          onClick={() => setIsDrawerOpen(true)}
-          className="h-[40px] px-6 flex items-center justify-center bg-[#FF5712] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded-3xl transition-colors hover:brightness-110 active:brightness-90 shrink-0 shadow-[0_0_15px_rgba(255,87,18,0.3)]"
+
+        <button
+          onClick={() => {
+            setInitialShowCal(false);
+            setIsDrawerOpen(true);
+          }}
+          className="h-[38px] px-5 sm:px-6 flex items-center justify-center bg-[var(--accent-focus)] text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded-full transition-all hover:brightness-110 active:brightness-90 shrink-0 shadow-[0_0_18px_rgba(255,85,0,0.3)] cursor-pointer"
         >
           Contato
         </button>
       </nav>
 
-      <ActionDrawer 
-        isOpen={isDrawerOpen} 
-        onClose={() => setIsDrawerOpen(false)} 
+      <ActionDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        initialShowCal={initialShowCal}
       />
     </>
   );
