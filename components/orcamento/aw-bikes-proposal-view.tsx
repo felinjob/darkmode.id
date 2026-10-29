@@ -843,7 +843,7 @@ export function AwBikesProposalView() {
                     pouco ao longo do ano. Como não há um painel separado de cadastro, o projeto é
                     mais rápido e mais econômico.{' '}
                     <span className="text-[var(--text-muted)]">
-                      (Sempre que precisar alterar um preço ou foto no futuro, basta falar comigo).
+                      (Caso precise alterar preços, modelos ou fotos no futuro, podemos negociar atualizações pontuais sob demanda).
                     </span>
                   </p>
                 </div>
